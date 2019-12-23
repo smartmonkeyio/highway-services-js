@@ -22,8 +22,8 @@ To use SmartMonkey services you need to create a User and an API Key in our site
 Now you can user the services by just using:
 
 ```js
-const { createClient } = require("highway-services");
-const smartmonkey_client = createClient(YOUR_API_KEY);
+const { createHighway } = require("highway-services");
+const highway = createHighway(YOUR_API_KEY);
 ```
 
 ## Optimization

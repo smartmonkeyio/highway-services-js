@@ -49,7 +49,7 @@ class Highway implements IHighway {
       return await axios.post(
         `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
         data,
-        { params: { key: this.apiKey } }
+        { params: { private_key: this.apiKey } }
       );
     }
   };
@@ -62,7 +62,7 @@ class Highway implements IHighway {
       return response;
     } else {
       const response = axios.get(`${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`, {
-        params: { key: this.apiKey }
+        params: { private_key: this.apiKey }
       });
       return response;
     }
@@ -78,7 +78,7 @@ class Highway implements IHighway {
     } else {
       const response = await axios.delete(
         `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        { params: { key: this.apiKey } }
+        { params: { private_key: this.apiKey } }
       );
       return response;
     }
@@ -97,7 +97,7 @@ class Highway implements IHighway {
         `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
         data,
 
-        { params: { key: this.apiKey } }
+        { params: { private_key: this.apiKey } }
       );
     }
   };
