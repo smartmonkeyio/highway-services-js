@@ -1,5 +1,5 @@
 {
-  "name": "smartmonkey-services-js",
+  "name": "highway-services-js",
   "version": "",
   "description": "This package allows the users to easily integrate SmartMonkey services in their code.",
   "main": "dist/index.js",
