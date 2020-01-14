@@ -14,11 +14,11 @@ const globalClient = {
   label: "test",
 
   external_id: "test",
-  icon: "papa",
+  icon: "normal",
   location: {
     label: "test",
-    lat: 1.111,
-    lng: 11.11
+    lat: 41.401893,
+    lng: 2.114046
   },
   label: "test",
   tags: ["test", "test2"],
@@ -83,6 +83,17 @@ describe("Highway", () => {
       const resp3 = await hw.client.delete(client.id);
       const deletedClient = resp3.data;
       expect(deletedClient.deleted_at).to.not.eq(undefined);
+    });
+  });
+  describe("plan", () => {
+    it("it should create a plan", async () => {
+      const hw = createHighway(publicKey, undefined);
+      const respo = await hw.plan.create({
+        label: "testServices",
+        external_id: "externalid"
+      });
+      const plan = respo.data;
+      expect(plan.label).to.eq("testServices");
     });
   });
 });

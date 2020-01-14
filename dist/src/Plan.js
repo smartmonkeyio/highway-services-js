@@ -43,7 +43,7 @@ var Plan = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.highway.post("/plan", plan)];
+                    case 0: return [4 /*yield*/, this.highway.post("plan", plan)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response];
@@ -58,7 +58,7 @@ var Plan = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.highway.put("/client/" + planId, plan)];
+                    case 0: return [4 /*yield*/, this.highway.put("plan/" + planId, plan)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response];
@@ -69,7 +69,7 @@ var Plan = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.highway.delete("/client/" + planId)];
+                    case 0: return [4 /*yield*/, this.highway.delete("plan/" + planId)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response];
@@ -80,7 +80,7 @@ var Plan = /** @class */ (function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.highway.get("/plan/" + clientId)];
+                    case 0: return [4 /*yield*/, this.highway.get("plan/" + clientId)];
                     case 1:
                         response = _a.sent();
                         return [2 /*return*/, response];

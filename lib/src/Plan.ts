@@ -8,7 +8,7 @@ class Plan {
   }
 
   create = async (plan: IPlanData) => {
-    const response = await this.highway.post(`/plan`, plan);
+    const response = await this.highway.post(`plan`, plan);
     return response;
   };
 
@@ -18,17 +18,17 @@ class Plan {
   // };
 
   update = async (planId: String, plan: IPlanData) => {
-    const response = await this.highway.put(`/client/${planId}`, plan);
+    const response = await this.highway.put(`plan/${planId}`, plan);
     return response;
   };
 
   delete = async (planId: String) => {
-    const response = await this.highway.delete(`/client/${planId}`);
+    const response = await this.highway.delete(`plan/${planId}`);
     return response;
   };
 
   get = async (clientId: String) => {
-    const response = await this.highway.get(`/plan/${clientId}`);
+    const response = await this.highway.get(`plan/${clientId}`);
     return response;
   };
 }
