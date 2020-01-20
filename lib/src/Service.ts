@@ -1,9 +1,10 @@
-import { IHighway, IServiceData } from "../common/interfaces";
+import { IServiceData } from "../common/interfaces";
+import { Highway } from "./Highway";
 
-class Service {
-  highway: IHighway;
+export class Service {
+  highway: Highway;
 
-  constructor(hw: IHighway) {
+  constructor(hw: Highway) {
     this.highway = hw;
   }
 
@@ -12,7 +13,7 @@ class Service {
     return response;
   };
 
-  createMany = async (arrayServices: Array<IServiceData>) => {
+  createMany = async (arrayServices: IServiceData[]) => {
     const response = await this.highway.post(`/services`, arrayServices);
     return response;
   };
@@ -22,20 +23,18 @@ class Service {
     return response;
   };
 
-  update = async (serviceId: String, service: IServiceData) => {
+  update = async (serviceId: string, service: IServiceData) => {
     const response = await this.highway.put(`/service/${serviceId}`, service);
     return response;
   };
 
-  delete = async (serviceId: String) => {
+  delete = async (serviceId: string) => {
     const response = await this.highway.delete(`/service/${serviceId}`);
     return response;
   };
 
-  get = async (serviceID: String) => {
+  get = async (serviceID: string) => {
     const response = await this.highway.get(`/service/${serviceID}`);
     return response;
   };
 }
-
-export default Service;

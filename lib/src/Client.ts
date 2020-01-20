@@ -1,36 +1,39 @@
-import { IClientData, IHighway } from "../common/interfaces";
+import { IClientData } from "../common/interfaces";
+import { Highway } from "./Highway";
 
-class Client {
-  highway: IHighway;
 
-  constructor(hw: IHighway) {
+export class Client {
+  highway: Highway;
+
+  constructor(hw: Highway) {
     this.highway = hw;
   }
 
   create = async (client: IClientData) => {
+
     const response = await this.highway.post(`client`, client);
     return response;
+
   };
 
-  createMany = async (arrayClients: Array<IClientData>) => {
+  createMany = async (arrayClients: IClientData[]) => {
     const response = await this.highway.post(`clients`, arrayClients);
     return response;
   };
 
-  update = async (clientId: String, client: IClientData) => {
+  update = async (clientId: string, client: IClientData) => {
     const response = await this.highway.put(`client/${clientId}`, client);
     return response;
   };
 
-  delete = async (clientId: String) => {
+  delete = async (clientId: string) => {
     const response = await this.highway.delete(`client/${clientId}`);
     return response;
   };
 
-  get = async (clientId: String) => {
+  get = async (clientId: string) => {
     const response = await this.highway.get(`client/${clientId}`);
     return response;
   };
 }
 
-export default Client;

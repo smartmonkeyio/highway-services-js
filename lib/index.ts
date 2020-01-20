@@ -1,6 +1,5 @@
-import Highway from "./src/Highway";
-import { IHighway } from "./common/interfaces";
+import { Highway } from "./src/Highway";
 
-export function createHighway(APIKey: string, bearer: string): IHighway {
-  return new Highway(APIKey, bearer);
+export function createHighway(apiKey: string, bearer?: string): Highway {
+  return new Highway(apiKey, bearer);
 }

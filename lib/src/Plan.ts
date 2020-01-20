@@ -1,9 +1,10 @@
-import { IPlanData, IHighway } from "../common/interfaces";
+import { IPlanData } from "../common/interfaces";
+import { Highway } from "./Highway";
 
-class Plan {
-  highway: IHighway;
+export class Plan {
+  highway: Highway;
 
-  constructor(hw: IHighway) {
+  constructor(hw: Highway) {
     this.highway = hw;
   }
 
@@ -17,25 +18,23 @@ class Plan {
   //   return response;
   // };
 
-  update = async (planId: String, plan: IPlanData) => {
+  update = async (planId: string, plan: IPlanData) => {
     const response = await this.highway.put(`plan/${planId}`, plan);
     return response;
   };
 
-  delete = async (planId: String) => {
+  delete = async (planId: string) => {
     const response = await this.highway.delete(`plan/${planId}`);
     return response;
   };
 
-  get = async (planId: String) => {
+  get = async (planId: string) => {
     const response = await this.highway.get(`plan/${planId}`);
     return response;
   };
 
-  optimize = async (planId: String) => {
+  optimize = async (planId: string) => {
     const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
 }
-
-export default Plan;

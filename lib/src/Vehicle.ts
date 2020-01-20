@@ -1,33 +1,38 @@
-import { IVehicleData, IHighway } from "../common/interfaces";
+import { IWebhookData } from "../common/interfaces";
+import { Highway } from "./Highway";
 
-export default class Vehicle {
-  highway: IHighway;
+export class Vehicle {
+  highway: Highway;
 
-  constructor(hw: IHighway) {
+  constructor(hw: Highway) {
     this.highway = hw;
   }
 
-  create = async (vehicle: IVehicleData) => {
-    const response = await this.highway.post(`/vehicle`, vehicle);
-    return response;
+  create = async (vehicle: IWebhookData) => {
+    try {
+      const response = await this.highway.post(`/vehicle`, vehicle);
+      return response;
+    } catch (exception) {
+      console.log(exception);
+    }
   };
 
-  createMany = async (arrayServices: Array<IVehicleData>) => {
+  createMany = async (arrayServices: IWebhookData[]) => {
     const response = await this.highway.post(`/vehicles`, arrayServices);
     return response;
   };
 
-  update = async (vehicleId: String, vehicle: IVehicleData) => {
+  update = async (vehicleId: string, vehicle: IWebhookData) => {
     const response = await this.highway.put(`/vehicle/${vehicleId}`, vehicle);
     return response;
   };
 
-  delete = async (vehicleId: String) => {
+  delete = async (vehicleId: string) => {
     const response = await this.highway.delete(`/vehicle/${vehicleId}`);
     return response;
   };
 
-  get = async (vehicleID: String) => {
+  get = async (vehicleID: string) => {
     const response = await this.highway.get(`/vehicle/${vehicleID}`);
     return response;
   };

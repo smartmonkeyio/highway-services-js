@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "test": "npm run clean && npm run build && mkdir .coverage && nyc mocha && nyc report --reporter=text-lcov > .coverage/coverage.lcov",
+    "test": "nyc mocha 'test/**/*.ts'",
     "build": "npm run clean  && tsc",
     "clean": "rm -rf .coverage .nyc_output dist"
   },
@@ -21,14 +21,42 @@
   "author": "smartmonkey",
   "license": "MIT",
   "homepage": "",
+  "nyc": {
+    "include": [
+      "lib/**/*.ts",
+      "lib/**/*.tsx"
+    ],
+    "exclude": [
+      "test/*.spec.ts"
+    ],
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html",
+      "lcov"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
   "devDependencies": {
+    "@types/dotenv": "^4.0.3",
     "@types/joi": "^14.3.1",
+    "@types/mocha": "^5.2.7",
     "@types/request-promise": "^4.1.42",
+    "dotenv": "^7.0.0",
     "chai": "^4.2.0",
-    "dotenv": "^6.2.0",
     "husky": "^1.3.1",
+    "jest": "^24.9.0",
     "mocha": "^6.2.0",
     "nyc": "^14.1.1",
+    "ts-node": "^7.0.0",
+    "tslint": "^5.20.1",
     "typescript": "^3.3.3"
   },
   "dependencies": {

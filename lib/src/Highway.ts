@@ -1,22 +1,22 @@
 import axios from "axios";
 import { HIGHWAY_ENDPOINT, API_VERSION } from "../common/constants";
 import {
-  IHighway,
   IClientClass,
   IPlanClass,
   IRouteClass,
   IServiceClass,
   IVehicleClass
 } from "../common/interfaces";
-import Client from "./Client";
-import Plan from "./Plan";
-import Vehicle from "./Vehicle";
-import Route from "./Route";
-import Service from "./Service";
+import { Client } from "./Client";
+import { Plan } from "./Plan";
+import { Vehicle } from "./Vehicle";
+import { Route } from "./Route";
+import { Service } from "./Service";
+import { HighwayError } from "../common/errors";
 
-class Highway implements IHighway {
-  token?: String;
-  apiKey: String;
+export class Highway {
+  token?: string;
+  apiKey: string;
 
   client: IClientClass;
   plan: IPlanClass;
@@ -24,9 +24,9 @@ class Highway implements IHighway {
   service: IServiceClass;
   vehicle: IVehicleClass;
 
-  constructor(APIKey: string, bearer: string) {
+  constructor(apiKey: string, bearer?: string) {
     this.token = bearer;
-    this.apiKey = APIKey;
+    this.apiKey = apiKey;
     this.client = new Client(this);
     this.plan = new Plan(this);
     this.route = new Route(this);
@@ -34,73 +34,40 @@ class Highway implements IHighway {
     this.vehicle = new Vehicle(this);
   }
 
-  post = async (url: string, data: Object) => {
-    if (this.token) {
-      return await axios.post(
+  _request = async (method: (url: string, data: any, headers: any) => Promise<any>, url: string, data?: any) => {
+    try {
+      return await method(
         `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
         data,
         {
-          headers: {
-            Authorization: `Bearer ${this.token}`
-          }
+          ...this.apiKey ? {
+            params: { private_key: this.apiKey },
+          } : {
+              headers: {
+                Authorization: `Bearer ${this.token}`,
+              },
+            },
         }
       );
-    } else {
-      return await axios.post(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        data,
-        { params: { private_key: this.apiKey } }
-      );
+    } catch (error) {
+      const { data } = error.response;
+      throw new HighwayError(data.message, data.messageId);
     }
+  }
+
+  post = async (url: string, data?: any) => {
+    return this._request(axios.post, url, data);
   };
 
   get = async (url: string) => {
-    if (this.token) {
-      const response = axios.get(`${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`, {
-        headers: { Authorization: `Bearer ${this.token}` }
-      });
-      return response;
-    } else {
-      const response = axios.get(`${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`, {
-        params: { private_key: this.apiKey }
-      });
-      return response;
-    }
+    return this._request(axios.get, url);
   };
 
   delete = async (url: string) => {
-    if (this.token) {
-      const response = await axios.delete(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        { headers: { Authorization: `Bearer ${this.token}` } }
-      );
-      return response;
-    } else {
-      const response = await axios.delete(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        { params: { private_key: this.apiKey } }
-      );
-      return response;
-    }
+    return this._request(axios.delete, url);
   };
 
-  put = async (url: string, data: Object) => {
-    if (this.token) {
-      const response = await axios.put(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        data,
-        { headers: { Authorization: `Bearer ${this.token}` } }
-      );
-      return response;
-    } else {
-      return await axios.put(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        data,
-
-        { params: { private_key: this.apiKey } }
-      );
-    }
+  put = async (url: string, data?: any) => {
+    return this._request(axios.put, url, data);
   };
 }
-
-export default Highway;

@@ -142,10 +142,10 @@ export interface IServiceClass {
     delete: Function;
     get: Function;
 }
-export interface IVehicle extends IVehicleData {
+export interface IVehicle extends IWebhookData {
     id: string;
 }
-export interface IVehicleData {
+export interface IWebhookData {
     user_id?: String;
     external_id?: String;
     unit_id?: String;

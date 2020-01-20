@@ -1,9 +1,10 @@
-import { IRouteData, IHighway } from "../common/interfaces";
+import { IRouteData } from "../common/interfaces";
+import { Highway } from "./Highway";
 
-class Route {
-  highway: IHighway;
+export class Route {
+  highway: Highway;
 
-  constructor(hw: IHighway) {
+  constructor(hw: Highway) {
     this.highway = hw;
   }
 
@@ -17,25 +18,23 @@ class Route {
     return response;
   };
 
-  createMany = async (arrayRoutes: Array<IRouteData>) => {
+  createMany = async (arrayRoutes: IRouteData[]) => {
     const response = await this.highway.post(`/routes`, arrayRoutes);
     return response;
   };
 
-  update = async (routeId: String, route: IRouteData) => {
+  update = async (routeId: string, route: IRouteData) => {
     const response = await this.highway.put(`/route/${routeId}`, route);
     return response;
   };
 
-  delete = async (routeId: String) => {
+  delete = async (routeId: string) => {
     const response = await this.highway.delete(`/route/${routeId}`);
     return response;
   };
 
-  get = async (routeId: String) => {
+  get = async (routeId: string) => {
     const response = await this.highway.get(`/route/${routeId}`);
     return response;
   };
 }
-
-export default Route;

@@ -1,20 +1,6 @@
-export interface IHighway {
-  vehicle?: IVehicleClass;
-  client?: IClientClass;
-  plan?: IPlanClass;
-  route?: IRouteClass;
-  service?: IServiceClass;
-  location?: ILocation;
-  token?: String;
-  post: Function;
-  get: Function;
-  put: Function;
-  delete: Function;
-}
-
 export interface IClientData {
-  user_id?: String;
-  external_id?: String;
+  user_id?: string;
+  external_id?: string;
 
   created_at?: Date;
   updated_at?: Date;
@@ -23,24 +9,24 @@ export interface IClientData {
   //   icon?: Icon;
 
   location?: ILocation;
-  label?: String;
-  tags?: Array<String>;
-  comments?: String;
-  phone?: String;
-  email?: String;
-  website?: String;
+  label?: string;
+  tags?: string[];
+  comments?: string;
+  phone?: string;
+  email?: string;
+  website?: string;
 
-  default_duration?: Number;
-  default_reward?: Number;
-  default_requires?: Array<String>;
-  default_cluster?: String;
-  default_assign_to?: String;
-  default_timewindows?: [[Number, Number]];
-  default_volume?: Number;
-  default_weight?: Number;
+  default_duration?: number;
+  default_reward?: number;
+  default_requires?: string[];
+  default_cluster?: string;
+  default_assign_to?: string;
+  default_timewindows?: [[number, number]];
+  default_volume?: number;
+  default_weight?: number;
 }
 export interface IClient extends IClientData {
-  id: String;
+  id: string;
 }
 
 export interface IClientClass {
@@ -60,54 +46,54 @@ export interface IPlanClass {
 }
 
 export interface IPlan extends IPlanData {
-  id: String;
+  id: string;
 }
 export interface IPlanData {
-  unit_id?: String;
-  _version?: Number;
-  user_id?: String;
+  unit_id?: string;
+  _version?: number;
+  user_id?: string;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
   date_start?: Date;
   date_end?: Date;
-  single_day?: Boolean;
-  tags?: Array<String>;
-  label?: String;
+  single_day?: boolean;
+  tags?: string[];
+  label?: string;
 }
 
 export interface IRoute extends IRouteData {
-  id: String;
+  id: string;
 }
 export interface IRouteData {
-  user_id?: String;
-  external_id?: String;
-  plan_id?: String;
-  vehicle_id?: String;
+  user_id?: string;
+  external_id?: string;
+  plan_id?: string;
+  vehicle_id?: string;
 
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
 
-  label?: String;
-  phone?: String;
-  avatar?: String;
-  email?: String;
-  plate?: String;
+  label?: string;
+  phone?: string;
+  avatar?: string;
+  email?: string;
+  plate?: string;
 
-  timewindow?: [[Number, Number]];
-  max_weight?: Number;
-  max_volume?: Number;
+  timewindow?: [[number, number]];
+  max_weight?: number;
+  max_volume?: number;
   location_start?: ILocation;
   location_end?: ILocation;
-  provides?: Array<String>;
+  provides?: string[];
 
   date_start?: Date;
   date_end?: Date;
   //track TimeAwarePolyline aqui no se que sera
-  feedback_images?: Array<String>;
-  feedback_comments?: String;
-  feedback_duration?: Number;
+  feedback_images?: string[];
+  feedback_comments?: string;
+  feedback_duration?: number;
 }
 
 export interface IRouteClass {
@@ -119,18 +105,18 @@ export interface IRouteClass {
 }
 
 export interface IService extends IServiceData {
-  id: String;
+  id: string;
 }
 export interface IServiceData {
-  plan_id?: String;
-  client_id?: String;
-  user_id?: String;
-  external_id?: String;
+  plan_id?: string;
+  client_id?: string;
+  user_id?: string;
+  external_id?: string;
 
-  route_id?: String;
-  order?: Number;
-  planned_arrival_time?: Number;
-  planned_departure_time?: Number;
+  route_id?: string;
+  order?: number;
+  planned_arrival_time?: number;
+  planned_departure_time?: number;
 
   //icon Icon
 
@@ -140,27 +126,27 @@ export interface IServiceData {
   deleted_at?: Date;
 
   location?: ILocation;
-  label?: String;
-  tags?: Array<String>;
-  comments?: String;
-  phone?: String;
-  email?: String;
+  label?: string;
+  tags?: string[];
+  comments?: string;
+  phone?: string;
+  email?: string;
 
-  duration?: Number;
-  reward?: Number;
-  requires?: Array<String>;
-  cluster?: String;
-  assign_to?: String;
-  timewindows?: [[Number, Number]];
-  volume?: Number;
-  weight?: Number;
+  duration?: number;
+  reward?: number;
+  requires?: string[];
+  cluster?: string;
+  assign_to?: string;
+  timewindows?: [[number, number]];
+  volume?: number;
+  weight?: number;
 
   done_at?: Date;
   done_location?: ILocation;
-  feedback_images?: Array<String>;
-  feedback_comments?: String;
-  feedback_duration?: Number;
-  feedback_rejection_reason?: String;
+  feedback_images?: string[];
+  feedback_comments?: string;
+  feedback_duration?: number;
+  feedback_rejection_reason?: string;
 }
 
 export interface IServiceClass {
@@ -171,32 +157,32 @@ export interface IServiceClass {
   get: Function;
 }
 
-export interface IVehicle extends IVehicleData {
+export interface IVehicle extends IWebhookData {
   id: string;
 }
-export interface IVehicleData {
-  user_id?: String;
-  external_id?: String;
-  unit_id?: String;
+export interface IWebhookData {
+  user_id?: string;
+  external_id?: string;
+  unit_id?: string;
 
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
 
-  label?: String;
-  phone?: String;
-  avatar?: String;
-  email?: String;
-  plate?: String;
-  vehicle_model?: String;
-  brand?: String;
+  label?: string;
+  phone?: string;
+  avatar?: string;
+  email?: string;
+  plate?: string;
+  vehicle_model?: string;
+  brand?: string;
 
-  default_timewindow?: [[Number, Number]];
-  default_max_weight?: Number;
-  default_max_volume?: Number;
+  default_timewindow?: [[number, number]];
+  default_max_weight?: number;
+  default_max_volume?: number;
   default_location_start?: ILocation;
   default_location_end?: ILocation;
-  default_provides?: Array<String>;
+  default_provides?: string[];
 }
 
 export interface IVehicleClass {
@@ -208,16 +194,16 @@ export interface IVehicleClass {
 }
 
 export interface ILocation {
-  label?: String;
-  country?: String;
-  state?: String;
-  county?: String;
-  city?: String;
-  district?: String;
-  street?: String;
-  house_number?: String;
-  postal_code?: String;
-  comments?: String;
-  lat?: Number;
-  lng?: Number;
+  label?: string;
+  country?: string;
+  state?: string;
+  county?: string;
+  city?: string;
+  district?: string;
+  street?: string;
+  house_number?: string;
+  postal_code?: string;
+  comments?: string;
+  lat?: number;
+  lng?: number;
 }
