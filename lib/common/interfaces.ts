@@ -20,7 +20,7 @@ export interface IClientData {
   default_reward?: number;
   default_requires?: string[];
   default_cluster?: string;
-  default_assign_to?: string;
+  default_assign_to?: string[];
   default_timewindows?: [[number, number]];
   default_volume?: number;
   default_weight?: number;
@@ -153,11 +153,11 @@ export interface IWebhookData {
   vehicle_model?: string;
   brand?: string;
 
-  default_timewindow?: [[number, number]];
+  default_timewindow?: [number, number];
   default_max_weight?: number;
   default_max_volume?: number;
-  default_location_start?: ILocation;
-  default_location_end?: ILocation;
+  default_start_location?: ILocation;
+  default_end_location?: ILocation;
   default_provides?: string[];
 }
 

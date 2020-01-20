@@ -57,5 +57,12 @@ describe(`Test Plans API`, () => {
             assert.strictEqual(planList.offset, 0);
             assert.strictEqual(planList.limit, 20);
         });
+        it(`Should be able to remove all previously created plans`, async () => {
+            const promises = await Promise.all(allPlanIds.map(async (val) => {
+                const client = await highway.plan.delete(val);
+                assert.notStrictEqual(client.deleted_at, undefined);
+            }));
+            assert.strictEqual(promises.length, allPlanIds.length);
+        });
     });
 });

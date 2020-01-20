@@ -1,4 +1,4 @@
-import { IClientData, IClient } from "../common/interfaces";
+import { IClientData, IClient, IPaginateResult } from "../common/interfaces";
 import { Highway } from "./Highway";
 
 
@@ -32,6 +32,14 @@ export class Client {
 
   get = async (clientId: string): Promise<IClient> => {
     const response = await this.highway.get(`client/${clientId}`);
+    return response;
+  };
+
+  list = async (offset = 0, limit = 20): Promise<IPaginateResult<IClient>> => {
+    const params = new URLSearchParams();
+    params.append(`offset`, `${offset}`);
+    params.append(`limit`, `${limit}`);
+    const response = await this.highway.get(`clients?${params.toString()}`);
     return response;
   };
 }

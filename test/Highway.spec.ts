@@ -28,7 +28,7 @@ describe(`Create a Highway Client`, () => {
       highway = createHighway(`BadKey`);
       await highway.plan.list();
       throw new Error(`Should raise an exception with a bad key!`);
-    } catch (exception){
+    } catch (exception) {
       // Everything worked
       assert.strictEqual(exception.httpsStatus, 401);
     }

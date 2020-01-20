@@ -8,8 +8,8 @@ import { Service } from "./Service";
 import { HighwayError } from "../common/errors";
 
 export class Highway {
-  token?: string;
-  apiKey: string;
+  private _token?: string;
+  private _apiKey: string;
 
   client: Client;
   plan: Plan;
@@ -18,8 +18,8 @@ export class Highway {
   vehicle: Vehicle;
 
   constructor(apiKey: string, bearer?: string) {
-    this.token = bearer;
-    this.apiKey = apiKey;
+    this._token = bearer;
+    this._apiKey = apiKey;
     this.client = new Client(this);
     this.plan = new Plan(this);
     this.route = new Route(this);
@@ -27,7 +27,7 @@ export class Highway {
     this.vehicle = new Vehicle(this);
   }
 
-  _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
+  private _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
     try {
       if (data) {
         return (await method(
@@ -38,7 +38,7 @@ export class Highway {
               params: { private_key: this.apiKey },
             } : {
                 headers: {
-                  Authorization: `Bearer ${this.token}`,
+                  Authorization: `Bearer ${this._token}`,
                 },
               },
           }
@@ -51,13 +51,13 @@ export class Highway {
               params: { private_key: this.apiKey },
             } : {
                 headers: {
-                  Authorization: `Bearer ${this.token}`,
+                  Authorization: `Bearer ${this._token}`,
                 },
               },
           }
         )).data;
       }
-      
+
     } catch (error) {
       const { data, status } = error.response;
       throw new HighwayError(`${status} - ${data.message}`, data.messageId, status);
@@ -79,4 +79,11 @@ export class Highway {
   put = async (url: string, data?: any) => {
     return this._request(axios.put, url, data || {});
   };
+
+  get apiKey(): string {
+    return this._apiKey;
+  }
+  get token(): string | void {
+    return this._token;
+  }
 }
