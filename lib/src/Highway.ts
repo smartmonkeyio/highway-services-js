@@ -1,12 +1,5 @@
 import axios from "axios";
 import { HIGHWAY_ENDPOINT, API_VERSION } from "../common/constants";
-import {
-  IClientClass,
-  IPlanClass,
-  IRouteClass,
-  IServiceClass,
-  IVehicleClass
-} from "../common/interfaces";
 import { Client } from "./Client";
 import { Plan } from "./Plan";
 import { Vehicle } from "./Vehicle";
@@ -18,11 +11,11 @@ export class Highway {
   token?: string;
   apiKey: string;
 
-  client: IClientClass;
-  plan: IPlanClass;
-  route: IRouteClass;
-  service: IServiceClass;
-  vehicle: IVehicleClass;
+  client: Client;
+  plan: Plan;
+  route: Route;
+  service: Service;
+  vehicle: Vehicle;
 
   constructor(apiKey: string, bearer?: string) {
     this.token = bearer;
@@ -34,29 +27,45 @@ export class Highway {
     this.vehicle = new Vehicle(this);
   }
 
-  _request = async (method: (url: string, data: any, headers: any) => Promise<any>, url: string, data?: any) => {
+  _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
     try {
-      return await method(
-        `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
-        data,
-        {
-          ...this.apiKey ? {
-            params: { private_key: this.apiKey },
-          } : {
-              headers: {
-                Authorization: `Bearer ${this.token}`,
+      if (data) {
+        return (await method(
+          `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
+          data || {},
+          {
+            ...this.apiKey ? {
+              params: { private_key: this.apiKey },
+            } : {
+                headers: {
+                  Authorization: `Bearer ${this.token}`,
+                },
               },
-            },
-        }
-      );
+          }
+        )).data;
+      } else {
+        return (await method(
+          `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
+          {
+            ...this.apiKey ? {
+              params: { private_key: this.apiKey },
+            } : {
+                headers: {
+                  Authorization: `Bearer ${this.token}`,
+                },
+              },
+          }
+        )).data;
+      }
+      
     } catch (error) {
-      const { data } = error.response;
-      throw new HighwayError(data.message, data.messageId);
+      const { data, status } = error.response;
+      throw new HighwayError(`${status} - ${data.message}`, data.messageId, status);
     }
   }
 
   post = async (url: string, data?: any) => {
-    return this._request(axios.post, url, data);
+    return this._request(axios.post, url, data || {});
   };
 
   get = async (url: string) => {
@@ -68,6 +77,6 @@ export class Highway {
   };
 
   put = async (url: string, data?: any) => {
-    return this._request(axios.put, url, data);
+    return this._request(axios.put, url, data || {});
   };
 }

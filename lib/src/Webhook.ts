@@ -2,7 +2,7 @@ import { IWebhookData } from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Webhook {
-    highway: Highway;
+    private highway: Highway;
 
     constructor(hw: Highway) {
         this.highway = hw;

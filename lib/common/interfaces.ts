@@ -29,24 +29,16 @@ export interface IClient extends IClientData {
   id: string;
 }
 
-export interface IClientClass {
-  create: Function;
-  createMany: Function;
-  update: Function;
-  delete: Function;
-  get: Function;
-}
-
-export interface IPlanClass {
-  create: Function;
-  // createMany: Function;
-  update: Function;
-  delete: Function;
-  get: Function;
+export interface IPlanSchema extends IPlanData {
+  id: string;
+  services_count: number;
+  routes_count: number;
 }
 
 export interface IPlan extends IPlanData {
   id: string;
+  services: IService[];
+  routes: IRoute[];
 }
 export interface IPlanData {
   unit_id?: string;
@@ -61,9 +53,9 @@ export interface IPlanData {
   tags?: string[];
   label?: string;
 }
-
 export interface IRoute extends IRouteData {
   id: string;
+  services: IService[];
 }
 export interface IRouteData {
   user_id?: string;
@@ -94,14 +86,6 @@ export interface IRouteData {
   feedback_images?: string[];
   feedback_comments?: string;
   feedback_duration?: number;
-}
-
-export interface IRouteClass {
-  create: Function;
-  // createMany: Function;
-  update: Function;
-  delete: Function;
-  get: Function;
 }
 
 export interface IService extends IServiceData {
@@ -149,14 +133,6 @@ export interface IServiceData {
   feedback_rejection_reason?: string;
 }
 
-export interface IServiceClass {
-  create: Function;
-  // createMany: Function;
-  update: Function;
-  delete: Function;
-  get: Function;
-}
-
 export interface IVehicle extends IWebhookData {
   id: string;
 }
@@ -185,14 +161,6 @@ export interface IWebhookData {
   default_provides?: string[];
 }
 
-export interface IVehicleClass {
-  create: Function;
-  // createMany: Function;
-  update: Function;
-  delete: Function;
-  get: Function;
-}
-
 export interface ILocation {
   label?: string;
   country?: string;
@@ -206,4 +174,13 @@ export interface ILocation {
   comments?: string;
   lat?: number;
   lng?: number;
+}
+
+export interface IPaginateResult<T> {
+  docs: T[];
+  total: number;
+  limit: number;
+  page?: number;
+  pages?: number;
+  offset?: number;
 }

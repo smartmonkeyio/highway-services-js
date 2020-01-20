@@ -2,39 +2,40 @@ import { IServiceData } from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Service {
-  highway: Highway;
+  private highway: Highway;
 
   constructor(hw: Highway) {
     this.highway = hw;
   }
 
-  create = async (service: IServiceData) => {
-    const response = await this.highway.post(`/service`, service);
+  create = async (planId: string, service: IServiceData) => {
+    const response = await this.highway.post(`service?plan_id=${planId}`, service);
     return response;
   };
 
-  createMany = async (arrayServices: IServiceData[]) => {
-    const response = await this.highway.post(`/services`, arrayServices);
+  createMany = async (planId: string, arrayServices: IServiceData[]) => {
+    const response = await this.highway.post(`services?plan_id=${planId}`, arrayServices);
     return response;
   };
 
   fromClient = async (clientId: string) => {
-    const response = await this.highway.post(`/service/${clientId}`);
+    // TODO: WHAT IS THIS?
+    const response = await this.highway.post(`service/${clientId}`);
     return response;
   };
 
   update = async (serviceId: string, service: IServiceData) => {
-    const response = await this.highway.put(`/service/${serviceId}`, service);
+    const response = await this.highway.put(`service/${serviceId}`, service);
     return response;
   };
 
   delete = async (serviceId: string) => {
-    const response = await this.highway.delete(`/service/${serviceId}`);
+    const response = await this.highway.delete(`service/${serviceId}`);
     return response;
   };
 
   get = async (serviceID: string) => {
-    const response = await this.highway.get(`/service/${serviceID}`);
+    const response = await this.highway.get(`service/${serviceID}`);
     return response;
   };
 }

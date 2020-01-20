@@ -2,19 +2,16 @@ import { IWebhookData } from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Vehicle {
-  highway: Highway;
+  private highway: Highway;
 
   constructor(hw: Highway) {
     this.highway = hw;
   }
 
   create = async (vehicle: IWebhookData) => {
-    try {
-      const response = await this.highway.post(`/vehicle`, vehicle);
-      return response;
-    } catch (exception) {
-      console.log(exception);
-    }
+    const response = await this.highway.post(`/vehicle`, vehicle);
+    return response;
+
   };
 
   createMany = async (arrayServices: IWebhookData[]) => {

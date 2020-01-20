@@ -1,23 +1,36 @@
 
 'use strict';
 import * as assert from 'assert';
+import * as common from './common';
 import { createHighway } from "../lib/index";
+import { Highway } from '../lib/src/Highway';
 
-describe(`Create a highway object`, () => {
-  const privateKey = process.env.HIGHWAY_PRIVATE_KEY || ``;
-  const token = process.env.HIGHWAY_TOKEN || ``;
+describe(`Create a Highway Client`, () => {
+  const privateKey = common.key;
+  const token = common.token;
+  let highway: Highway;
 
-  it(`it should create a hihgway privateKey`, () => {
-    const highway = createHighway(privateKey);
+  it(`it should create a Highway privateKey`, () => {
+    highway = createHighway(privateKey);
     assert.strictEqual(highway.apiKey, privateKey);
   });
-  it(`it should create a hihgway token`, () => {
-    const hw = createHighway(``, token);
-    assert.strictEqual(hw.token, token);
+  it(`it should create a Highway token`, () => {
+    highway = createHighway(``, token);
+    assert.strictEqual(highway.token, token);
   });
   it(`it should create a both key and token`, () => {
-    const hw = createHighway(privateKey, token);
-    assert.strictEqual(hw.apiKey, privateKey);
-    assert.strictEqual(hw.token, token);
+    highway = createHighway(privateKey, token);
+    assert.strictEqual(highway.apiKey, privateKey);
+    assert.strictEqual(highway.token, token);
+  });
+  it(`Should fail to list plans with a wrong key`, async () => {
+    try {
+      highway = createHighway(`BadKey`);
+      await highway.plan.list();
+      throw new Error(`Should raise an exception with a bad key!`);
+    } catch (exception){
+      // Everything worked
+      assert.strictEqual(exception.httpsStatus, 401);
+    }
   });
 });
