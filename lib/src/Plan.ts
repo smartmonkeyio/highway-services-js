@@ -27,8 +27,13 @@ class Plan {
     return response;
   };
 
-  get = async (clientId: String) => {
-    const response = await this.highway.get(`plan/${clientId}`);
+  get = async (planId: String) => {
+    const response = await this.highway.get(`plan/${planId}`);
+    return response;
+  };
+
+  optimize = async (planId: String) => {
+    const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
 }
