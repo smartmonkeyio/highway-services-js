@@ -10,6 +10,7 @@ import { HighwayError } from "../common/errors";
 export class Highway {
   private _token?: string;
   private _apiKey: string;
+  private apiEndpoint: string;
 
   client: Client;
   plan: Plan;
@@ -17,7 +18,7 @@ export class Highway {
   service: Service;
   vehicle: Vehicle;
 
-  constructor(apiKey: string, bearer?: string) {
+  constructor(apiKey: string, bearer?: string, apiEndpoint?: string) {
     this._token = bearer;
     this._apiKey = apiKey;
     this.client = new Client(this);
@@ -25,13 +26,15 @@ export class Highway {
     this.route = new Route(this);
     this.service = new Service(this);
     this.vehicle = new Vehicle(this);
+    this.apiEndpoint = apiEndpoint || HIGHWAY_ENDPOINT;
+
   }
 
   private _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
     try {
       if (data) {
         return (await method(
-          `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
+          `${this.apiEndpoint}/${API_VERSION}/${url}`,
           data || {},
           {
             ...this.apiKey ? {
@@ -45,7 +48,7 @@ export class Highway {
         )).data;
       } else {
         return (await method(
-          `${HIGHWAY_ENDPOINT}/${API_VERSION}/${url}`,
+          `${this.apiEndpoint}/${API_VERSION}/${url}`,
           {
             ...this.apiKey ? {
               params: { private_key: this.apiKey },
