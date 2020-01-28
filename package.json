@@ -7,7 +7,9 @@
   "scripts": {
     "test": "nyc mocha 'test/**/*.ts'",
     "build": "npm run clean  && tsc",
-    "clean": "rm -rf .coverage .nyc_output dist"
+    "clean": "rm -rf .coverage .nyc_output dist",
+    "prepare": "yarn run build",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
