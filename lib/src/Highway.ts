@@ -33,7 +33,7 @@ export class Highway {
     try {
       if (data) {
         return (await method(
-          `${this.apiEndpoint}/${API_VERSION}/${url}`,
+          `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
           data || {},
           {
             ...this.apiKey ? {
@@ -47,7 +47,7 @@ export class Highway {
         )).data;
       } else {
         return (await method(
-          `${this.apiEndpoint}/${API_VERSION}/${url}`,
+          `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
           {
             ...this.apiKey ? {
               params: { private_key: this.apiKey },
