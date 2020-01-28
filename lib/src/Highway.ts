@@ -27,7 +27,6 @@ export class Highway {
     this.service = new Service(this);
     this.vehicle = new Vehicle(this);
     this.apiEndpoint = apiEndpoint || HIGHWAY_ENDPOINT;
-
   }
 
   private _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
@@ -62,6 +61,9 @@ export class Highway {
       }
 
     } catch (error) {
+      if (error.code === `ENOTFOUND` || error.code === `ECONNREFUSED`) {
+        throw new HighwayError(`${error.code} - api endpoint is not correctly set`, `highway.bad_endpoint`, 0);
+      }
       const { data, status } = error.response;
       throw new HighwayError(`${status} - ${data.message}`, data.messageId, status);
     }

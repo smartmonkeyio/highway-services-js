@@ -33,4 +33,24 @@ describe(`Create a Highway Client`, () => {
       assert.strictEqual(exception.httpsStatus, 401);
     }
   });
+  it(`Should fail to list plans with a wrong URL`, async () => {
+    try {
+      highway = createHighway(privateKey, undefined, `http://localhost:1234/`);
+      await highway.plan.list();
+      throw new Error(`Should raise an exception with a bad key!`);
+    } catch (exception) {
+      // Everything worked
+      assert.strictEqual(exception.messageId, `highway.bad_endpoint`);
+    }
+  });
+  it(`Should fail to list plans with a wrong URL`, async () => {
+    try {
+      highway = createHighway(privateKey, undefined, `malformedurl`);
+      await highway.plan.list();
+      throw new Error(`Should raise an exception with a bad key!`);
+    } catch (exception) {
+      // Everything worked
+      assert.strictEqual(exception.messageId, `highway.bad_endpoint`);
+    }
+  });
 });
