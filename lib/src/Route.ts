@@ -14,7 +14,10 @@ export class Route {
   };
 
   createMany = async (planId: string, arrayRoutes: IRouteData[]) => {
-    const response = await this.highway.post(`routes?plan_id=${planId}`, arrayRoutes);
+    const response = await this.highway.post(
+      `routes?plan_id=${planId}`,
+      arrayRoutes
+    );
     return response;
   };
 
@@ -36,6 +39,11 @@ export class Route {
 
   get = async (routeId: string) => {
     const response = await this.highway.get(`route/${routeId}`);
+    return response;
+  };
+
+  optimize = async (routeId: string) => {
+    const response = await this.highway.post(`route/${routeId}/optimize`);
     return response;
   };
 }
