@@ -1,7 +1,6 @@
 import { IClientData, IClient, IPaginateResult } from "../common/interfaces";
 import { Highway } from "./Highway";
 
-
 export class Client {
   private highway: Highway;
 
@@ -12,7 +11,6 @@ export class Client {
   create = async (client: IClientData): Promise<IClient> => {
     const response = await this.highway.post(`client`, client);
     return response;
-
   };
 
   createMany = async (arrayClients: IClientData[]): Promise<IClient[]> => {
@@ -35,12 +33,16 @@ export class Client {
     return response;
   };
 
-  list = async (offset = 0, limit = 20): Promise<IPaginateResult<IClient>> => {
+  list = async (
+    offset = 0,
+    limit = 20,
+    text = undefined
+  ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
+    params.append(`text`, `${text}`);
     const response = await this.highway.get(`clients?${params.toString()}`);
     return response;
   };
 }
-
