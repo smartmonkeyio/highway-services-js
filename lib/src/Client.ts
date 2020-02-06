@@ -41,7 +41,9 @@ export class Client {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
-    params.append(`text`, `${text}`);
+    if (text) {
+      params.append(`text`, `${text}`);
+    }
     const response = await this.highway.get(`clients?${params.toString()}`);
     return response;
   };
@@ -49,5 +51,5 @@ export class Client {
   listFlat = async () => {
     const response = await this.highway.get(`clients/flat`);
     return response;
-  }
+  };
 }
