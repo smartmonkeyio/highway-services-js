@@ -45,4 +45,9 @@ export class Client {
     const response = await this.highway.get(`clients?${params.toString()}`);
     return response;
   };
+
+  listFlat = async () => {
+    const response = await this.highway.get(`clients/flat`);
+    return response;
+  }
 }

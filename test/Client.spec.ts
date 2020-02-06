@@ -48,6 +48,10 @@ describe(`Test Clients API`, () => {
       assert.strictEqual(client.label, loader.clients.client1.label);
       assert.strictEqual(client.external_id, loader.clients.client1.external_id);
     });
+    it(`Should be able to retrieve a flat list of clients`, async () => {
+      const clients = await highway.client.listFlat();
+      assert.strictEqual(clients.length, 6);
+    });
     it(`Should be able to update a client`, async () => {
       const client = await highway.client.update(allClientIds[0], {
         label: `new label`,

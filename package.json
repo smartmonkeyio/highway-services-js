@@ -7,7 +7,9 @@
   "scripts": {
     "test": "nyc mocha 'test/**/*.ts'",
     "build": "npm run clean  && tsc",
-    "clean": "rm -rf .coverage .nyc_output dist"
+    "clean": "rm -rf .coverage .nyc_output dist",
+    "prepare": "yarn run build",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -51,7 +53,6 @@
     "@types/request-promise": "^4.1.42",
     "dotenv": "^8.2.0",
     "mocha": "^7.0.0",
-    "husky": "^4.0.10",
     "nyc": "^15.0.0",
     "ts-node": "^8.6.2",
     "tslint": "^5.20.1",
@@ -63,10 +64,5 @@
   },
   "files": [
     "dist/**/*"
-  ],
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test"
-    }
-  }
+  ]
 }
