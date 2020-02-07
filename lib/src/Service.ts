@@ -37,7 +37,7 @@ export class Service {
       volume: client.default_volume,
       weight: client.default_weight,
     };
-    return newService;
+    return Object.entries(newService).reduce((a,[k,v]) => (v === undefined ? a : {...a, [k]:v}), {});
   };
 
   update = async (serviceId: string, service: IServiceData) => {
