@@ -33,10 +33,24 @@ export class Plan {
     return response;
   };
 
-  list = async (offset=0, limit=20): Promise<IPaginateResult<IPlanSchema>> => {
+  list = async (
+    text=undefined,
+    status=undefined,
+    fromDate=undefined,
+    toDate=undefined,
+    sort=undefined,
+    offset=0,
+    limit=20
+    ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
-    params.append(`offset`, `${offset}`);
-    params.append(`limit`, `${limit}`);
+
+params.append(`text`, `${text}`);
+params.append(`status`, `${status}`);
+params.append(`fromDate`, `${fromDate}`);
+params.append(`toDate`, `${toDate}`);
+params.append(`sort`, `${sort}`);
+params.append(`offset`, `${offset}`);
+params.append(`limit`, `${limit}`);
     
     const response = await this.highway.get(`plans?${params.toString()}`);
     return response;
