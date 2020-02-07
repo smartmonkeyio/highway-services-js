@@ -43,14 +43,13 @@ export class Plan {
     limit=20
     ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
-
-params.append(`text`, `${text}`);
-params.append(`status`, `${status}`);
-params.append(`fromDate`, `${fromDate}`);
-params.append(`toDate`, `${toDate}`);
-params.append(`sort`, `${sort}`);
-params.append(`offset`, `${offset}`);
-params.append(`limit`, `${limit}`);
+    params.append(`text`, `${text}`);
+    params.append(`status`, `${status}`);
+    params.append(`fromDate`, `${fromDate}`);
+    params.append(`toDate`, `${toDate}`);
+    params.append(`sort`, `${sort}`);
+    params.append(`offset`, `${offset}`);
+    params.append(`limit`, `${limit}`);
     
     const response = await this.highway.get(`plans?${params.toString()}`);
     return response;
