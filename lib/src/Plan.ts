@@ -15,7 +15,7 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (plan: IPlanData): Promise<IPlan> => {
+  create = async (plan: IPlan): Promise<IPlan> => {
     const response = await this.highway.post(`plan`, plan);
     return response;
   };
