@@ -24,7 +24,7 @@ export class Service {
     return response;
   };
 
-  fromClient = async (client: IClient) => {
+  fromClient = (client: IClient) => {
     const { label, location, tags, comments, phone, email, website } = client;
     const newService: IServiceData = {
       label, location, tags, comments,
