@@ -47,7 +47,7 @@ export class Plan {
     toDate = undefined,
     sort = undefined,
     offset = 0,
-    limit = 20
+    limit = 20,
   ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
     params.append(`text`, `${text}`);
@@ -69,7 +69,7 @@ export class Plan {
 
   addServices = async (
     planId: string,
-    services: IServiceData[]
+    services: IServiceData[],
   ): Promise<IPlan> => {
     await this.highway.service.createMany(planId, services);
     const response = await this.get(planId);

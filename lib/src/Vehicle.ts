@@ -20,7 +20,7 @@ export class Vehicle {
 
   update = async (
     vehicleId: string,
-    vehicle: IWebhookData
+    vehicle: IWebhookData,
   ): Promise<IVehicle> => {
     const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
     return response;

@@ -33,7 +33,7 @@ describe(`Test Vehicles API`, () => {
             assert.strictEqual(vehicle.external_id, loader.vehicles.vehicle1.external_id);
             assert.deepStrictEqual(
                 vehicle.default_timewindow,
-                loader.vehicles.vehicle1.default_timewindow
+                loader.vehicles.vehicle1.default_timewindow,
             );
             allVehicleIds.push(vehicle.id);
         });

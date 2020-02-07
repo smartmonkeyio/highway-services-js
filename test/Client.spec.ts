@@ -1,11 +1,9 @@
-
-'use strict';
-import * as assert from 'assert';
+"use strict";
+import * as assert from "assert";
 import { createHighway } from "../lib/index";
 import * as loader from "./loader";
 import * as common from "./common";
-import { Highway } from '../lib/src/Highway';
-
+import { Highway } from "../lib/src/Highway";
 
 describe(`Test Clients API`, () => {
   let highway: Highway;
@@ -30,11 +28,14 @@ describe(`Test Clients API`, () => {
     it(`should create a client`, async () => {
       const client = await highway.client.create(loader.clients.client1);
       assert.strictEqual(client.label, loader.clients.client1.label);
-      assert.strictEqual(client.external_id, loader.clients.client1.external_id);
+      assert.strictEqual(
+        client.external_id,
+        loader.clients.client1.external_id,
+      );
       assert.deepStrictEqual(client.tags, loader.clients.client1.tags);
       assert.deepStrictEqual(
         client.default_timewindows,
-        loader.clients.client1.default_timewindows
+        loader.clients.client1.default_timewindows,
       );
       allClientIds.push(client.id);
     });
@@ -46,7 +47,10 @@ describe(`Test Clients API`, () => {
     it(`Should be able to retrieve a single client`, async () => {
       const client = await highway.client.get(allClientIds[2]);
       assert.strictEqual(client.label, loader.clients.client1.label);
-      assert.strictEqual(client.external_id, loader.clients.client1.external_id);
+      assert.strictEqual(
+        client.external_id,
+        loader.clients.client1.external_id,
+      );
     });
     it(`Should be able to retrieve a flat list of clients`, async () => {
       const clients = await highway.client.listFlat();
@@ -71,10 +75,12 @@ describe(`Test Clients API`, () => {
       assert.strictEqual(client.limit, 20);
     });
     it(`Should be able to remove all previously created clients`, async () => {
-      const promises = await Promise.all(allClientIds.map(async (val) => {
-        const client = await highway.client.delete(val);
-        assert.notStrictEqual(client.deleted_at, undefined);
-      }));
+      const promises = await Promise.all(
+        allClientIds.map(async val => {
+          const client = await highway.client.delete(val);
+          assert.notStrictEqual(client.deleted_at, undefined);
+        }),
+      );
       assert.strictEqual(promises.length, allClientIds.length);
     });
   });

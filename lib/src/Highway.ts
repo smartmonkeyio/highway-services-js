@@ -32,7 +32,7 @@ export class Highway {
   private _request = async (
     method: (url: string, data: any, headers?: any) => Promise<any>,
     url: string,
-    data?: any
+    data?: any,
   ) => {
     try {
       if (data) {
@@ -43,14 +43,14 @@ export class Highway {
             {
               ...(this.apiKey
                 ? {
-                    params: { private_key: this.apiKey }
+                    params: { private_key: this.apiKey },
                   }
                 : {
                     headers: {
-                      Authorization: `Bearer ${this._token}`
-                    }
-                  })
-            }
+                      Authorization: `Bearer ${this._token}`,
+                    },
+                  }),
+            },
           )
         ).data;
       } else {
@@ -58,13 +58,13 @@ export class Highway {
           await method(`${this.apiEndpoint}/api/${API_VERSION}/${url}`, {
             ...(this.apiKey
               ? {
-                  params: { private_key: this.apiKey }
+                  params: { private_key: this.apiKey },
                 }
               : {
                   headers: {
-                    Authorization: `Bearer ${this._token}`
-                  }
-                })
+                    Authorization: `Bearer ${this._token}`,
+                  },
+                }),
           })
         ).data;
       }
@@ -73,14 +73,14 @@ export class Highway {
         throw new HighwayError(
           `${error.code} - api endpoint is not correctly set`,
           `highway.bad_endpoint`,
-          0
+          0,
         );
       }
       const { data, status } = error.response;
       throw new HighwayError(
         `${status} - ${data.message}`,
         data.messageId,
-        status
+        status,
       );
     }
   };

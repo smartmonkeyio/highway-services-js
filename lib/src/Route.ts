@@ -16,7 +16,7 @@ export class Route {
   createMany = async (planId: string, arrayRoutes: IRouteData[]) => {
     const response = await this.highway.post(
       `routes?plan_id=${planId}`,
-      arrayRoutes
+      arrayRoutes,
     );
     return response;
   };

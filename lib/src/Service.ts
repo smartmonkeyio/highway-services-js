@@ -11,7 +11,7 @@ export class Service {
   create = async (planId: string, service: IServiceData) => {
     const response = await this.highway.post(
       `service?plan_id=${planId}`,
-      service
+      service,
     );
     return response;
   };
@@ -19,7 +19,7 @@ export class Service {
   createMany = async (planId: string, arrayServices: IServiceData[]) => {
     const response = await this.highway.post(
       `services?plan_id=${planId}`,
-      arrayServices
+      arrayServices,
     );
     return response;
   };
