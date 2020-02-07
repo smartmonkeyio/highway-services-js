@@ -50,11 +50,11 @@ export class Plan {
     limit = 20,
   ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
-    params.append(`text`, `${text}`);
-    params.append(`status`, `${status}`);
-    params.append(`fromDate`, `${fromDate}`);
-    params.append(`toDate`, `${toDate}`);
-    params.append(`sort`, `${sort}`);
+    if (text) {params.append(`text`, `${text}`);}
+    if (status) {params.append(`status`, `${status}`);}
+    if (fromDate) {params.append(`fromDate`, `${fromDate}`);}
+    if (toDate) {params.append(`toDate`, `${toDate}`);}
+    if (sort) {params.append(`sort`, `${sort}`);}
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
 
