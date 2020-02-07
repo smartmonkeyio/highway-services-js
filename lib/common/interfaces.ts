@@ -115,12 +115,13 @@ export interface IServiceData {
   comments?: string;
   phone?: string;
   email?: string;
+  website?: string;
 
   duration?: number;
   reward?: number;
   requires?: string[];
   cluster?: string;
-  assign_to?: string;
+  assign_to?: string[];
   timewindows?: [[number, number]];
   volume?: number;
   weight?: number;
