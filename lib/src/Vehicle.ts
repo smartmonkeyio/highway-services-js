@@ -11,7 +11,6 @@ export class Vehicle {
   create = async (vehicle: IWebhookData): Promise<IVehicle> => {
     const response = await this.highway.post(`vehicle`, vehicle);
     return response;
-
   };
 
   createMany = async (arrayServices: IWebhookData[]): Promise<IVehicle[]> => {
@@ -19,7 +18,10 @@ export class Vehicle {
     return response;
   };
 
-  update = async (vehicleId: string, vehicle: IWebhookData): Promise<IVehicle> => {
+  update = async (
+    vehicleId: string,
+    vehicle: IWebhookData
+  ): Promise<IVehicle> => {
     const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
     return response;
   };

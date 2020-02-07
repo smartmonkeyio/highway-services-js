@@ -1,4 +1,11 @@
-import { IPlanData, IPlan, IServiceData, IRouteData, IPaginateResult, IPlanSchema } from "../common/interfaces";
+import {
+  IPlanData,
+  IPlan,
+  IServiceData,
+  IRouteData,
+  IPaginateResult,
+  IPlanSchema
+} from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Plan {
@@ -34,14 +41,14 @@ export class Plan {
   };
 
   list = async (
-    text=undefined,
-    status=undefined,
-    fromDate=undefined,
-    toDate=undefined,
-    sort=undefined,
-    offset=0,
-    limit=20
-    ): Promise<IPaginateResult<IPlanSchema>> => {
+    text = undefined,
+    status = undefined,
+    fromDate = undefined,
+    toDate = undefined,
+    sort = undefined,
+    offset = 0,
+    limit = 20
+  ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
     params.append(`text`, `${text}`);
     params.append(`status`, `${status}`);
@@ -50,7 +57,7 @@ export class Plan {
     params.append(`sort`, `${sort}`);
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
-    
+
     const response = await this.highway.get(`plans?${params.toString()}`);
     return response;
   };
@@ -59,16 +66,19 @@ export class Plan {
     const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
-  
-  addServices = async (planId: string, services: IServiceData[]): Promise<IPlan> => {
+
+  addServices = async (
+    planId: string,
+    services: IServiceData[]
+  ): Promise<IPlan> => {
     await this.highway.service.createMany(planId, services);
     const response = await this.get(planId);
     return response;
-  }
+  };
 
   addRoutes = async (planId: string, routes: IRouteData[]): Promise<IPlan> => {
     await this.highway.route.createMany(planId, routes);
     const response = await this.get(planId);
     return response;
-  }
+  };
 }
