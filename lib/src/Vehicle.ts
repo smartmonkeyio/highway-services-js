@@ -11,7 +11,6 @@ export class Vehicle {
   create = async (vehicle: IWebhookData): Promise<IVehicle> => {
     const response = await this.highway.post(`vehicle`, vehicle);
     return response;
-
   };
 
   createMany = async (arrayServices: IWebhookData[]): Promise<IVehicle[]> => {
@@ -19,7 +18,10 @@ export class Vehicle {
     return response;
   };
 
-  update = async (vehicleId: string, vehicle: IWebhookData): Promise<IVehicle> => {
+  update = async (
+    vehicleId: string,
+    vehicle: IWebhookData
+  ): Promise<IVehicle> => {
     const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
     return response;
   };
@@ -39,6 +41,11 @@ export class Vehicle {
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
     const response = await this.highway.get(`vehicles?${params.toString()}`);
+    return response;
+  };
+
+  listFlat = async () => {
+    const response = await this.highway.get(`vehicles/flat`);
     return response;
   };
 }
