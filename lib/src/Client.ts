@@ -36,7 +36,7 @@ export class Client {
   list = async (
     offset = 0,
     limit = 20,
-    text = undefined
+    text = undefined,
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);

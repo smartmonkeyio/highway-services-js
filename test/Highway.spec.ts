@@ -1,9 +1,8 @@
-
-'use strict';
-import * as assert from 'assert';
-import * as common from './common';
+"use strict";
+import * as assert from "assert";
+import * as common from "./common";
 import { createHighway } from "../lib/index";
-import { Highway } from '../lib/src/Highway';
+import { Highway } from "../lib/src/Highway";
 
 describe(`Create a Highway Client`, () => {
   const privateKey = common.key;

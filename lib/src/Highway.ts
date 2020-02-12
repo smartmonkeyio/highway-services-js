@@ -29,45 +29,61 @@ export class Highway {
     this.apiEndpoint = apiEndpoint || HIGHWAY_ENDPOINT;
   }
 
-  private _request = async (method: (url: string, data: any, headers?: any) => Promise<any>, url: string, data?: any) => {
+  private _request = async (
+    method: (url: string, data: any, headers?: any) => Promise<any>,
+    url: string,
+    data?: any,
+  ) => {
     try {
       if (data) {
-        return (await method(
-          `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
-          data || {},
-          {
-            ...this.apiKey ? {
-              params: { private_key: this.apiKey },
-            } : {
-                headers: {
-                  Authorization: `Bearer ${this._token}`,
-                },
-              },
-          }
-        )).data;
+        return (
+          await method(
+            `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
+            data || {},
+            {
+              ...(this.apiKey
+                ? {
+                    params: { private_key: this.apiKey },
+                  }
+                : {
+                    headers: {
+                      Authorization: `Bearer ${this._token}`,
+                    },
+                  }),
+            },
+          )
+        ).data;
       } else {
-        return (await method(
-          `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
-          {
-            ...this.apiKey ? {
-              params: { private_key: this.apiKey },
-            } : {
-                headers: {
-                  Authorization: `Bearer ${this._token}`,
-                },
-              },
-          }
-        )).data;
+        return (
+          await method(`${this.apiEndpoint}/api/${API_VERSION}/${url}`, {
+            ...(this.apiKey
+              ? {
+                  params: { private_key: this.apiKey },
+                }
+              : {
+                  headers: {
+                    Authorization: `Bearer ${this._token}`,
+                  },
+                }),
+          })
+        ).data;
       }
-
     } catch (error) {
       if (error.code === `ENOTFOUND` || error.code === `ECONNREFUSED`) {
-        throw new HighwayError(`${error.code} - api endpoint is not correctly set`, `highway.bad_endpoint`, 0);
+        throw new HighwayError(
+          `${error.code} - api endpoint is not correctly set`,
+          `highway.bad_endpoint`,
+          0,
+        );
       }
       const { data, status } = error.response;
-      throw new HighwayError(`${status} - ${data.message}`, data.messageId, status);
+      throw new HighwayError(
+        `${status} - ${data.message}`,
+        data.messageId,
+        status,
+      );
     }
-  }
+  };
 
   post = async (url: string, data?: any) => {
     return this._request(axios.post, url, data || {});
