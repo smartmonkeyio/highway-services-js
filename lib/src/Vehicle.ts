@@ -20,7 +20,7 @@ export class Vehicle {
 
   update = async (
     vehicleId: string,
-    vehicle: IWebhookData
+    vehicle: IWebhookData,
   ): Promise<IVehicle> => {
     const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
     return response;
@@ -36,10 +36,14 @@ export class Vehicle {
     return response;
   };
 
-  list = async (offset = 0, limit = 20): Promise<IPaginateResult<IVehicle>> => {
+  list = async (offset = 0, limit = 20, text = undefined): Promise<IPaginateResult<IVehicle>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
+    if (text) {
+      params.append(`text`, `${text}`);
+    }
+
     const response = await this.highway.get(`vehicles?${params.toString()}`);
     return response;
   };
