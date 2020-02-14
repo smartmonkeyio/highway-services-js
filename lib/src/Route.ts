@@ -28,7 +28,8 @@ export class Route {
     const {
       default_end_location, default_start_location,
       default_max_volume, default_max_weight,
-      default_provides, default_timewindow, ...other } = vehicle;
+      default_provides, default_timewindow,
+      user_id, unit_id, ...other } = vehicle;
 
     return {
       start_location: default_start_location,
