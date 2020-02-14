@@ -73,6 +73,8 @@ export interface IRouteData {
   icon?: string;
   email?: string;
   plate?: string;
+  vehicle_model?: string;
+  brand?: string;
 
   timewindow?: [number, number];
   max_weight?: number;

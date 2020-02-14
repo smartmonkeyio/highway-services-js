@@ -29,7 +29,8 @@ export class Route {
       default_end_location, default_start_location,
       default_max_volume, default_max_weight,
       default_provides, default_timewindow,
-      user_id, unit_id, ...other } = vehicle;
+      plate, vehicle_model, icon, brand,
+      avatar, phone, label, email } = vehicle;
 
     return {
       start_location: default_start_location,
@@ -38,7 +39,8 @@ export class Route {
       max_weight: default_max_weight,
       provides: default_provides,
       timewindow: default_timewindow,
-      ...other,
+      plate, vehicle_model, icon, brand, avatar,
+      phone, label, email,
     };
   };
 
