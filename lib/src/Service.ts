@@ -25,10 +25,11 @@ export class Service {
   };
 
   fromClient = (client: IClient) => {
-    const { label, location, tags, comments, phone, email, website } = client;
+    const { id, label, location, tags, comments, phone, email, website } = client;
     const newService: IServiceData = {
       label, location, tags, comments,
       phone, email, website,
+      client_id: id,
       duration: client.default_duration,
       reward: client.default_reward,
       requires: client.default_requires,
@@ -37,7 +38,7 @@ export class Service {
       volume: client.default_volume,
       weight: client.default_weight,
     };
-    return Object.entries(newService).reduce((a,[k,v]) => (v === undefined ? a : {...a, [k]:v}), {});
+    return Object.entries(newService).reduce((a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }), {});
   };
 
   update = async (serviceId: string, service: IServiceData) => {

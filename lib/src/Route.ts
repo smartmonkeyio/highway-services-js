@@ -1,4 +1,4 @@
-import { IRouteData } from "../common/interfaces";
+import { IRouteData, IVehicle } from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Route {
@@ -21,10 +21,24 @@ export class Route {
     return response;
   };
 
-  fromVehicle = async (vehicleId: string) => {
-    //TODO: What is this?
-    const response = await this.highway.post(`route/${vehicleId}`);
-    return response;
+  /**
+   * Create a new route from a vehicle object.
+   */
+  fromVehicle = (vehicle: IVehicle): IRouteData => {
+    const {
+      default_end_location, default_start_location,
+      default_max_volume, default_max_weight,
+      default_provides, default_timewindow, ...other } = vehicle;
+
+    return {
+      start_location: default_start_location,
+      end_location: default_end_location,
+      max_volume: default_max_volume,
+      max_weight: default_max_weight,
+      provides: default_provides,
+      timewindow: default_timewindow,
+      ...other,
+    };
   };
 
   update = async (routeId: string, route: IRouteData) => {

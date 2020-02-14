@@ -70,14 +70,15 @@ export interface IRouteData {
   label?: string;
   phone?: string;
   avatar?: string;
+  icon?: string;
   email?: string;
   plate?: string;
 
-  timewindow?: [[number, number]];
+  timewindow?: [number, number];
   max_weight?: number;
   max_volume?: number;
-  location_start?: ILocation;
-  location_end?: ILocation;
+  start_location?: ILocation;
+  end_location?: ILocation;
   provides?: string[];
 
   date_start?: Date;
@@ -149,6 +150,7 @@ export interface IWebhookData {
   label?: string;
   phone?: string;
   avatar?: string;
+  icon?: string;
   email?: string;
   plate?: string;
   vehicle_model?: string;
