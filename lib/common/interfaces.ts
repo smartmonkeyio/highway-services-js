@@ -1,3 +1,11 @@
+export interface IHighwayOptions {
+  bearer?: string;
+  apiEndpoint?: string;
+  queryParams?: {
+    [param: string]: string
+  };
+}
+
 export interface IClientData {
   user_id?: string;
   external_id?: string;

@@ -30,11 +30,11 @@ describe(`Test Vehicles API`, () => {
       assert.strictEqual(vehicle.label, loader.vehicles.vehicle1.label);
       assert.strictEqual(
         vehicle.external_id,
-        loader.vehicles.vehicle1.external_id
+        loader.vehicles.vehicle1.external_id,
       );
       assert.deepStrictEqual(
         vehicle.default_timewindow,
-        loader.vehicles.vehicle1.default_timewindow
+        loader.vehicles.vehicle1.default_timewindow,
       );
       allVehicleIds.push(vehicle.id);
     });
@@ -48,7 +48,7 @@ describe(`Test Vehicles API`, () => {
       assert.strictEqual(vehicle.label, loader.vehicles.vehicle1.label);
       assert.strictEqual(
         vehicle.external_id,
-        loader.vehicles.vehicle1.external_id
+        loader.vehicles.vehicle1.external_id,
       );
     });
     it(`Should be able to retrieve a flat list of vehicles`, async () => {
@@ -60,8 +60,8 @@ describe(`Test Vehicles API`, () => {
         label: `new label`,
         default_start_location: {
           lat: 12,
-          lng: 12
-        }
+          lng: 12,
+        },
       });
       assert.strictEqual(vehicle.label, `new label`);
       assert.strictEqual(vehicle.default_start_location?.lat, 12);
@@ -78,7 +78,7 @@ describe(`Test Vehicles API`, () => {
         allVehicleIds.map(async val => {
           const vehicle = await highway.vehicle.delete(val);
           assert.notStrictEqual(vehicle.deleted_at, undefined);
-        })
+        }),
       );
       assert.strictEqual(promises.length, allVehicleIds.length);
     });

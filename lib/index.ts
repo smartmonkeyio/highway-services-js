@@ -1,9 +1,9 @@
 import { Highway } from "./src/Highway";
+import { IHighwayOptions } from "./common/interfaces";
 
 export function createHighway(
   apiKey: string,
-  bearer?: string,
-  apiEndpoint?: string,
+  options?: IHighwayOptions,
 ): Highway {
-  return new Highway(apiKey, bearer, apiEndpoint);
+  return new Highway(apiKey, options || {});
 }

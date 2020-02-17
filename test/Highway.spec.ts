@@ -11,16 +11,16 @@ describe(`Create a Highway Client`, () => {
 
   it(`it should create a Highway privateKey`, () => {
     highway = createHighway(privateKey);
-    assert.strictEqual(highway.apiKey, privateKey);
+    assert.strictEqual(highway._apiKey, privateKey);
   });
   it(`it should create a Highway token`, () => {
     highway = createHighway(``, token);
-    assert.strictEqual(highway.token, token);
+    assert.strictEqual(highway._token, token);
   });
   it(`it should create a both key and token`, () => {
     highway = createHighway(privateKey, token);
-    assert.strictEqual(highway.apiKey, privateKey);
-    assert.strictEqual(highway.token, token);
+    assert.strictEqual(highway._apiKey, privateKey);
+    assert.strictEqual(highway._token, token);
   });
   it(`Should fail to list plans with a wrong key`, async () => {
     try {
