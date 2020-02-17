@@ -1,4 +1,9 @@
-import { IClientData, IClient, IPaginateResult } from "../common/interfaces";
+import {
+  IClientData,
+  IClient,
+  IPaginateResult,
+  IService
+} from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Client {
@@ -36,7 +41,7 @@ export class Client {
   list = async (
     offset = 0,
     limit = 20,
-    text = undefined,
+    text = undefined
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
@@ -51,5 +56,28 @@ export class Client {
   listFlat = async () => {
     const response = await this.highway.get(`clients/flat`);
     return response;
+  };
+
+  fromService = (service: IService) => {
+    const { label, location, tags, comments, phone, email, website } = service;
+    const newClient: IClientData = {
+      label,
+      location,
+      tags,
+      comments,
+      phone,
+      email,
+      website,
+      default_reward: service.reward,
+      default_requires: service.requires,
+      default_cluster: service.cluster,
+      default_assign_to: service.assign_to,
+      default_volume: service.volume,
+      default_weight: service.weight
+    };
+    return Object.entries(newClient).reduce(
+      (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
+      {}
+    );
   };
 }
