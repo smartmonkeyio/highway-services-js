@@ -83,7 +83,7 @@ export class Vehicle {
       email
     } = route;
 
-    return {
+    const newVehicle: IWebhookData = {
       default_start_location: start_location,
       default_end_location: end_location,
       default_max_volume: max_volume,
@@ -99,5 +99,9 @@ export class Vehicle {
       label,
       email
     };
+    return Object.entries(newVehicle).reduce(
+      (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
+      {}
+    );
   };
 }
