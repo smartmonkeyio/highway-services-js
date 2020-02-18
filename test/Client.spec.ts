@@ -15,6 +15,7 @@ describe(`Test Clients API`, () => {
     });
     it(`it should create a client with key`, async () => {
       const client = await highway.client.create({ label: `test` });
+
       assert.strictEqual(client.label, `test`);
       allClientIds.push(client.id);
     });

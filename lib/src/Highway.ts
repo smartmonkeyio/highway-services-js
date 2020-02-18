@@ -6,11 +6,13 @@ import { Vehicle } from "./Vehicle";
 import { Route } from "./Route";
 import { Service } from "./Service";
 import { HighwayError } from "../common/errors";
+import { IHighwayOptions } from "../common/interfaces";
 
 export class Highway {
   private _token?: string;
   private _apiKey: string;
   private apiEndpoint: string;
+  private queryParams: { [param: string]: string } | undefined;
 
   client: Client;
   plan: Plan;
@@ -18,15 +20,18 @@ export class Highway {
   service: Service;
   vehicle: Vehicle;
 
-  constructor(apiKey: string, bearer?: string, apiEndpoint?: string) {
-    this._token = bearer;
+
+
+  constructor(apiKey: string, options: IHighwayOptions) {
+    this._token = options.bearer;
     this._apiKey = apiKey;
     this.client = new Client(this);
     this.plan = new Plan(this);
     this.route = new Route(this);
     this.service = new Service(this);
     this.vehicle = new Vehicle(this);
-    this.apiEndpoint = apiEndpoint || HIGHWAY_ENDPOINT;
+    this.apiEndpoint = options.apiEndpoint || HIGHWAY_ENDPOINT;
+    this.queryParams = options.queryParams;
   }
 
   private _request = async (
@@ -41,30 +46,26 @@ export class Highway {
             `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
             data || {},
             {
-              ...(this.apiKey
-                ? {
-                    params: { private_key: this.apiKey },
-                  }
-                : {
-                    headers: {
-                      Authorization: `Bearer ${this._token}`,
-                    },
-                  }),
+              params: {
+                ...this._apiKey ? { private_key: this._apiKey } : {},
+                ...this.queryParams ? this.queryParams : {},
+              },
+              headers: {
+                ...!this._apiKey ? { Authorization: `Bearer ${this._token}` } : {},
+              },
             },
           )
         ).data;
       } else {
         return (
           await method(`${this.apiEndpoint}/api/${API_VERSION}/${url}`, {
-            ...(this.apiKey
-              ? {
-                  params: { private_key: this.apiKey },
-                }
-              : {
-                  headers: {
-                    Authorization: `Bearer ${this._token}`,
-                  },
-                }),
+            params: {
+              ...this._apiKey ? { private_key: this._apiKey } : {},
+              ...this.queryParams ? this.queryParams : {},
+            },
+            headers: {
+              ...!this._apiKey ? { Authorization: `Bearer ${this._token}` } : {},
+            },
           })
         ).data;
       }
@@ -83,7 +84,7 @@ export class Highway {
         status,
       );
     }
-  };
+  }
 
   post = async (url: string, data?: any) => {
     return this._request(axios.post, url, data || {});
@@ -95,7 +96,7 @@ export class Highway {
 
   delete = async (url: string) => {
     return this._request(axios.delete, url);
-  };
+  }
 
   put = async (url: string, data?: any) => {
     return this._request(axios.put, url, data || {});

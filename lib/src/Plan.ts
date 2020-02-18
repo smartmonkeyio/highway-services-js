@@ -15,7 +15,7 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (plan: IPlan): Promise<IPlan> => {
+  create = async (plan: IPlanData): Promise<IPlan> => {
     const response = await this.highway.post(`plan`, plan);
     return response;
   };
@@ -50,11 +50,11 @@ export class Plan {
     limit = 20,
   ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
-    if (text) {params.append(`text`, `${text}`);}
-    if (status) {params.append(`status`, `${status}`);}
-    if (fromDate) {params.append(`fromDate`, `${fromDate}`);}
-    if (toDate) {params.append(`toDate`, `${toDate}`);}
-    if (sort) {params.append(`sort`, `${sort}`);}
+    if (text) { params.append(`text`, `${text}`); }
+    if (status) { params.append(`status`, `${status}`); }
+    if (fromDate) { params.append(`fromDate`, `${fromDate}`); }
+    if (toDate) { params.append(`toDate`, `${toDate}`); }
+    if (sort) { params.append(`sort`, `${sort}`); }
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
 

@@ -14,11 +14,11 @@ describe(`Create a Highway Client`, () => {
     assert.strictEqual(highway.apiKey, privateKey);
   });
   it(`it should create a Highway token`, () => {
-    highway = createHighway(``, token);
+    highway = createHighway(``, { bearer: token });
     assert.strictEqual(highway.token, token);
   });
   it(`it should create a both key and token`, () => {
-    highway = createHighway(privateKey, token);
+    highway = createHighway(privateKey, { bearer: token });
     assert.strictEqual(highway.apiKey, privateKey);
     assert.strictEqual(highway.token, token);
   });
@@ -34,7 +34,7 @@ describe(`Create a Highway Client`, () => {
   });
   it(`Should fail to list plans with a wrong URL`, async () => {
     try {
-      highway = createHighway(privateKey, undefined, `http://localhost:1234/`);
+      highway = createHighway(privateKey, { apiEndpoint: `http://localhost:1234/` });
       await highway.plan.list();
       throw new Error(`Should raise an exception with a bad key!`);
     } catch (exception) {
@@ -44,7 +44,7 @@ describe(`Create a Highway Client`, () => {
   });
   it(`Should fail to list plans with a wrong URL`, async () => {
     try {
-      highway = createHighway(privateKey, undefined, `malformedurl`);
+      highway = createHighway(privateKey, { apiEndpoint: `malformedurl` });
       await highway.plan.list();
       throw new Error(`Should raise an exception with a bad key!`);
     } catch (exception) {
