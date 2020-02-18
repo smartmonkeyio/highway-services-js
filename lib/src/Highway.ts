@@ -94,18 +94,18 @@ export class Highway {
     return this._request(axios.get, url);
   };
 
-  delete; = async(url: string) => {
-  return this._request(axios.delete, url);
-}
+  delete = async (url: string) => {
+    return this._request(axios.delete, url);
+  }
 
-put = async (url: string, data?: any) => {
-  return this._request(axios.put, url, data || {});
-};
+  put = async (url: string, data?: any) => {
+    return this._request(axios.put, url, data || {});
+  };
 
-get; apiKey();: string; {
-  return this._apiKey;
-}
-get; token();: string | void {
-  return this._token;,,,,,,,,
-};
+  get apiKey(): string {
+    return this._apiKey;
+  }
+  get token(): string | void {
+    return this._token;
+  }
 }
