@@ -145,10 +145,10 @@ export interface IServiceData {
   feedback_rejection_reason?: string;
 }
 
-export interface IVehicle extends IWebhookData {
+export interface IVehicle extends IVehicleData {
   id: string;
 }
-export interface IWebhookData {
+export interface IVehicleData {
   user_id?: string;
   external_id?: string;
   unit_id?: string;
@@ -187,6 +187,19 @@ export interface ILocation {
   comments?: string;
   lat?: number;
   lng?: number;
+}
+
+export interface IWebhook extends IWebhookData {
+  id: string;
+}
+export type EventType =
+  `plan.created` |
+  `plan.deleted` |
+  `plan.updated`;
+
+export interface IWebhookData {
+  enabled_events?: EventType[];
+  url?: string;
 }
 
 export interface IPaginateResult<T> {

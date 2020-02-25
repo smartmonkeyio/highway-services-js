@@ -41,7 +41,7 @@ export class Client {
   list = async (
     offset = 0,
     limit = 20,
-    text = undefined
+    text = undefined,
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
@@ -58,7 +58,7 @@ export class Client {
     return response;
   };
 
-  fromService = (service: IService) => {
+  fromService = (service: IService): IClientData => {
     const { label, location, tags, comments, phone, email, website } = service;
     const newClient: IClientData = {
       label,
@@ -73,11 +73,11 @@ export class Client {
       default_cluster: service.cluster,
       default_assign_to: service.assign_to,
       default_volume: service.volume,
-      default_weight: service.weight
+      default_weight: service.weight,
     };
     return Object.entries(newClient).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
-      {}
+      {},
     );
   };
 }
