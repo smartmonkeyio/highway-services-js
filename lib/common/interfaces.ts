@@ -14,11 +14,10 @@ export interface IClientData {
   updated_at?: Date;
   deleted_at?: Date;
 
-  //   icon?: Icon;
-
   location?: ILocation;
   label?: string;
   tags?: string[];
+  icon?: string;
   comments?: string;
   phone?: string;
   email?: string;
@@ -119,6 +118,7 @@ export interface IServiceData {
   up?: Date;
   d_at?: Date;
   deleted_at?: Date;
+  icon?: string;
 
   location?: ILocation;
   label?: string;
