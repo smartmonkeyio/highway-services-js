@@ -24,11 +24,11 @@ export class Service {
     return response;
   };
 
-  fromClient = (client: IClient) => {
-    const { id, label, location, tags, comments, phone, email, website } = client;
+  fromClient = (client: IClient): IServiceData => {
+    const { id, icon, label, location, tags, comments, phone, email, website } = client;
     const newService: IServiceData = {
       label, location, tags, comments,
-      phone, email, website,
+      phone, email, website, icon,
       client_id: id,
       duration: client.default_duration,
       reward: client.default_reward,
