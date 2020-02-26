@@ -2,7 +2,7 @@ export interface IHighwayOptions {
   bearer?: string;
   apiEndpoint?: string;
   queryParams?: {
-    [param: string]: string
+    [param: string]: string;
   };
 }
 
@@ -87,6 +87,7 @@ export interface IRouteData {
   timewindow?: [number, number];
   max_weight?: number;
   max_volume?: number;
+  max_services?: number;
   start_location?: ILocation;
   end_location?: ILocation;
   provides?: string[];
@@ -172,6 +173,7 @@ export interface IWebhookData {
   default_start_location?: ILocation;
   default_end_location?: ILocation;
   default_provides?: string[];
+  default_max_services?: number;
 }
 
 export interface ILocation {

@@ -16,7 +16,7 @@ export class Route {
   createMany = async (planId: string, arrayRoutes: IRouteData[]) => {
     const response = await this.highway.post(
       `routes?plan_id=${planId}`,
-      arrayRoutes,
+      arrayRoutes
     );
     return response;
   };
@@ -26,21 +26,40 @@ export class Route {
    */
   fromVehicle = (vehicle: IVehicle): IRouteData => {
     const {
-      default_end_location, default_start_location,
-      default_max_volume, default_max_weight,
-      default_provides, default_timewindow,
-      plate, vehicle_model, icon, brand,
-      avatar, phone, label, email } = vehicle;
+      default_end_location,
+      default_start_location,
+      default_max_volume,
+      default_max_weight,
+      default_provides,
+      default_timewindow,
+      default_max_services,
+      plate,
+      vehicle_model,
+      icon,
+      brand,
+      avatar,
+      phone,
+      label,
+      email
+    } = vehicle;
 
     return {
       start_location: default_start_location,
       end_location: default_end_location,
       max_volume: default_max_volume,
       max_weight: default_max_weight,
+      max_services: default_max_services,
+
       provides: default_provides,
       timewindow: default_timewindow,
-      plate, vehicle_model, icon, brand, avatar,
-      phone, label, email,
+      plate,
+      vehicle_model,
+      icon,
+      brand,
+      avatar,
+      phone,
+      label,
+      email
     };
   };
 
