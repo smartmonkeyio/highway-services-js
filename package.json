@@ -1,5 +1,5 @@
 {
-  "name": "highway-services-js",
+  "name": "highway-api",
   "version": "1.0.0",
   "description": "This package allows the users to easily integrate Highway services in their code.",
   "main": "dist/index.js",
