@@ -1,9 +1,10 @@
 {
   "name": "highway-services-js",
-  "version": "0.0.1",
-  "description": "This package allows the users to easily integrate SmartMonkey services in their code.",
+  "version": "1.0.0",
+  "description": "This package allows the users to easily integrate Highway services in their code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "homepage": "http://apidocs.smartmonkey.io/",
   "scripts": {
     "test": "nyc mocha 'test/**/*.ts'",
     "build": "npm run clean  && tsc",
@@ -20,9 +21,12 @@
     "smartmonkey",
     "services"
   ],
-  "author": "smartmonkey",
+  "author": {
+    "name": "Pablo Martínez",
+    "email": "pablo.martinez@smartmonkey.io",
+    "url": "https://github.com/pablomartinezm"
+  },
   "license": "MIT",
-  "homepage": "",
   "nyc": {
     "include": [
       "lib/**/*.ts",

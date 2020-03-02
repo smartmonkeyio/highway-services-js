@@ -25,7 +25,7 @@ export class Vehicle {
 
   update = async (
     vehicleId: string,
-    vehicle: IVehicleData
+    vehicle: IVehicleData,
   ): Promise<IVehicle> => {
     const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
     return response;
@@ -44,7 +44,7 @@ export class Vehicle {
   list = async (
     offset = 0,
     limit = 20,
-    text = undefined
+    text = undefined,
   ): Promise<IPaginateResult<IVehicle>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
@@ -81,7 +81,7 @@ export class Vehicle {
       avatar,
       phone,
       label,
-      email
+      email,
     } = route;
 
     const newVehicle: IVehicleData = {
@@ -99,11 +99,11 @@ export class Vehicle {
       avatar,
       phone,
       label,
-      email
+      email,
     };
     return Object.entries(newVehicle).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
-      {}
+      {},
     );
   };
 }
