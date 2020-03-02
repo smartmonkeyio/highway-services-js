@@ -53,7 +53,7 @@ describe(`Test Plans API`, () => {
         });
         it(`Must retrieve the list of plans`, async () => {
             const planList = await highway.plan.list();
-            assert.strictEqual(planList.docs.length, 20);
+            assert.strictEqual(planList.docs.length, 1);
             assert.strictEqual(planList.offset, 0);
             assert.strictEqual(planList.limit, 20);
         });
