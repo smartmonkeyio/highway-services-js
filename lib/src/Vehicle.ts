@@ -14,7 +14,7 @@ export class Vehicle {
   }
 
   create = async (vehicle: IVehicleData): Promise<IVehicle> => {
-    const response = await this.highway.post(`vehicles`, vehicle);
+    const response = await this.highway.post(`vehicle`, vehicle);
     return response;
   };
 
