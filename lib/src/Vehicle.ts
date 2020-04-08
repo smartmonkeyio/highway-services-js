@@ -45,12 +45,16 @@ export class Vehicle {
     offset = 0,
     limit = 20,
     text = undefined,
+    sort = undefined,
   ): Promise<IPaginateResult<IVehicle>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
     if (text) {
       params.append(`text`, `${text}`);
+    }
+    if (sort) {
+      params.append(`sort`, `${sort}`);
     }
 
     const response = await this.highway.get(`vehicles?${params.toString()}`);

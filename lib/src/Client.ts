@@ -42,12 +42,16 @@ export class Client {
     offset = 0,
     limit = 20,
     text = undefined,
+    sort = undefined,
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
     if (text) {
       params.append(`text`, `${text}`);
+    }
+    if (sort) {
+      params.append(`sort`, `${sort}`);
     }
     const response = await this.highway.get(`clients?${params.toString()}`);
     return response;
