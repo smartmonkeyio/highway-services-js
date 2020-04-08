@@ -74,6 +74,7 @@ export class Client {
       default_assign_to: service.assign_to,
       default_volume: service.volume,
       default_weight: service.weight,
+      default_timewindows: service.timewindows,
     };
     return Object.entries(newClient).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
