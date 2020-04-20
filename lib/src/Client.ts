@@ -63,10 +63,11 @@ export class Client {
   };
 
   fromService = (service: IService): IClientData => {
-    const { label, location, tags, comments, phone, email, website } = service;
+    const { label, location, tags, comments, phone, email, website, location_details } = service;
     const newClient: IClientData = {
       label,
       location,
+      location_details,
       tags,
       comments,
       phone,

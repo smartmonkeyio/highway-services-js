@@ -15,6 +15,7 @@ export interface IClientData {
   deleted_at?: Date;
 
   location?: ILocation;
+  location_details?: string;
   label?: string;
   tags?: string[];
   icon?: string;
@@ -122,6 +123,7 @@ export interface IServiceData {
   icon?: string;
 
   location?: ILocation;
+  location_details?: string;
   label?: string;
   tags?: string[];
   comments?: string;

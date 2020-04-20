@@ -30,6 +30,7 @@ export class Service {
       label, location, tags, comments,
       phone, email, website, icon,
       client_id: id,
+      location_details: client.location_details,
       duration: client.default_duration,
       reward: client.default_reward,
       requires: client.default_requires,
