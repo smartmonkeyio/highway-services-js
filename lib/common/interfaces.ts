@@ -23,6 +23,7 @@ export interface IClientData {
   phone?: string;
   email?: string;
   website?: string;
+  reference_person?: string;
 
   default_duration?: number;
   default_reward?: number;
@@ -131,6 +132,7 @@ export interface IServiceData {
   phone?: string;
   email?: string;
   website?: string;
+  reference_person?: string;
 
   duration?: number;
   reward?: number;

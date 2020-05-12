@@ -25,10 +25,11 @@ export class Service {
   };
 
   fromClient = (client: IClient): IServiceData => {
-    const { id, external_id, icon, label, location, tags, comments, phone, email, website } = client;
+    const { id, external_id, icon, label, location, tags, comments, phone, email, website, reference_person } = client;
     const newService: IServiceData = {
       label, location, tags, comments,
       phone, email, website, icon,
+      reference_person,
       client_id: id,
       client_external_id: external_id,
       location_details: client.location_details,
