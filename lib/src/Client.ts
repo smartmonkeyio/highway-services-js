@@ -63,7 +63,7 @@ export class Client {
   };
 
   fromService = (service: IService): IClientData => {
-    const { label, location, tags, comments, phone, email, website, location_details } = service;
+    const { label, location, tags, comments, phone, email, website, location_details, client_external_id } = service;
     const newClient: IClientData = {
       label,
       location,
@@ -73,6 +73,7 @@ export class Client {
       phone,
       email,
       website,
+      external_id: client_external_id,
       default_reward: service.reward,
       default_requires: service.requires,
       default_cluster: service.cluster,

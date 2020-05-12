@@ -106,6 +106,7 @@ export interface IService extends IServiceData {
 export interface IServiceData {
   plan_id?: string;
   client_id?: string;
+  client_external_id?: string;
   user_id?: string;
   external_id?: string;
 
