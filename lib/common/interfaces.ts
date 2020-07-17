@@ -86,6 +86,7 @@ export interface IRouteData {
   brand?: string;
 
   timewindow?: [number, number];
+  max_distance?: number;
   max_weight?: number;
   max_volume?: number;
   max_services?: number;
@@ -173,6 +174,7 @@ export interface IVehicleData {
   brand?: string;
 
   default_timewindow?: [number, number];
+  default_max_distance?: number;
   default_max_weight?: number;
   default_max_volume?: number;
   default_start_location?: ILocation;
@@ -199,10 +201,7 @@ export interface ILocation {
 export interface IWebhook extends IWebhookData {
   id: string;
 }
-export type EventType =
-  `plan.created` |
-  `plan.deleted` |
-  `plan.updated`;
+export type EventType = `plan.created` | `plan.deleted` | `plan.updated`;
 
 export interface IWebhookData {
   enabled_events?: EventType[];

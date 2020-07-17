@@ -28,6 +28,7 @@ export class Route {
     const {
       default_end_location,
       default_start_location,
+      default_max_distance,
       default_max_volume,
       default_max_weight,
       default_provides,
@@ -40,12 +41,13 @@ export class Route {
       avatar,
       phone,
       label,
-      email
+      email,
     } = vehicle;
 
     return {
       start_location: default_start_location,
       end_location: default_end_location,
+      max_distance: default_max_distance,
       max_volume: default_max_volume,
       max_weight: default_max_weight,
       max_services: default_max_services,
@@ -59,7 +61,7 @@ export class Route {
       avatar,
       phone,
       label,
-      email
+      email,
     };
   };
 
