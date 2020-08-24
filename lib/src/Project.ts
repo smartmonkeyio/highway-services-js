@@ -1,4 +1,9 @@
-import { IProject, IProjectData } from "../common/interfaces";
+import {
+  IProject,
+  IProjectData,
+  IProjectUsers,
+  ProjectRoles,
+} from "../common/interfaces";
 import { Highway } from "./Highway";
 
 export class Project {
@@ -9,31 +14,49 @@ export class Project {
   }
 
   create = async (project: IProjectData): Promise<IProject> => {
-    const response = await this.highway.post(`project`, project);
-    return response;
+    return this.highway.post(`project`, project);
   };
 
   get = async (projectId: string): Promise<IProject> => {
-    const response = await this.highway.get(`project/${projectId}`);
-    return response;
+    return this.highway.get(`project/${projectId}`);
   };
 
-  getAll = async (): Promise<IProject> => {
-    const response = await this.highway.get(`projects`);
-    return response;
+  getAll = async (): Promise<IProject[]> => {
+    return this.highway.get(`projects`);
   };
 
   update = async (
     projectId: string,
     project: IProjectData
   ): Promise<IProject> => {
-    const response = await this.highway.put(`project/${projectId}`, project);
-    return response;
+    return this.highway.put(`project/${projectId}`, project);
   };
 
   delete = async (projectId: string): Promise<IProject> => {
-    const response = await this.highway.delete(`plan/${projectId}`);
-    return response;
+    return this.highway.delete(`project/${projectId}`);
+  };
+
+  getUsers = async (projectId: string): Promise<IProjectUsers[]> => {
+    return this.highway.get(`project/${projectId}/users`);
+  };
+
+  createUser = async (
+    projectId: string,
+    userData: IProjectUsers
+  ): Promise<IProject> => {
+    return this.highway.post(`project/${projectId}/users`, userData);
+  };
+
+  updateUser = async (
+    projectId: string,
+    userId: string,
+    userData: { role: ProjectRoles }
+  ): Promise<IProject> => {
+    return this.highway.put(`project/${projectId}/users/${userId}`, userData);
+  };
+
+  deleteUser = async (projectId: string, userId: string): Promise<IProject> => {
+    return this.highway.delete(`project/${projectId}/users/${userId}`);
   };
 
   // list = async (

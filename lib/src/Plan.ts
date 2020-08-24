@@ -15,9 +15,10 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (projectId: string, plan: IPlanData): Promise<IPlan> => {
-    const response = await this.highway.post(`plan?plan_id=${projectId}`, plan);
-    return response;
+  create = async (planData: IPlanData, projectId?: string): Promise<IPlan> => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`plan?${params.toString()}`, planData);
   };
 
   // createMany = async (arrayPlans: Array<IPlanData>) => {
@@ -41,6 +42,7 @@ export class Plan {
   };
 
   list = async (
+    projectId?: string,
     text = undefined,
     status = undefined,
     fromDate = undefined,
@@ -50,6 +52,10 @@ export class Plan {
     limit = 20
   ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
+    if (projectId) {
+      params.append(`project_id`, projectId);
+    }
+
     if (text) {
       params.append(`text`, `${text}`);
     }

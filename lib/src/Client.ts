@@ -1,8 +1,8 @@
 import {
-  IClientData,
   IClient,
+  IClientData,
   IPaginateResult,
-  IService
+  IService,
 } from "../common/interfaces";
 import { Highway } from "./Highway";
 
@@ -13,38 +13,47 @@ export class Client {
     this.highway = hw;
   }
 
-  create = async (client: IClientData): Promise<IClient> => {
-    const response = await this.highway.post(`client`, client);
-    return response;
+  create = async (
+    client: IClientData,
+    projectId?: string
+  ): Promise<IClient> => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`client?${params.toString()}`, client);
   };
 
-  createMany = async (arrayClients: IClientData[]): Promise<IClient[]> => {
-    const response = await this.highway.post(`clients`, arrayClients);
-    return response;
+  createMany = async (
+    arrayClients: IClientData[],
+    projectId?: string
+  ): Promise<IClient[]> => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`clients?${params.toString()}`, arrayClients);
   };
 
   update = async (clientId: string, client: IClientData): Promise<IClient> => {
-    const response = await this.highway.put(`client/${clientId}`, client);
-    return response;
+    return this.highway.put(`client/${clientId}`, client);
   };
 
   delete = async (clientId: string): Promise<IClient> => {
-    const response = await this.highway.delete(`client/${clientId}`);
-    return response;
+    return this.highway.delete(`client/${clientId}`);
   };
 
   get = async (clientId: string): Promise<IClient> => {
-    const response = await this.highway.get(`client/${clientId}`);
-    return response;
+    return this.highway.get(`client/${clientId}`);
   };
 
   list = async (
+    projectId?: string,
     offset = 0,
     limit = 20,
     text = undefined,
-    sort = undefined,
+    sort = undefined
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
+    if (text) {
+      params.append(`project_id`, `${projectId}`);
+    }
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
     if (text) {
@@ -53,17 +62,28 @@ export class Client {
     if (sort) {
       params.append(`sort`, `${sort}`);
     }
-    const response = await this.highway.get(`clients?${params.toString()}`);
-    return response;
+    return this.highway.get(`clients?${params.toString()}`);
   };
 
-  listFlat = async () => {
-    const response = await this.highway.get(`clients/flat`);
-    return response;
+  listFlat = async (projectId?: string) => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.get(`clients/flat?${params.toString()}`);
   };
 
   fromService = (service: IService): IClientData => {
-    const { label, location, tags, comments, phone, email, website, location_details, client_external_id, reference_person } = service;
+    const {
+      label,
+      location,
+      tags,
+      comments,
+      phone,
+      email,
+      website,
+      location_details,
+      client_external_id,
+      reference_person,
+    } = service;
     const newClient: IClientData = {
       label,
       location,
@@ -85,7 +105,7 @@ export class Client {
     };
     return Object.entries(newClient).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
-      {},
+      {}
     );
   };
 }

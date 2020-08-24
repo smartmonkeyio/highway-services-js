@@ -1,8 +1,8 @@
 import {
   IPaginateResult,
-  IVehicle,
   IRoute,
-  IVehicleData
+  IVehicle,
+  IVehicleData,
 } from "../common/interfaces";
 import { Highway } from "./Highway";
 
@@ -13,41 +13,50 @@ export class Vehicle {
     this.highway = hw;
   }
 
-  create = async (vehicle: IVehicleData): Promise<IVehicle> => {
-    const response = await this.highway.post(`vehicle`, vehicle);
-    return response;
+  create = async (
+    vehicleData: IVehicleData,
+    projectId?: string
+  ): Promise<IVehicle> => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`vehicle?${params.toString()}`, vehicleData);
   };
 
-  createMany = async (arrayServices: IVehicleData[]): Promise<IVehicle[]> => {
-    const response = await this.highway.post(`vehicles`, arrayServices);
-    return response;
+  createMany = async (
+    arrayServices: IVehicleData[],
+    projectId?: string
+  ): Promise<IVehicle[]> => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`vehicles?${params.toString()}`, arrayServices);
   };
 
   update = async (
     vehicleId: string,
-    vehicle: IVehicleData,
+    vehicle: IVehicleData
   ): Promise<IVehicle> => {
-    const response = await this.highway.put(`vehicle/${vehicleId}`, vehicle);
-    return response;
+    return this.highway.put(`vehicle/${vehicleId}`, vehicle);
   };
 
   delete = async (vehicleId: string): Promise<IVehicle> => {
-    const response = await this.highway.delete(`vehicle/${vehicleId}`);
-    return response;
+    return this.highway.delete(`vehicle/${vehicleId}`);
   };
 
   get = async (vehicleID: string): Promise<IVehicle> => {
-    const response = await this.highway.get(`vehicle/${vehicleID}`);
-    return response;
+    return this.highway.get(`vehicle/${vehicleID}`);
   };
 
   list = async (
+    projectId?: string,
     offset = 0,
     limit = 20,
     text = undefined,
-    sort = undefined,
+    sort = undefined
   ): Promise<IPaginateResult<IVehicle>> => {
     const params = new URLSearchParams();
+    if (projectId) {
+      params.append(`project_id`, `${projectId}`);
+    }
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
     if (text) {
@@ -57,13 +66,13 @@ export class Vehicle {
       params.append(`sort`, `${sort}`);
     }
 
-    const response = await this.highway.get(`vehicles?${params.toString()}`);
-    return response;
+    return this.highway.get(`vehicles?${params.toString()}`);
   };
 
-  listFlat = async () => {
-    const response = await this.highway.get(`vehicles/flat`);
-    return response;
+  listFlat = async (projectId?: string) => {
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.get(`vehicles/flat?${params.toString()}`);
   };
 
   /**
@@ -107,7 +116,7 @@ export class Vehicle {
     };
     return Object.entries(newVehicle).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),
-      {},
+      {}
     );
   };
 }

@@ -7,37 +7,133 @@ export interface IHighwayOptions {
 }
 
 export interface IProjectSchema extends IProjectData {
-  // id: string;
-  // services_count: number;
-  // routes_count: number;
+  id: string;
 }
 
 export interface IProject extends IProjectData {
-  // id: string;
-  // services: IService[];
-  // routes: IRoute[];
+  id: string;
 }
+
+export enum ProjectRoles {
+  project_manager = `project_manager`,
+  project_user = `project_user`,
+}
+
+export interface IProjectUsers {
+  user_id: string;
+  role: ProjectRoles;
+}
+
+interface IProjectVehiclePreferences {
+  external_id: boolean;
+  comments: boolean;
+  plate: boolean;
+  phone: boolean;
+  email: boolean;
+  webpage: boolean;
+}
+
+interface IProjectClientPreferences {
+  external_id: boolean;
+  location_details: boolean;
+  comments: boolean;
+  reference_person: boolean;
+  phone: boolean;
+  webpage: boolean;
+}
+
+interface IProjectConstraintsPreferences {
+  distance: boolean;
+  weight: boolean;
+  volume: boolean;
+  timewindows: boolean;
+  provide_requires: boolean;
+  max_services: boolean;
+  pickups: boolean;
+}
+
+interface IProjectWebAppPreferences extends IProjectClientPreferences {}
+
+export interface IProjectView {
+  constraints: IProjectConstraintsPreferences;
+  vehicle: IProjectVehiclePreferences;
+  client: IProjectClientPreferences;
+  webapp: IProjectWebAppPreferences;
+}
+
+export type DistanceType = `km` | `mi`;
+export type WeightType = `kg` | `lb`;
+
+export interface IProjectUnits {
+  distance: DistanceType;
+  weight: WeightType;
+}
+
+export interface IProjectProofOfDelivery {
+  rejected_enabled?: boolean;
+  accepted_enabled?: boolean;
+  comments?: boolean;
+  signature?: boolean;
+  pictures?: boolean;
+  rejected_categorical?: boolean;
+}
+
 export interface IProjectData {
-  // unit_id?: string;
-  // _version?: number;
-  // user_id?: string;
-  // created_at?: Date;
-  // updated_at?: Date;
-  // deleted_at?: Date;
-  // date_start?: Date;
-  // date_end?: Date;
-  // single_day?: boolean;
-  // tags?: string[];
-  // label?: string;
-}
+  label?: string;
+  organization_id?: string;
+  users?: IProjectUsers[];
 
-export interface IClientData {
-  user_id?: string;
-  external_id?: string;
+  view?: IProjectView;
+  optimizer_config?: IOptimizerConfig;
+  units?: IProjectUnits;
+  pod?: IProjectProofOfDelivery;
 
+  created_by?: string;
   created_at?: Date;
   updated_at?: Date;
   deleted_at?: Date;
+}
+
+export type LocalSearchMetaheuristic =
+  | `AUTOMATIC`
+  | `GREEDY_DESCENT`
+  | `GUIDED_LOCAL_SEARCH`
+  | `SIMULATED_ANNEALING`
+  | `TABU_SEARCH`;
+
+export type FirstSolutionStrategy =
+  | `AUTOMATIC`
+  | `PATH_CHEAPEST_ARC`
+  | `PATH_MOST_CONSTRAINED_ARC`
+  | `EVALUATOR_STRATEGY`
+  | `SAVINGS`
+  | `SWEEP`
+  | `CHRISTOFIDES`
+  | `ALL_UNPERFORMED`
+  | `BEST_INSERTION`
+  | `PARALLEL_CHEAPEST_INSERTION`
+  | `LOCAL_CHEAPEST_INSERTION`
+  | `GLOBAL_CHEAPEST_ARC`
+  | `LOCAL_CHEAPEST_ARC`
+  | `FIRST_UNBOUND_MIN_VALUE`;
+
+export interface IOptimizerConfig {
+  max_wait_time?: number;
+  matrix_multiplier?: number;
+  first_solution_strategy?: FirstSolutionStrategy;
+  local_search_strategy?: LocalSearchMetaheuristic;
+  time_limit_seconds?: number;
+  lns_time_limit?: number;
+  skip_penalty?: number;
+  balance_services?: boolean;
+  service_duration?: number;
+  operation_country?: string;
+}
+
+export interface IClientData {
+  organization_id?: string;
+  project_id?: string;
+  external_id?: string;
 
   location?: ILocation;
   location_details?: string;
@@ -58,6 +154,11 @@ export interface IClientData {
   default_timewindows?: [[number, number]];
   default_volume?: number;
   default_weight?: number;
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
 export interface IClient extends IClientData {
   id: string;
@@ -74,32 +175,42 @@ export interface IPlan extends IPlanData {
   services: IService[];
   routes: IRoute[];
 }
+
+export type PlanStatusType = `planning` | `in_progress` | `finished`;
+
 export interface IPlanData {
+  project_id?: string;
   unit_id?: string;
   _version?: number;
-  user_id?: string;
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
   date_start?: Date;
   date_end?: Date;
   single_day?: boolean;
   tags?: string[];
   label?: string;
+
+  external_id?: string;
+  status?: PlanStatusType;
+  start_date?: Date;
+  end_date?: Date;
+
+  optimizer_config?: IOptimizerConfig;
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
+
 export interface IRoute extends IRouteData {
   id: string;
   services: IService[];
 }
+
 export interface IRouteData {
-  user_id?: string;
+  project_id?: string;
   external_id?: string;
   plan_id?: string;
   vehicle_id?: string;
-
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
 
   label?: string;
   phone?: string;
@@ -125,16 +236,21 @@ export interface IRouteData {
   feedback_images?: string[];
   feedback_comments?: string;
   feedback_duration?: number;
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
 
 export interface IService extends IServiceData {
   id: string;
 }
 export interface IServiceData {
+  project_id?: string;
   plan_id?: string;
   client_id?: string;
   client_external_id?: string;
-  user_id?: string;
   external_id?: string;
 
   route_id?: string;
@@ -142,12 +258,6 @@ export interface IServiceData {
   planned_arrival_time?: number;
   planned_departure_time?: number;
 
-  //icon Icon
-
-  created_at?: Date;
-  up?: Date;
-  d_at?: Date;
-  deleted_at?: Date;
   icon?: string;
 
   location?: ILocation;
@@ -175,19 +285,25 @@ export interface IServiceData {
   feedback_comments?: string;
   feedback_duration?: number;
   feedback_rejection_reason?: string;
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+
+  // AIXÒ QUE COI FA??????
+  // up?: Date;
+  // d_at?: Date;
 }
 
 export interface IVehicle extends IVehicleData {
   id: string;
 }
 export interface IVehicleData {
-  user_id?: string;
+  organization_id?: string;
+  project_id?: string;
   external_id?: string;
   unit_id?: string;
-
-  created_at?: Date;
-  updated_at?: Date;
-  deleted_at?: Date;
 
   label?: string;
   phone?: string;
@@ -206,6 +322,11 @@ export interface IVehicleData {
   default_end_location?: ILocation;
   default_provides?: string[];
   default_max_services?: number;
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
 
 export interface ILocation {

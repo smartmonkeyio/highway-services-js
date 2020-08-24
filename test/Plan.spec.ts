@@ -7,19 +7,31 @@ import * as common from "./common";
 
 describe(`Test Plans API`, () => {
   let highway: Highway;
+  let allProjectIds: string[] = [];
   const allPlanIds: string[] = [];
   let plan: any;
-  before(() => {
+
+  before(async () => {
     highway = createHighway(common.key);
+    allProjectIds = (await highway.project.getAll()).map(
+      (project) => project.id
+    );
   });
   describe(`Basic Plan CRUD`, () => {
-    // it(`it should create a new Plan`, async () => {
-    //   plan = await highway.plan.create({});
-    //   assert.strictEqual(plan._version, 1);
-    //   assert.strictEqual(plan.label, undefined);
-    //   assert.notStrictEqual(plan.created_at, undefined);
-    //   allPlanIds.push(plan.id);
-    // });
+    it(`it should create a new Plan`, async () => {
+      plan = await highway.plan.create({});
+      assert.strictEqual(plan._version, 1);
+      assert.strictEqual(plan.label, undefined);
+      assert.notStrictEqual(plan.created_at, undefined);
+      allPlanIds.push(plan.id);
+    });
+    it(`it should create a new Plan with project id`, async () => {
+      plan = await highway.plan.create({}, allProjectIds[0]);
+      assert.strictEqual(plan._version, 1);
+      assert.strictEqual(plan.label, undefined);
+      assert.notStrictEqual(plan.created_at, undefined);
+      allPlanIds.push(plan.id);
+    });
     it(`it should be able to retrieve the recently created plan`, async () => {
       plan = await highway.plan.get(allPlanIds[0]);
       assert.strictEqual(plan._version, 1);
@@ -52,8 +64,8 @@ describe(`Test Plans API`, () => {
       assert.strictEqual(plan.services.length, 2);
     });
     it(`Must retrieve the list of plans`, async () => {
-      const planList = await highway.plan.list();
-      assert.strictEqual(planList.docs.length, 1);
+      const planList = await highway.plan.list(allProjectIds[0]);
+      assert.strictEqual(planList.docs.length, 2);
       assert.strictEqual(planList.offset, 0);
       assert.strictEqual(planList.limit, 20);
     });

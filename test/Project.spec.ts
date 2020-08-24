@@ -7,74 +7,109 @@ import * as common from "./common";
 
 describe(`Test Projects API`, () => {
   let highway: Highway;
-  const allProjectsIds: string[] = [];
   let project: any;
-  before(() => {
+  let projectName: string;
+  const allProjectsIds: string[] = [];
+  before(async () => {
     highway = createHighway(common.key);
+
+    // First of all remove all the previow projects.
+    const projects = await highway.project.getAll();
+    await Promise.all(
+      projects.map(async (val) => {
+        try {
+          await highway.project.delete(val.id);
+        } catch (_) {
+          console.log(`Default project could not be removed. Avoiding this.`);
+        }
+      })
+    );
   });
   describe(`Basic Project CRUD`, async () => {
     it(`it should create a new Project`, async function () {
       this.timeout(10000);
 
-      console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA A`);
-
-      const projectName = `test`;
-
+      projectName = `test`;
       project = await highway.project.create({ label: projectName });
-
-      console.log(`AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA B`);
-
-      console.log(project);
-
       assert.strictEqual(project.label, projectName);
       assert.notStrictEqual(project.created_at, undefined);
       allProjectsIds.push(project.id);
     });
-    // it(`it should be able to retrieve the recently created plan`, async () => {
-    //   plan = await highway.plan.get(allPlanIds[0]);
-    //   assert.strictEqual(plan._version, 1);
-    //   assert.strictEqual(plan.label, undefined);
-    //   assert.notStrictEqual(plan.created_at, undefined);
+    it(`it should be able to retrieve the recently created project`, async () => {
+      project = await highway.project.get(allProjectsIds[0]);
+      assert.strictEqual(project.label, projectName);
+      assert.notStrictEqual(project.created_at, undefined);
+    });
+    it(`it should be able to update the project`, async () => {
+      const newProjectName = `manolo`;
+      project = await highway.project.update(allProjectsIds[0], {
+        label: newProjectName,
+      });
+      assert.strictEqual(project.label, newProjectName);
+    });
+    it(`Must retrieve the list of user projects`, async () => {
+      const projects = await highway.project.getAll();
+      assert.strictEqual(projects.length, 2);
+    });
+    it(`Should be able to remove all previously created projects`, async () => {
+      const promises = await Promise.all(
+        allProjectsIds.map(async (val) => {
+          const project = await highway.project.delete(val);
+          assert.notStrictEqual(project.deleted_at, undefined);
+        })
+      );
+      assert.strictEqual(promises.length, allProjectsIds.length);
+    });
+  });
+  describe(`Basic Project Users CRUD`, async () => {
+    let projectId: string;
+    before(async function () {
+      this.timeout(10000);
+      projectName = `test`;
+      const project = await highway.project.create({ label: projectName });
+      projectId = project.id;
+    });
+    it(`it should be able to retrieve all the project users`, async () => {
+      const projectUsers = await highway.project.getUsers(projectId);
+      assert.strictEqual(projectUsers.length, 1);
+    });
+
+    // The above tests could not work because we can't create users from API.
+
+    // it(`it should be able to create a project user`, async () => {
+    //   // TESTS SHOULD BE ABLE TO CREATE USERS
+
+    //   project = await highway.project.createUser(projectId, {
+    //     user_id: `asdqwe123`,
+    //     role: ProjectRoles.project_user,
+    //   });
+    //   const projectUsers = await highway.project.getUsers(projectId);
+
+    //   console.log(`projectUsers`, projectUsers);
+
+    //   assert.strictEqual(projectUsers.length, 2);
     // });
-    // it(`it should be able to update the plan`, async () => {
-    //   plan = await highway.plan.update(allPlanIds[0], { label: `manolo` });
-    //   assert.strictEqual(plan._version, 1);
-    //   assert.strictEqual(plan.label, `manolo`);
+    // it(`it should be able to update the user project`, async () => {
+    //   // UPDATE user that we have created at the last test.
+
+    //   project = await highway.project.updateUser(projectId, `asdqwe123`, {
+    //     role: ProjectRoles.project_user,
+    //   });
+    //   const projectUsers = await highway.project.getUsers(projectId);
+
+    //   console.log(`projectUsers`, projectUsers);
+
+    //   assert.strictEqual(projectUsers.length, 2);
     // });
-    // it(`Optimize must do nothig with an empty list`, async () => {
-    //   plan = await highway.plan.optimize(allPlanIds[0]);
-    //   assert.strictEqual(plan._version, 1);
-    //   assert.strictEqual(plan.label, `manolo`);
-    //   assert.strictEqual(plan.services.length, 0);
-    //   assert.strictEqual(plan.routes.length, 0);
-    // });
-    // it(`Must be able to create services for a plan`, async () => {
-    //   plan = await highway.plan.addServices(allPlanIds[0], [{}, {}]);
-    //   assert.strictEqual(plan.services.length, 2);
-    // });
-    // it(`Must be able to create routes for a plan`, async () => {
-    //   plan = await highway.plan.addRoutes(allPlanIds[0], [{}, {}]);
-    //   assert.strictEqual(plan.routes.length, 2);
-    // });
-    // it(`Must be able to optimize routes of the current plan`, async () => {
-    //   plan = await highway.plan.optimize(allPlanIds[0]);
-    //   assert.strictEqual(plan.routes.length, 2);
-    //   assert.strictEqual(plan.services.length, 2);
-    // });
-    // it(`Must retrieve the list of plans`, async () => {
-    //   const planList = await highway.plan.list();
-    //   assert.strictEqual(planList.docs.length, 1);
-    //   assert.strictEqual(planList.offset, 0);
-    //   assert.strictEqual(planList.limit, 20);
-    // });
-    // it(`Should be able to remove all previously created plans`, async () => {
-    //   const promises = await Promise.all(
-    //     allPlanIds.map(async (val) => {
-    //       const client = await highway.plan.delete(val);
-    //       assert.notStrictEqual(client.deleted_at, undefined);
-    //     })
-    //   );
-    //   assert.strictEqual(promises.length, allPlanIds.length);
+    // it(`it should be able to delete a project user`, async () => {
+    //   // DELETE user that we have created at the last test.
+
+    //   project = await highway.project.deleteUser(projectId, `asdqwe123`);
+    //   const projectUsers = await highway.project.getUsers(projectId);
+
+    //   console.log(`projectUsers`, projectUsers);
+
+    //   assert.strictEqual(projectUsers.length, 2);
     // });
   });
 });
