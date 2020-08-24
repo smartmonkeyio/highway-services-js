@@ -1,10 +1,10 @@
 import {
-  IPlanData,
-  IPlan,
-  IServiceData,
-  IRouteData,
   IPaginateResult,
-  IPlanSchema
+  IPlan,
+  IPlanData,
+  IPlanSchema,
+  IRouteData,
+  IServiceData,
 } from "../common/interfaces";
 import { Highway } from "./Highway";
 
@@ -15,8 +15,8 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (plan: IPlanData): Promise<IPlan> => {
-    const response = await this.highway.post(`plan`, plan);
+  create = async (projectId: string, plan: IPlanData): Promise<IPlan> => {
+    const response = await this.highway.post(`plan?plan_id=${projectId}`, plan);
     return response;
   };
 
@@ -47,14 +47,24 @@ export class Plan {
     toDate = undefined,
     sort = undefined,
     offset = 0,
-    limit = 20,
+    limit = 20
   ): Promise<IPaginateResult<IPlanSchema>> => {
     const params = new URLSearchParams();
-    if (text) { params.append(`text`, `${text}`); }
-    if (status) { params.append(`status`, `${status}`); }
-    if (fromDate) { params.append(`fromDate`, `${fromDate}`); }
-    if (toDate) { params.append(`toDate`, `${toDate}`); }
-    if (sort) { params.append(`sort`, `${sort}`); }
+    if (text) {
+      params.append(`text`, `${text}`);
+    }
+    if (status) {
+      params.append(`status`, `${status}`);
+    }
+    if (fromDate) {
+      params.append(`fromDate`, `${fromDate}`);
+    }
+    if (toDate) {
+      params.append(`toDate`, `${toDate}`);
+    }
+    if (sort) {
+      params.append(`sort`, `${sort}`);
+    }
     params.append(`offset`, `${offset}`);
     params.append(`limit`, `${limit}`);
 
@@ -69,7 +79,7 @@ export class Plan {
 
   addServices = async (
     planId: string,
-    services: IServiceData[],
+    services: IServiceData[]
   ): Promise<IPlan> => {
     await this.highway.service.createMany(planId, services);
     const response = await this.get(planId);

@@ -6,6 +6,31 @@ export interface IHighwayOptions {
   };
 }
 
+export interface IProjectSchema extends IProjectData {
+  // id: string;
+  // services_count: number;
+  // routes_count: number;
+}
+
+export interface IProject extends IProjectData {
+  // id: string;
+  // services: IService[];
+  // routes: IRoute[];
+}
+export interface IProjectData {
+  // unit_id?: string;
+  // _version?: number;
+  // user_id?: string;
+  // created_at?: Date;
+  // updated_at?: Date;
+  // deleted_at?: Date;
+  // date_start?: Date;
+  // date_end?: Date;
+  // single_day?: boolean;
+  // tags?: string[];
+  // label?: string;
+}
+
 export interface IClientData {
   user_id?: string;
   external_id?: string;

@@ -1,9 +1,9 @@
-import { Highway } from "./src/Highway";
 import { IHighwayOptions } from "./common/interfaces";
+import { Highway } from "./src/Highway";
 
 export function createHighway(
   apiKey: string,
-  options?: IHighwayOptions,
+  options?: IHighwayOptions
 ): Highway {
   return new Highway(apiKey, options || {});
 }
