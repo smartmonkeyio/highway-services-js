@@ -51,7 +51,7 @@ export class Client {
     sort = undefined
   ): Promise<IPaginateResult<IClient>> => {
     const params = new URLSearchParams();
-    if (text) {
+    if (projectId) {
       params.append(`project_id`, `${projectId}`);
     }
     params.append(`offset`, `${offset}`);

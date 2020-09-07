@@ -85,7 +85,7 @@ describe(`Test Vehicles API`, () => {
     });
     it(`Should be able to retrieve a flat list of vehicles`, async () => {
       const clients = await highway.vehicle.listFlat(allProjectIds[0]);
-      assert.strictEqual(clients.length, 7);
+      assert.strictEqual(clients.length, 4);
     });
     it(`Should be able to update a vehicle`, async () => {
       const vehicle = await highway.vehicle.update(allVehicleIds[2], {

@@ -69,6 +69,12 @@ describe(`Test Plans API`, () => {
       assert.strictEqual(planList.offset, 0);
       assert.strictEqual(planList.limit, 20);
     });
+    it(`Must retrieve the list of plans without setting the project id`, async () => {
+      const planList = await highway.plan.list();
+      assert.strictEqual(planList.docs.length, 2);
+      assert.strictEqual(planList.offset, 0);
+      assert.strictEqual(planList.limit, 20);
+    });
     it(`Should be able to remove all previously created plans`, async () => {
       const promises = await Promise.all(
         allPlanIds.map(async (val) => {
