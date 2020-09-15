@@ -1,6 +1,7 @@
 import {
   IProject,
   IProjectData,
+  IProjectResources,
   IProjectUsers,
   ProjectRoles,
 } from "../common/interfaces";
@@ -45,6 +46,12 @@ export class Project {
     userData: IProjectUsers
   ): Promise<IProject> => {
     return this.highway.post(`project/${projectId}/users`, userData);
+  };
+
+  updateProjectsResources = async (
+    projectsResources: IProjectResources[]
+  ): Promise<IProject[]> => {
+    return this.highway.put(`projects`, projectsResources);
   };
 
   updateUser = async (

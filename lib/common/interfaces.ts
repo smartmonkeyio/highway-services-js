@@ -6,6 +6,15 @@ export interface IHighwayOptions {
   };
 }
 
+interface IProjectLimitsEdit {
+  max_vehicles: number;
+}
+
+export interface IProjectResources {
+  id: string;
+  limits: IProjectLimitsEdit;
+}
+
 export interface IProjectSchema extends IProjectData {
   id: string;
 }
