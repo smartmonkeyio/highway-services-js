@@ -82,6 +82,11 @@ export class Plan {
     const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
+  
+  optimizeAsync = async (planId: string): Promise<IPlan> => {
+    const response = await this.highway.post(`plan/${planId}/optimize/async`);
+    return response;
+  };
 
   addServices = async (
     planId: string,
