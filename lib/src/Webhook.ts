@@ -8,18 +8,11 @@ export class Webhook {
     this.highway = hw;
   }
 
-  create = async (webhook: IWebhookData) => {
-    const response = await this.highway.post(`/webhook`, webhook);
-    return response;
-  };
-
-  createMany = async (arrayServices: IWebhookData[]) => {
-    const response = await this.highway.post(`/webhooks`, arrayServices);
-    return response;
-  };
-
-  update = async (webhookId: string, webhook: IWebhookData) => {
-    const response = await this.highway.put(`/webhook/${webhookId}`, webhook);
+  create = async (webhook: IWebhookData, projectId?: string) => {
+    const response = await this.highway.post(
+      `/webhook${projectId ? `?project_id=${projectId}` : ``}`,
+      webhook
+    );
     return response;
   };
 
@@ -28,8 +21,10 @@ export class Webhook {
     return response;
   };
 
-  get = async (webhookID: string) => {
-    const response = await this.highway.get(`/webhook/${webhookID}`);
+  getAll = async (projectId?: string) => {
+    const response = await this.highway.get(
+      `/webhook${projectId ? `?project_id=${projectId}` : ``}`
+    );
     return response;
   };
 }
