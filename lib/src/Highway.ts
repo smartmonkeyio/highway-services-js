@@ -8,6 +8,7 @@ import { Project } from "./Project";
 import { Route } from "./Route";
 import { Service } from "./Service";
 import { Vehicle } from "./Vehicle";
+import { Webhook } from "./Webhook";
 
 export class Highway {
   private _token?: string;
@@ -17,6 +18,7 @@ export class Highway {
 
   project: Project;
   client: Client;
+  webhook: Webhook;
   plan: Plan;
   route: Route;
   service: Service;
@@ -27,6 +29,7 @@ export class Highway {
     this._apiKey = apiKey;
     this.project = new Project(this);
     this.client = new Client(this);
+    this.webhook = new Webhook(this);
     this.plan = new Plan(this);
     this.route = new Route(this);
     this.service = new Service(this);
