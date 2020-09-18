@@ -10,20 +10,20 @@ export class Webhook {
 
   create = async (webhook: IWebhookData, projectId?: string) => {
     const response = await this.highway.post(
-      `/webhook${projectId ? `?project_id=${projectId}` : ``}`,
+      `webhook${projectId ? `?project_id=${projectId}` : ``}`,
       webhook
     );
     return response;
   };
 
   delete = async (webhookId: string) => {
-    const response = await this.highway.delete(`/webhook/${webhookId}`);
+    const response = await this.highway.delete(`webhook/${webhookId}`);
     return response;
   };
 
   getAll = async (projectId?: string) => {
     const response = await this.highway.get(
-      `/webhook${projectId ? `?project_id=${projectId}` : ``}`
+      `webhook${projectId ? `?project_id=${projectId}` : ``}`
     );
     return response;
   };
