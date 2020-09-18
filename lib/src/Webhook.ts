@@ -9,11 +9,9 @@ export class Webhook {
   }
 
   create = async (webhook: IWebhookData, projectId?: string) => {
-    const response = await this.highway.post(
-      `webhook${projectId ? `?project_id=${projectId}` : ``}`,
-      webhook
-    );
-    return response;
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.post(`webhook?${params.toString()}`, webhook);
   };
 
   delete = async (webhookId: string) => {
@@ -22,9 +20,8 @@ export class Webhook {
   };
 
   getAll = async (projectId?: string) => {
-    const response = await this.highway.get(
-      `webhook${projectId ? `?project_id=${projectId}` : ``}`
-    );
-    return response;
+    const params = new URLSearchParams();
+    if (projectId) params.append(`project_id`, `${projectId}`);
+    return this.highway.get(`webhooks?${params.toString()}`);
   };
 }
