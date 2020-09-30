@@ -41,7 +41,8 @@ export class Highway {
   private _request = async (
     method: (url: string, data: any, headers?: any) => Promise<any>,
     url: string,
-    data?: any
+    data?: any,
+    headers?: any
   ) => {
     try {
       if (data) {
@@ -55,6 +56,7 @@ export class Highway {
                 ...(this.queryParams ? this.queryParams : {}),
               },
               headers: {
+                ...headers,
                 ...(!this._apiKey
                   ? { Authorization: `Bearer ${this._token}` }
                   : {}),
@@ -70,6 +72,7 @@ export class Highway {
               ...(this.queryParams ? this.queryParams : {}),
             },
             headers: {
+              ...headers,
               ...(!this._apiKey
                 ? { Authorization: `Bearer ${this._token}` }
                 : {}),
@@ -94,20 +97,20 @@ export class Highway {
     }
   };
 
-  post = async (url: string, data?: any) => {
-    return this._request(axios.post, url, data || {});
+  post = async (url: string, data: any = {}, headers: any = {}) => {
+    return this._request(axios.post, url, data, headers);
   };
 
-  get = async (url: string) => {
-    return this._request(axios.get, url);
+  get = async (url: string, headers: any = {}) => {
+    return this._request(axios.get, url, undefined, headers);
   };
 
-  delete = async (url: string) => {
-    return this._request(axios.delete, url);
+  delete = async (url: string, headers: any = {}) => {
+    return this._request(axios.delete, url, undefined, headers);
   };
 
-  put = async (url: string, data?: any) => {
-    return this._request(axios.put, url, data || {});
+  put = async (url: string, data: any = {}, headers: any = {}) => {
+    return this._request(axios.put, url, data, headers);
   };
 
   get apiKey(): string {

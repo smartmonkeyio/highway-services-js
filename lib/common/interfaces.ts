@@ -21,6 +21,7 @@ export interface IProjectSchema extends IProjectData {
 
 export interface IProject extends IProjectData {
   id: string;
+  avatar?: string;
 }
 
 export enum ProjectRoles {
@@ -87,15 +88,30 @@ export interface IProjectProofOfDelivery {
   rejected_categorical?: boolean;
 }
 
+export interface IProjectAllCustomField {
+  client: IProjectCustomField[];
+  vehicle: IProjectCustomField[];
+  webapp: IProjectCustomField[];
+}
+
+export interface IProjectLimits {
+  max_vehicles: number;
+  max_clients: number;
+  max_services_plan: number;
+}
+
 export interface IProjectData {
   label?: string;
-  organization_id?: string;
+  location?: ILocation;
+  description?: string;
   users?: IProjectUsers[];
 
   view?: IProjectView;
   optimizer_config?: IOptimizerConfig;
   units?: IProjectUnits;
   pod?: IProjectProofOfDelivery;
+
+  limits?: IProjectLimits;
 
   created_by?: string;
   created_at?: Date;
@@ -371,3 +387,30 @@ export interface IPaginateResult<T> {
   pages?: number;
   offset?: number;
 }
+
+export type CustomFieldValueTypes =
+  | `text`
+  | `boolean`
+  | `numerical`
+  | `categorical`;
+
+export interface ICategoricalOptions {
+  id: string;
+  label: string;
+}
+
+export interface IProjectCustomField {
+  id: string;
+  label: string;
+  type: CustomFieldValueTypes;
+  // optional?: boolean; // NOT YET!
+  multiple?: boolean;
+  options?: ICategoricalOptions[];
+}
+
+export interface IPutProjectCustomFieldPayload {
+  label?: string;
+  order?: number;
+}
+
+export type CustomFieldTypes = `client` | `vehicle` | `webapp`;

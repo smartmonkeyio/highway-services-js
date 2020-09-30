@@ -1,9 +1,15 @@
 "use strict";
 import * as assert from "assert";
+import FormData from "form-data";
+import {
+  IProjectCustomField,
+  IPutProjectCustomFieldPayload,
+} from "../lib/common/interfaces";
 import { createHighway } from "../lib/index";
 import { Highway } from "../lib/src/Highway";
 //import * as loader from "./loader";
 import * as common from "./common";
+import * as storageLoader from "./loaders/storage.loader";
 
 describe(`Test Projects API`, () => {
   let highway: Highway;
@@ -111,5 +117,110 @@ describe(`Test Projects API`, () => {
 
     //   assert.strictEqual(projectUsers.length, 2);
     // });
+  });
+
+  describe(`Basic Project Avatar CRUD`, async () => {
+    let project: any;
+    let uploadData: any;
+    it(`it should create a new project avatar`, async function () {
+      this.timeout(10000);
+
+      project = await highway.project.create({ label: `Test Project` });
+
+      const binaryData = storageLoader.files.imgMedium.toString(`binary`);
+
+      const formData = new FormData();
+      formData.append(`data`, binaryData);
+      formData.append(`name`, `text.txt`);
+      formData.append(`mime`, `image/jpeg`);
+      uploadData = await highway.project.createAvatar(project.id, formData);
+
+      const projectUpdated = await highway.project.get(project.id);
+      assert.notStrictEqual(projectUpdated.avatar, undefined);
+    });
+
+    it(`it should delete a project avatar`, async function () {
+      this.timeout(10000);
+      project = await highway.project.deleteAvatar(project.id, uploadData.id);
+      assert.strictEqual(project.avatar, undefined);
+    });
+  });
+
+  describe(`Basic Project Custom Fields CRUD`, async () => {
+    let project: any;
+    let customField: IProjectCustomField;
+    it(`it should create a new project custom field`, async function () {
+      this.timeout(10000);
+
+      project = await highway.project.create({ label: `Test Project` });
+
+      customField = {
+        id: `my2_custom_field`,
+        label: `My custom field`,
+        type: `text`,
+      };
+
+      project = await highway.project.createCustomField(
+        project.id,
+        `webapp`,
+        customField
+      );
+
+      assert.deepStrictEqual(project.custom_fields, {
+        client: [],
+        vehicle: [],
+        webapp: [
+          {
+            id: customField.id,
+            label: customField.label,
+            type: customField.type,
+          },
+        ],
+      });
+    });
+
+    it(`it should edit a project custom field`, async function () {
+      this.timeout(10000);
+
+      const customFieldUpdate: IPutProjectCustomFieldPayload = {
+        label: `New label`,
+        order: 0,
+      };
+
+      project = await highway.project.editCustomField(
+        project.id,
+        `webapp`,
+        customField.id,
+        customFieldUpdate
+      );
+
+      assert.deepStrictEqual(project.custom_fields, {
+        client: [],
+        vehicle: [],
+        webapp: [
+          {
+            id: customField.id,
+            label: customFieldUpdate.label,
+            type: customField.type,
+          },
+        ],
+      });
+    });
+
+    it(`it should delete a project custom field`, async function () {
+      this.timeout(10000);
+
+      project = await highway.project.deleteCustomField(
+        project.id,
+        `webapp`,
+        customField.id
+      );
+
+      assert.deepStrictEqual(project.custom_fields, {
+        client: [],
+        vehicle: [],
+        webapp: [],
+      });
+    });
   });
 });

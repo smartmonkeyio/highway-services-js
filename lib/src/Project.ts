@@ -1,8 +1,12 @@
+import * as FormData from "form-data";
 import {
+  CustomFieldTypes,
   IProject,
+  IProjectCustomField,
   IProjectData,
   IProjectResources,
   IProjectUsers,
+  IPutProjectCustomFieldPayload,
   ProjectRoles,
 } from "../common/interfaces";
 import { Highway } from "./Highway";
@@ -64,6 +68,50 @@ export class Project {
 
   deleteUser = async (projectId: string, userId: string): Promise<IProject> => {
     return this.highway.delete(`project/${projectId}/users/${userId}`);
+  };
+
+  createCustomField = async (
+    projectId: string,
+    type: CustomFieldTypes,
+    customFieldData: IProjectCustomField
+  ) => {
+    return this.highway.post(
+      `project/${projectId}/custom_fields?type=${type}`,
+      customFieldData
+    );
+  };
+
+  editCustomField = async (
+    projectId: string,
+    type: CustomFieldTypes,
+    customFielId: string,
+    customFieldData: IPutProjectCustomFieldPayload
+  ) => {
+    return this.highway.put(
+      `project/${projectId}/custom_fields/${customFielId}?type=${type}`,
+      customFieldData
+    );
+  };
+
+  deleteCustomField = async (
+    projectId: string,
+    type: CustomFieldTypes,
+    customFielId: string
+  ) => {
+    return this.highway.delete(
+      `project/${projectId}/custom_fields/${customFielId}?type=${type}`
+    );
+  };
+
+  createAvatar = async (projectId: string, formData: FormData) => {
+    return this.highway.post(`project/${projectId}/avatar`, formData, {
+      "content-type": `multipart/form-data`,
+      ...formData.getHeaders(),
+    });
+  };
+
+  deleteAvatar = async (projectId: string, avatarId: string) => {
+    return this.highway.delete(`project/${projectId}/avatar/${avatarId}`);
   };
 
   // list = async (
