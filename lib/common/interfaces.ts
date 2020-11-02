@@ -372,11 +372,17 @@ export interface ILocation {
 export interface IWebhook extends IWebhookData {
   id: string;
 }
-export type EventType = `plan.created` | `plan.deleted` | `plan.updated`;
+export type WebhookEventType = `plan.created` | `plan.deleted` | `plan.updated` | `service.report` | `route.track`;
 
 export interface IWebhookData {
-  enabled_events?: EventType[];
   url?: string;
+  enabled?: boolean;
+  enabled_events?: WebhookEventType[];
+
+  created_by?: string;
+  created_at?: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
 }
 
 export interface IPaginateResult<T> {
