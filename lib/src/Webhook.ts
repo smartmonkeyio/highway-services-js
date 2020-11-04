@@ -19,8 +19,11 @@ export class Webhook {
   };
 
   delete = async (webhookId: string) => {
-    const response = await this.highway.delete(`webhook/${webhookId}`);
-    return response;
+    return this.highway.delete(`webhook/${webhookId}`);
+  };
+
+  test = async (webhookId: string): Promise<IWebhook> => {
+    return this.highway.post(`webhook/${webhookId}/test`, {});
   };
 
   getAll = async (projectId?: string) => {

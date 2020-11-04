@@ -19,7 +19,7 @@ yarn add highway-api
 
 To use Highway services you need to create a User and an API Key in our site: https://highway.smartmonkey.io
 
-Now you can user the services by just using:
+Now you can use the services by just using:
 
 ```js
 const { createHighway } = require("highway-api");
