@@ -22,8 +22,8 @@ export class Webhook {
     return this.highway.delete(`webhook/${webhookId}`);
   };
 
-  test = async (webhookId: string): Promise<IWebhook> => {
-    return this.highway.post(`webhook/${webhookId}/test`, {});
+  test = async (webhookId: string, eventType: string): Promise<IWebhook> => {
+    return this.highway.post(`webhook/${webhookId}/test`, { event_type: eventType });
   };
 
   getAll = async (projectId?: string) => {
