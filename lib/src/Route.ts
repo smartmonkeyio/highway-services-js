@@ -1,4 +1,5 @@
-import { IRouteData, IVehicle } from "../common/interfaces";
+import { IRouteBase, IRouteData } from "../common/interfaces/routes";
+import { IVehicleData } from "../common/interfaces/vehicles";
 import { Highway } from "./Highway";
 
 export class Route {
@@ -13,7 +14,7 @@ export class Route {
     return response;
   };
 
-  createMany = async (planId: string, arrayRoutes: IRouteData[]) => {
+  createMany = async (planId: string, arrayRoutes: IRouteBase[]) => {
     const response = await this.highway.post(
       `routes?plan_id=${planId}`,
       arrayRoutes
@@ -24,7 +25,7 @@ export class Route {
   /**
    * Create a new route from a vehicle object.
    */
-  fromVehicle = (vehicle: IVehicle): IRouteData => {
+  fromVehicle = (vehicle: IVehicleData): IRouteBase => {
     const {
       default_end_location,
       default_start_location,
@@ -38,10 +39,10 @@ export class Route {
       vehicle_model,
       icon,
       brand,
-      avatar,
       phone,
       label,
       email,
+      custom_fields,
       price_per_distance,
       price_per_minute,
     } = vehicle;
@@ -60,10 +61,10 @@ export class Route {
       vehicle_model,
       icon,
       brand,
-      avatar,
       phone,
       label,
       email,
+      custom_fields,
       price_per_distance,
       price_per_minute,
     };

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_VERSION, HIGHWAY_ENDPOINT } from "../common/constants";
 import { HighwayError } from "../common/errors";
-import { IHighwayOptions } from "../common/interfaces";
+import { IHighwayOptions } from "../common/interfaces/common";
 import { Client } from "./Client";
 import { Plan } from "./Plan";
 import { Project } from "./Project";

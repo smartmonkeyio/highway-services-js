@@ -1,4 +1,4 @@
-import { IHighwayOptions } from "./common/interfaces";
+import { IHighwayOptions } from "./common/interfaces/common";
 import { Highway } from "./src/Highway";
 
 export function createHighway(

@@ -1,9 +1,5 @@
-import {
-  IPaginateResult,
-  IRoute,
-  IVehicle,
-  IVehicleData,
-} from "../common/interfaces";
+import { IRouteData } from "../common/interfaces/routes";
+import { IVehicleBase, IVehicleData, IVehiclePagination } from "../common/interfaces/vehicles";
 import { Highway } from "./Highway";
 
 export class Vehicle {
@@ -14,18 +10,18 @@ export class Vehicle {
   }
 
   create = async (
-    vehicleData: IVehicleData,
+    vehicleData: IVehicleBase,
     projectId?: string
-  ): Promise<IVehicle> => {
+  ): Promise<IVehicleData> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`vehicle?${params.toString()}`, vehicleData);
   };
 
   createMany = async (
-    arrayServices: IVehicleData[],
+    arrayServices: IVehicleBase[],
     projectId?: string
-  ): Promise<IVehicle[]> => {
+  ): Promise<IVehicleData[]> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`vehicles?${params.toString()}`, arrayServices);
@@ -33,16 +29,16 @@ export class Vehicle {
 
   update = async (
     vehicleId: string,
-    vehicle: IVehicleData
-  ): Promise<IVehicle> => {
+    vehicle: IVehicleBase
+  ): Promise<IVehicleData> => {
     return this.highway.put(`vehicle/${vehicleId}`, vehicle);
   };
 
-  delete = async (vehicleId: string): Promise<IVehicle> => {
+  delete = async (vehicleId: string): Promise<IVehicleData> => {
     return this.highway.delete(`vehicle/${vehicleId}`);
   };
 
-  get = async (vehicleID: string): Promise<IVehicle> => {
+  get = async (vehicleID: string): Promise<IVehicleData> => {
     return this.highway.get(`vehicle/${vehicleID}`);
   };
 
@@ -52,7 +48,7 @@ export class Vehicle {
     limit = 20,
     text = undefined,
     sort = undefined
-  ): Promise<IPaginateResult<IVehicle>> => {
+  ): Promise<IVehiclePagination> => {
     const params = new URLSearchParams();
     if (projectId) {
       params.append(`project_id`, `${projectId}`);
@@ -78,7 +74,7 @@ export class Vehicle {
   /**
    * Create a new route from a vehicle object.
    */
-  fromRoute = (route: IRoute): IVehicleData => {
+  fromRoute = (route: IRouteData): IVehicleBase => {
     const {
       end_location,
       start_location,
@@ -91,13 +87,15 @@ export class Vehicle {
       vehicle_model,
       icon,
       brand,
-      avatar,
       phone,
       label,
       email,
+      custom_fields,
+      price_per_minute,
+      price_per_distance,
     } = route;
 
-    const newVehicle: IVehicleData = {
+    const newVehicle: IVehicleBase = {
       default_start_location: start_location,
       default_end_location: end_location,
       default_max_volume: max_volume,
@@ -109,10 +107,12 @@ export class Vehicle {
       vehicle_model,
       icon,
       brand,
-      avatar,
       phone,
       label,
       email,
+      custom_fields,
+      price_per_minute,
+      price_per_distance,
     };
     return Object.entries(newVehicle).reduce(
       (a, [k, v]) => (v === undefined ? a : { ...a, [k]: v }),

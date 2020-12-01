@@ -1,14 +1,5 @@
 import * as FormData from "form-data";
-import {
-  CustomFieldTypes,
-  IProject,
-  IProjectCustomField,
-  IProjectData,
-  IProjectResources,
-  IProjectUsers,
-  IPutProjectCustomFieldPayload,
-  ProjectRoles,
-} from "../common/interfaces";
+import { CustomFieldTypes, IProjectBase, IProjectCustomField, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, ProjectRoles } from "../common/interfaces/projects";
 import { Highway } from "./Highway";
 
 export class Project {
@@ -18,26 +9,26 @@ export class Project {
     this.highway = hw;
   }
 
-  create = async (project: IProjectData): Promise<IProject> => {
+  create = async (project: IProjectBase): Promise<IProjectData> => {
     return this.highway.post(`project`, project);
   };
 
-  get = async (projectId: string): Promise<IProject> => {
+  get = async (projectId: string): Promise<IProjectData> => {
     return this.highway.get(`project/${projectId}`);
   };
 
-  getAll = async (): Promise<IProject[]> => {
+  getAll = async (): Promise<IProjectData[]> => {
     return this.highway.get(`projects`);
   };
 
   update = async (
     projectId: string,
-    project: IProjectData
-  ): Promise<IProject> => {
+    project: IProjectBase
+  ): Promise<IProjectData> => {
     return this.highway.put(`project/${projectId}`, project);
   };
 
-  delete = async (projectId: string): Promise<IProject> => {
+  delete = async (projectId: string): Promise<IProjectData> => {
     return this.highway.delete(`project/${projectId}`);
   };
 
@@ -48,13 +39,13 @@ export class Project {
   createUser = async (
     projectId: string,
     userData: IProjectUsers
-  ): Promise<IProject> => {
+  ): Promise<IProjectData> => {
     return this.highway.post(`project/${projectId}/users`, userData);
   };
 
   updateProjectsResources = async (
     projectsResources: IProjectResources[]
-  ): Promise<IProject[]> => {
+  ): Promise<IProjectData[]> => {
     return this.highway.put(`projects`, projectsResources);
   };
 
@@ -62,11 +53,11 @@ export class Project {
     projectId: string,
     userId: string,
     userData: { role: ProjectRoles }
-  ): Promise<IProject> => {
+  ): Promise<IProjectData> => {
     return this.highway.put(`project/${projectId}/users/${userId}`, userData);
   };
 
-  deleteUser = async (projectId: string, userId: string): Promise<IProject> => {
+  deleteUser = async (projectId: string, userId: string): Promise<IProjectData> => {
     return this.highway.delete(`project/${projectId}/users/${userId}`);
   };
 

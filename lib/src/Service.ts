@@ -1,4 +1,5 @@
-import { IServiceData, IClient } from "../common/interfaces";
+import { IClientData } from "../common/interfaces/clients";
+import { IServiceBase, IServiceData } from "../common/interfaces/services";
 import { Highway } from "./Highway";
 
 export class Service {
@@ -16,7 +17,7 @@ export class Service {
     return response;
   };
 
-  createMany = async (planId: string, arrayServices: IServiceData[]) => {
+  createMany = async (planId: string, arrayServices: IServiceBase[]) => {
     const response = await this.highway.post(
       `services?plan_id=${planId}`,
       arrayServices
@@ -24,10 +25,10 @@ export class Service {
     return response;
   };
 
-  fromClient = (client: IClient): IServiceData => {
-    const { id, external_id, icon, label, location, tags, comments, phone, email, website, reference_person } = client;
-    const newService: IServiceData = {
-      label, location, tags, comments,
+  fromClient = (client: IClientData): IServiceBase => {
+    const { id, external_id, icon, label, location, comments, phone, email, website, reference_person } = client;
+    const newService: IServiceBase = {
+      label, location, comments,
       phone, email, website, icon,
       reference_person,
       client_id: id,
@@ -37,7 +38,7 @@ export class Service {
       reward: client.default_reward,
       requires: client.default_requires,
       cluster: client.default_cluster,
-      assign_to: client.default_assign_to,
+      assign_to: client.default_assign_to ? [client.default_assign_to] : [],
       volume: client.default_volume,
       weight: client.default_weight,
       timewindows: client.default_timewindows,

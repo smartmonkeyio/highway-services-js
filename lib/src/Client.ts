@@ -1,9 +1,5 @@
-import {
-  IClient,
-  IClientData,
-  IPaginateResult,
-  IService,
-} from "../common/interfaces";
+import { IClientBase, IClientData, IClientPagination } from "../common/interfaces/clients";
+import { IServiceData } from "../common/interfaces/services";
 import { Highway } from "./Highway";
 
 export class Client {
@@ -14,32 +10,32 @@ export class Client {
   }
 
   create = async (
-    client: IClientData,
+    client: IClientBase,
     projectId?: string
-  ): Promise<IClient> => {
+  ): Promise<IClientData> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`client?${params.toString()}`, client);
   };
 
   createMany = async (
-    arrayClients: IClientData[],
+    arrayClients: IClientBase[],
     projectId?: string
-  ): Promise<IClient[]> => {
+  ): Promise<IClientData[]> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`clients?${params.toString()}`, arrayClients);
   };
 
-  update = async (clientId: string, client: IClientData): Promise<IClient> => {
+  update = async (clientId: string, client: IClientBase): Promise<IClientData> => {
     return this.highway.put(`client/${clientId}`, client);
   };
 
-  delete = async (clientId: string): Promise<IClient> => {
+  delete = async (clientId: string): Promise<IClientData> => {
     return this.highway.delete(`client/${clientId}`);
   };
 
-  get = async (clientId: string): Promise<IClient> => {
+  get = async (clientId: string): Promise<IClientData> => {
     return this.highway.get(`client/${clientId}`);
   };
 
@@ -49,7 +45,7 @@ export class Client {
     limit = 20,
     text = undefined,
     sort = undefined
-  ): Promise<IPaginateResult<IClient>> => {
+  ): Promise<IClientPagination> => {
     const params = new URLSearchParams();
     if (projectId) {
       params.append(`project_id`, `${projectId}`);
@@ -71,11 +67,10 @@ export class Client {
     return this.highway.get(`clients/flat?${params.toString()}`);
   };
 
-  fromService = (service: IService): IClientData => {
+  fromService = (service: IServiceData): IClientBase => {
     const {
       label,
       location,
-      tags,
       comments,
       phone,
       email,
@@ -84,11 +79,10 @@ export class Client {
       client_external_id,
       reference_person,
     } = service;
-    const newClient: IClientData = {
+    const newClient: IClientBase = {
       label,
       location,
       location_details,
-      tags,
       comments,
       phone,
       email,
@@ -98,7 +92,7 @@ export class Client {
       default_reward: service.reward,
       default_requires: service.requires,
       default_cluster: service.cluster,
-      default_assign_to: service.assign_to,
+      default_assign_to: service.assign_to ? service.assign_to[0] : undefined,
       default_volume: service.volume,
       default_weight: service.weight,
       default_timewindows: service.timewindows,

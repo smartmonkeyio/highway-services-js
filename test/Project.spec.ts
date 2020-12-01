@@ -1,10 +1,7 @@
 "use strict";
 import * as assert from "assert";
 import FormData from "form-data";
-import {
-  IProjectCustomField,
-  IPutProjectCustomFieldPayload,
-} from "../lib/common/interfaces";
+import { IProjectCustomField, IPutProjectCustomFieldPayload } from "../lib/common/interfaces/projects";
 import { createHighway } from "../lib/index";
 import { Highway } from "../lib/src/Highway";
 //import * as loader from "./loader";
@@ -154,15 +151,13 @@ describe(`Test Projects API`, () => {
 
       project = await highway.project.create({ label: `Test Project` });
 
-      customField = {
-        id: `my2_custom_field`,
-        label: `My custom field`,
-        type: `text`,
-      };
+      customField.id = `my2_custom_field`;
+      customField.label = `My custom field`;
+      customField.type = `text`;
 
       project = await highway.project.createCustomField(
         project.id,
-        `webapp`,
+        `service_report_completed`,
         customField
       );
 
@@ -189,7 +184,7 @@ describe(`Test Projects API`, () => {
 
       project = await highway.project.editCustomField(
         project.id,
-        `webapp`,
+        `service_report_completed`,
         customField.id,
         customFieldUpdate
       );
@@ -212,7 +207,7 @@ describe(`Test Projects API`, () => {
 
       project = await highway.project.deleteCustomField(
         project.id,
-        `webapp`,
+        `service_report_completed`,
         customField.id
       );
 

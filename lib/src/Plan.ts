@@ -1,11 +1,6 @@
-import {
-  IPaginateResult,
-  IPlan,
-  IPlanData,
-  IPlanSchema,
-  IRouteData,
-  IServiceData,
-} from "../common/interfaces";
+import { IPlanBase, IPlanData, IPlanPagination } from "../common/interfaces/plans";
+import { IRouteBase } from "../common/interfaces/routes";
+import { IServiceBase } from "../common/interfaces/services";
 import { Highway } from "./Highway";
 
 export class Plan {
@@ -15,7 +10,7 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (planData: IPlanData, projectId?: string): Promise<IPlan> => {
+  create = async (planData: IPlanBase, projectId?: string): Promise<IPlanData> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`plan?${params.toString()}`, planData);
@@ -26,17 +21,17 @@ export class Plan {
   //   return response;
   // };
 
-  update = async (planId: string, plan: IPlanData): Promise<IPlan> => {
+  update = async (planId: string, plan: IPlanData): Promise<IPlanData> => {
     const response = await this.highway.put(`plan/${planId}`, plan);
     return response;
   };
 
-  delete = async (planId: string): Promise<IPlan> => {
+  delete = async (planId: string): Promise<IPlanData> => {
     const response = await this.highway.delete(`plan/${planId}`);
     return response;
   };
 
-  get = async (planId: string): Promise<IPlan> => {
+  get = async (planId: string): Promise<IPlanData> => {
     const response = await this.highway.get(`plan/${planId}`);
     return response;
   };
@@ -50,7 +45,7 @@ export class Plan {
     sort = undefined,
     offset = 0,
     limit = 20
-  ): Promise<IPaginateResult<IPlanSchema>> => {
+  ): Promise<IPlanPagination> => {
     const params = new URLSearchParams();
     if (projectId) {
       params.append(`project_id`, projectId);
@@ -78,7 +73,7 @@ export class Plan {
     return response;
   };
 
-  optimize = async (planId: string): Promise<IPlan> => {
+  optimize = async (planId: string): Promise<IPlanData> => {
     const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
@@ -90,14 +85,14 @@ export class Plan {
 
   addServices = async (
     planId: string,
-    services: IServiceData[]
-  ): Promise<IPlan> => {
+    services: IServiceBase[]
+  ): Promise<IPlanData> => {
     await this.highway.service.createMany(planId, services);
     const response = await this.get(planId);
     return response;
   };
 
-  addRoutes = async (planId: string, routes: IRouteData[]): Promise<IPlan> => {
+  addRoutes = async (planId: string, routes: IRouteBase[]): Promise<IPlanData> => {
     await this.highway.route.createMany(planId, routes);
     const response = await this.get(planId);
     return response;

@@ -58,7 +58,6 @@ describe(`Test Clients API`, () => {
         client.external_id,
         loader.clients.client1.external_id
       );
-      assert.deepStrictEqual(client.tags, loader.clients.client1.tags);
       assert.deepStrictEqual(
         client.default_timewindows,
         loader.clients.client1.default_timewindows

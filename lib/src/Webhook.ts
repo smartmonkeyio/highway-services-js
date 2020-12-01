@@ -1,4 +1,4 @@
-import { IWebhook, IWebhookData } from "../common/interfaces";
+import { IWebhook, IWebhookData } from "../common/interfaces/webhooks";
 import { Highway } from "./Highway";
 
 export class Webhook {
