@@ -90,6 +90,8 @@ describe(`Test Vehicles API`, () => {
     it(`Should be able to update a vehicle`, async () => {
       const vehicle = await highway.vehicle.update(allVehicleIds[2], {
         label: `new label`,
+        price_per_distance: 123,
+        price_per_minute: 456,
         default_start_location: {
           lat: 12,
           lng: 12,
@@ -98,6 +100,8 @@ describe(`Test Vehicles API`, () => {
       assert.strictEqual(vehicle.label, `new label`);
       assert.strictEqual(vehicle.default_start_location?.lat, 12);
       assert.strictEqual(vehicle.default_start_location?.lng, 12);
+      assert.strictEqual(vehicle.price_per_distance, 123);
+      assert.strictEqual(vehicle.price_per_distance, 456);
     });
     it(`Should be able to retrieve a list of vehicles`, async () => {
       const vehicle = await highway.vehicle.list(allProjectIds[0]);

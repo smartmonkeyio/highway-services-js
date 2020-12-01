@@ -1,6 +1,6 @@
 {
   "name": "highway-api",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "This package allows the users to easily integrate Highway services in their code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
     "build": "npm run clean  && tsc",
     "clean": "rm -rf .coverage .nyc_output dist",
     "prepare": "yarn run build",
-    "lint": "eslint src"
+    "tslint": "tslint './lib/**/*.{ts,tsx}' --fix"
   },
   "repository": {
     "type": "git",

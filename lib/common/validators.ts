@@ -73,7 +73,7 @@ export function pickups() {
           .items(timewindow())
           .single(),
         size: capacity(),
-      }),
+      })
     )
     .single();
 }

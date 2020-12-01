@@ -73,10 +73,14 @@ export interface IProjectView {
 
 export type DistanceType = `km` | `mi`;
 export type WeightType = `kg` | `lb`;
+export type VolumeType = `l` | `m³`;
+export type CurrencyTypes = `EUR` | `USD` | `MXN`;
 
 export interface IProjectUnits {
   distance: DistanceType;
   weight: WeightType;
+  volume: VolumeType;
+  currency?: CurrencyTypes;
 }
 
 export interface IProjectProofOfDelivery {
@@ -262,6 +266,9 @@ export interface IRouteData {
   feedback_comments?: string;
   feedback_duration?: number;
 
+  price_per_distance?: number;
+  price_per_minute?: number;
+
   created_by?: string;
   created_at?: Date;
   updated_at?: Date;
@@ -347,6 +354,10 @@ export interface IVehicleData {
   default_end_location?: ILocation;
   default_provides?: string[];
   default_max_services?: number;
+
+  custom_fields?: object;
+  price_per_distance?: number;
+  price_per_minute?: number;
 
   created_by?: string;
   created_at?: Date;

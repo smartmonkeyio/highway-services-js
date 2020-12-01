@@ -42,6 +42,8 @@ export class Route {
       phone,
       label,
       email,
+      price_per_distance,
+      price_per_minute,
     } = vehicle;
 
     return {
@@ -62,6 +64,8 @@ export class Route {
       phone,
       label,
       email,
+      price_per_distance,
+      price_per_minute,
     };
   };
 
