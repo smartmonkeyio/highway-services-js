@@ -1,19 +1,6 @@
-import { FirstSolutionStrategy, ICRUD, IPagination, IUserObject, LocalSearchMetaheuristic } from './common';
+import { ICRUD, IOptimizerConfig, IPagination, IUserObject } from './common';
 import { IRouteDataExtended } from './routes';
 import { IServiceDataExtended } from './services';
-
-export interface IOptimizerConfig {
-  max_wait_time?: number;
-  matrix_multiplier?: number;
-  first_solution_strategy?: FirstSolutionStrategy;
-  local_search_strategy?: LocalSearchMetaheuristic;
-  time_limit_seconds?: number;
-  lns_time_limit?: number;
-  skip_penalty?: number;
-  balance_services?: boolean;
-  service_duration?: number;
-  operation_country?: string;
-}
 
 export type PlanStatusType = `planning` | `in_progress` | `finished`;
 
