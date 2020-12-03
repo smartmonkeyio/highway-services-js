@@ -78,6 +78,13 @@ interface IProjectServiceReportCanceledPreferences {
   canceled_categorical?: boolean;
 }
 
+export interface IProjectServiceTracker {
+  driver_position: boolean;
+  estimated_time_arrival: boolean;
+  stops_left: boolean;
+  phone_call: boolean;
+}
+
 export interface IProjectView {
   constraints: IProjectConstraintsPreferences;
   vehicle: IProjectVehiclePreferences;
@@ -85,6 +92,7 @@ export interface IProjectView {
   webapp: IProjectWebAppPreferences;
   service_report_completed: IProjectServiceReportCompletedPreferences;
   service_report_canceled: IProjectServiceReportCanceledPreferences;
+  service_tracker: IProjectServiceTracker;
 }
 
 export interface IProjectUnits {
@@ -113,6 +121,19 @@ export interface IProjectLimits {
   max_services_plan: number;
 }
 
+export interface IServiceTrackingEmailItem {
+  enabled: boolean;
+  body?: string;
+  updated_at?: Date;
+}
+
+export interface IServiceTrackingEmail {
+  route_started?: IServiceTrackingEmailItem;
+  service_approaching?: IServiceTrackingEmailItem;
+  service_done?: IServiceTrackingEmailItem;
+  service_canceled?: IServiceTrackingEmailItem;
+}
+
 export interface IProjectBase extends ICRUD {
   organization_id?: string;
   label?: string;
@@ -128,6 +149,7 @@ export interface IProjectBase extends ICRUD {
   limits?: IProjectLimits;
 
   custom_fields?: IProjectAllCustomField;
+  service_tracking_email?: IServiceTrackingEmail;
 }
 
 export interface IProjectData extends IProjectBase {

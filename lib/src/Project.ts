@@ -1,5 +1,5 @@
 import * as FormData from "form-data";
-import { CustomFieldTypes, IProjectBase, IProjectCustomField, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, ProjectRoles } from "../common/interfaces/projects";
+import { CustomFieldTypes, IProjectBase, IProjectCustomField, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, IServiceTrackingEmail, ProjectRoles } from "../common/interfaces/projects";
 import { Highway } from "./Highway";
 
 export class Project {
@@ -103,6 +103,16 @@ export class Project {
 
   deleteAvatar = async (projectId: string, avatarId: string) => {
     return this.highway.delete(`project/${projectId}/avatar/${avatarId}`);
+  };
+
+  editCommunication = async (
+    projectId: string,
+    communicationData: IServiceTrackingEmail
+  ) => {
+    return this.highway.put(
+      `project/${projectId}/communication`,
+      communicationData
+    );
   };
 
   // list = async (

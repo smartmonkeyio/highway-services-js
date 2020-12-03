@@ -81,13 +81,6 @@ export interface IOptimizerConfig {
   operation_country?: string;
 }
 
-export interface IUserLocation {
-  country?: string;
-  latitude?: number;
-  longitude?: number;
-  mapZoomLevel?: number;
-}
-
 export interface IPagination<T> {
   docs: T[];
   total: number;
