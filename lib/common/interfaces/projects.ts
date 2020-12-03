@@ -130,7 +130,7 @@ export interface IServiceTrackingEmailItem {
 export interface IServiceTrackingEmail {
   route_started?: IServiceTrackingEmailItem;
   service_approaching?: IServiceTrackingEmailItem;
-  service_done?: IServiceTrackingEmailItem;
+  service_completed?: IServiceTrackingEmailItem;
   service_canceled?: IServiceTrackingEmailItem;
 }
 
