@@ -1,7 +1,21 @@
 import * as FormData from "form-data";
-import { CustomFieldTypes, IProjectBase, IProjectCustomField, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, IServiceTrackingEmail, ProjectRoles } from "../common/interfaces/projects";
+import { CustomFieldTypes, CustomFieldValueTypes, IProjectBase, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, IServiceTrackingEmail, ProjectRoles } from "../common/interfaces/projects";
 import { Highway } from "./Highway";
 
+export interface ProjectCommunicationPayload {
+  service_tracking_email: IServiceTrackingEmail;
+}
+
+export interface IProjectCustomFieldPayload {
+  id: string;
+  label: string;
+  type: CustomFieldValueTypes;
+  description?: string;
+  // optional?: boolean; // NOT YET!
+  enabled: boolean;
+  multiple?: boolean;
+  options?: string[];
+}
 export class Project {
   private highway: Highway;
 
@@ -64,7 +78,7 @@ export class Project {
   createCustomField = async (
     projectId: string,
     type: CustomFieldTypes,
-    customFieldData: IProjectCustomField
+    customFieldData: IProjectCustomFieldPayload
   ) => {
     return this.highway.post(
       `project/${projectId}/custom_fields?type=${type}`,
@@ -107,7 +121,7 @@ export class Project {
 
   editCommunication = async (
     projectId: string,
-    communicationData: IServiceTrackingEmail
+    communicationData: ProjectCommunicationPayload
   ) => {
     return this.highway.put(
       `project/${projectId}/communication`,

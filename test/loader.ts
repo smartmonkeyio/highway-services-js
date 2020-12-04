@@ -33,7 +33,6 @@ export const vehicles = {
     external_id: `external_id_1`,
     label: `label1`,
     phone: `phone1`,
-    avatar: `avatar1`,
     email: `email1`,
     plate: `plate1`,
     color: `blue`,

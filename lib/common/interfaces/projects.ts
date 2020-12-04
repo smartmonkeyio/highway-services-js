@@ -127,6 +127,8 @@ export interface IServiceTrackingEmailItem {
   updated_at?: Date;
 }
 
+export type ICommunicationChannel = `email`;
+export type IServiceTrackingEmailTypes = `route_started` | `service_approaching` | `service_completed` | `service_canceled`;
 export interface IServiceTrackingEmail {
   route_started?: IServiceTrackingEmailItem;
   service_approaching?: IServiceTrackingEmailItem;

@@ -101,7 +101,7 @@ describe(`Test Vehicles API`, () => {
       assert.strictEqual(vehicle.default_start_location?.lat, 12);
       assert.strictEqual(vehicle.default_start_location?.lng, 12);
       assert.strictEqual(vehicle.price_per_distance, 123);
-      assert.strictEqual(vehicle.price_per_distance, 456);
+      assert.strictEqual(vehicle.price_per_minute, 456);
     });
     it(`Should be able to retrieve a list of vehicles`, async () => {
       const vehicle = await highway.vehicle.list(allProjectIds[0]);

@@ -1,9 +1,10 @@
 "use strict";
 import * as assert from "assert";
 import FormData from "form-data";
-import { IProjectCustomField, IPutProjectCustomFieldPayload } from "../lib/common/interfaces/projects";
+import { IPutProjectCustomFieldPayload } from "../lib/common/interfaces/projects";
 import { createHighway } from "../lib/index";
 import { Highway } from "../lib/src/Highway";
+import { IProjectCustomFieldPayload } from "../lib/src/Project";
 //import * as loader from "./loader";
 import * as common from "./common";
 import * as storageLoader from "./loaders/storage.loader";
@@ -145,15 +146,16 @@ describe(`Test Projects API`, () => {
 
   describe(`Basic Project Custom Fields CRUD`, async () => {
     let project: any;
-    let customField: IProjectCustomField;
+    let customField: IProjectCustomFieldPayload = {
+      id: `my2_custom_field`,
+      label: `My custom field`,
+      type: `text`,
+      enabled: true
+    };
     it(`it should create a new project custom field`, async function () {
       this.timeout(10000);
 
       project = await highway.project.create({ label: `Test Project` });
-
-      customField.id = `my2_custom_field`;
-      customField.label = `My custom field`;
-      customField.type = `text`;
 
       project = await highway.project.createCustomField(
         project.id,
@@ -161,17 +163,17 @@ describe(`Test Projects API`, () => {
         customField
       );
 
-      assert.deepStrictEqual(project.custom_fields, {
-        client: [],
-        vehicle: [],
-        webapp: [
-          {
-            id: customField.id,
-            label: customField.label,
-            type: customField.type,
-          },
-        ],
-      });
+      assert.strictEqual(project.custom_fields.client.length, 0);
+      assert.strictEqual(project.custom_fields.vehicle.length, 0);
+      assert.strictEqual(project.custom_fields.service_report_canceled.length, 0);
+
+      const found = project.custom_fields.service_report_completed.find((field: any) => field.id === customField.id);
+      assert.notStrictEqual(found, undefined);
+      assert.strictEqual(found.label, customField.label);
+      assert.strictEqual(found.type, customField.type);
+      // assert.strictEqual(found.optional, false); // NOT YET!
+      assert.strictEqual(found.enabled, customField.enabled);
+      assert.notStrictEqual(found.created_at, undefined);
     });
 
     it(`it should edit a project custom field`, async function () {
@@ -179,7 +181,9 @@ describe(`Test Projects API`, () => {
 
       const customFieldUpdate: IPutProjectCustomFieldPayload = {
         label: `New label`,
-        order: 0,
+        description: `The description of the custom field`,
+        enabled: false,
+        order: 0
       };
 
       project = await highway.project.editCustomField(
@@ -189,17 +193,17 @@ describe(`Test Projects API`, () => {
         customFieldUpdate
       );
 
-      assert.deepStrictEqual(project.custom_fields, {
-        client: [],
-        vehicle: [],
-        webapp: [
-          {
-            id: customField.id,
-            label: customFieldUpdate.label,
-            type: customField.type,
-          },
-        ],
-      });
+      assert.strictEqual(project.custom_fields.client.length, 0);
+      assert.strictEqual(project.custom_fields.vehicle.length, 0);
+      assert.strictEqual(project.custom_fields.service_report_canceled.length, 0);
+
+      const found = project.custom_fields.service_report_completed.find((field: any) => field.id === customField.id);
+      assert.notStrictEqual(found, undefined);
+      assert.strictEqual(found.label, customFieldUpdate.label);
+      assert.strictEqual(found.type, customField.type);
+      // assert.strictEqual(found.optional, false); // NOT YET!
+      assert.strictEqual(found.enabled, customFieldUpdate.enabled);
+      assert.notStrictEqual(found.created_at, undefined);
     });
 
     it(`it should delete a project custom field`, async function () {
@@ -214,7 +218,8 @@ describe(`Test Projects API`, () => {
       assert.deepStrictEqual(project.custom_fields, {
         client: [],
         vehicle: [],
-        webapp: [],
+        service_report_canceled: [],
+        service_report_completed: [],
       });
     });
   });

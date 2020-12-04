@@ -10,9 +10,9 @@ export class Plan {
     this.highway = hw;
   }
 
-  create = async (planData: IPlanBase, projectId?: string): Promise<IPlanData> => {
+  create = async (planData: IPlanBase, projectId: string): Promise<IPlanData> => {
     const params = new URLSearchParams();
-    if (projectId) params.append(`project_id`, `${projectId}`);
+    params.append(`project_id`, `${projectId}`);
     return this.highway.post(`plan?${params.toString()}`, planData);
   };
 

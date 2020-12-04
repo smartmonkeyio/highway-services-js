@@ -19,7 +19,7 @@ describe(`Test Plans API`, () => {
   });
   describe(`Basic Plan CRUD`, () => {
     it(`it should create a new Plan`, async () => {
-      plan = await highway.plan.create({ services: [], routes: [] });
+      plan = await highway.plan.create({ services: [], routes: [] }, allProjectIds[0]);
       assert.strictEqual(plan._version, 1);
       assert.strictEqual(plan.label, undefined);
       assert.notStrictEqual(plan.created_at, undefined);
@@ -58,7 +58,9 @@ describe(`Test Plans API`, () => {
       plan = await highway.plan.addRoutes(allPlanIds[0], [{}, {}]);
       assert.strictEqual(plan.routes.length, 2);
     });
-    it(`Must be able to optimize routes of the current plan`, async () => {
+    it(`Must be able to optimize routes of the current plan`, async function () {
+      this.timeout(10000);
+
       plan = await highway.plan.optimize(allPlanIds[0]);
       assert.strictEqual(plan.routes.length, 2);
       assert.strictEqual(plan.services.length, 2);
