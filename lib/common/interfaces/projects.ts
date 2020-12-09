@@ -42,6 +42,8 @@ interface IProjectVehiclePreferences {
   phone: boolean;
   email: boolean;
   webpage: boolean;
+  price_per_minute: boolean;
+  price_per_distance: boolean;
 }
 
 interface IProjectClientPreferences {
