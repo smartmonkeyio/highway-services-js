@@ -26,7 +26,7 @@ export interface IClientBase extends ICRUD, IUserObject {
   default_reward?: number;
   default_requires?: string[];
   default_cluster?: string;
-  default_assign_to?: string;
+  default_assign_to?: string[];
   default_timewindows?: Timewindow[];
   default_volume?: number;
   default_weight?: number;

@@ -38,7 +38,7 @@ export class Service {
       reward: client.default_reward,
       requires: client.default_requires,
       cluster: client.default_cluster,
-      assign_to: client.default_assign_to ? [client.default_assign_to] : [],
+      assign_to: client.default_assign_to ? client.default_assign_to : [],
       volume: client.default_volume,
       weight: client.default_weight,
       timewindows: client.default_timewindows,

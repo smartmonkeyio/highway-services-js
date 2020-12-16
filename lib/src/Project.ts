@@ -2,7 +2,7 @@ import * as FormData from "form-data";
 import { CustomFieldTypes, CustomFieldValueTypes, IProjectBase, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, IServiceTrackingEmail, ProjectRoles } from "../common/interfaces/projects";
 import { Highway } from "./Highway";
 
-export interface ProjectCommunicationPayload {
+export interface IProjectCommunicationPayload {
   service_tracking_email: IServiceTrackingEmail;
 }
 
@@ -121,7 +121,7 @@ export class Project {
 
   editCommunication = async (
     projectId: string,
-    communicationData: ProjectCommunicationPayload
+    communicationData: IProjectCommunicationPayload
   ) => {
     return this.highway.put(
       `project/${projectId}/communication`,

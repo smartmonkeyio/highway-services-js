@@ -20,7 +20,7 @@ export const clients = {
     default_reward: 100,
     default_requires: [`requires1`],
     default_cluster: `cluster1`,
-    default_assign_to: `Manolo`,
+    default_assign_to: [`Manolo`],
     default_timewindows: [[0, 3600]] as Timewindow[],
     //default_size: 100,
     default_volume: 1000,
