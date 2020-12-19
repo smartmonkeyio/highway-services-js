@@ -1,22 +1,12 @@
-import * as joi from "joi";
+import * as joi from 'joi';
 
 /**
  * Returns the Joi validation for a GPS coordinate
  */
 export function coordinate() {
   return joi.object({
-    lat: joi
-      .number()
-      .min(-90)
-      .max(90)
-      .required()
-      .description(`Latitude`),
-    lng: joi
-      .number()
-      .min(-180)
-      .max(180)
-      .required()
-      .description(`Longitude`),
+    lat: joi.number().min(-90).max(90).required().description(`Latitude`),
+    lng: joi.number().min(-180).max(180).required().description(`Longitude`),
   });
 }
 
@@ -24,32 +14,21 @@ export function coordinate() {
  * Returns the Joi validation to validate a timewindow
  */
 export function timewindow() {
-  return joi
-    .array()
-    .items(joi.number().min(0))
-    .min(2)
-    .max(2)
-    .single();
+  return joi.array().items(joi.number().min(0)).min(2).max(2).single();
 }
 
 /**
  * Returns the Joi validation for capacity/volume of vehicles and services
  */
 export function capacity() {
-  return joi
-    .array()
-    .items(joi.number().min(0))
-    .single();
+  return joi.array().items(joi.number().min(0)).single();
 }
 
 /**
  * Array of string
  */
 export function stringArray() {
-  return joi
-    .array()
-    .items(joi.string().min(1))
-    .single();
+  return joi.array().items(joi.string().min(1)).single();
 }
 
 /**
@@ -68,10 +47,7 @@ export function pickups() {
           .number()
           .min(0)
           .max(24 * 3600),
-        timewindows: joi
-          .array()
-          .items(timewindow())
-          .single(),
+        timewindows: joi.array().items(timewindow()).single(),
         size: capacity(),
       })
     )

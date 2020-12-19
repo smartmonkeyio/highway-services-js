@@ -1,6 +1,6 @@
-import { IRouteData } from "../common/interfaces/routes";
-import { IVehicleBase, IVehicleData, IVehiclePagination } from "../common/interfaces/vehicles";
-import { Highway } from "./Highway";
+import { IRouteData } from '../common/interfaces/routes';
+import { IVehicleBase, IVehicleData, IVehiclePagination } from '../common/interfaces/vehicles';
+import { Highway } from './Highway';
 
 export class Vehicle {
   private highway: Highway;
@@ -9,10 +9,7 @@ export class Vehicle {
     this.highway = hw;
   }
 
-  create = async (
-    vehicleData: IVehicleBase,
-    projectId?: string
-  ): Promise<IVehicleData> => {
+  create = async (vehicleData: IVehicleBase, projectId?: string): Promise<IVehicleData> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`vehicle?${params.toString()}`, vehicleData);
@@ -27,10 +24,7 @@ export class Vehicle {
     return this.highway.post(`vehicles?${params.toString()}`, arrayServices);
   };
 
-  update = async (
-    vehicleId: string,
-    vehicle: IVehicleBase
-  ): Promise<IVehicleData> => {
+  update = async (vehicleId: string, vehicle: IVehicleBase): Promise<IVehicleData> => {
     return this.highway.put(`vehicle/${vehicleId}`, vehicle);
   };
 

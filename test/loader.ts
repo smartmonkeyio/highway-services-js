@@ -1,5 +1,5 @@
-import { Timewindow } from "../lib/common/interfaces/common";
-import { ServiceIconTypes } from "../lib/common/interfaces/services";
+import { Timewindow } from '../lib/common/interfaces/common';
+import { ServiceIconTypes } from '../lib/common/interfaces/services';
 
 export const clients = {
   client1: {

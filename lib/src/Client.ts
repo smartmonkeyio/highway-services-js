@@ -1,6 +1,6 @@
-import { IClientBase, IClientData, IClientPagination } from "../common/interfaces/clients";
-import { IServiceData } from "../common/interfaces/services";
-import { Highway } from "./Highway";
+import { IClientBase, IClientData, IClientPagination } from '../common/interfaces/clients';
+import { IServiceData } from '../common/interfaces/services';
+import { Highway } from './Highway';
 
 export class Client {
   private highway: Highway;
@@ -9,19 +9,13 @@ export class Client {
     this.highway = hw;
   }
 
-  create = async (
-    client: IClientBase,
-    projectId?: string
-  ): Promise<IClientData> => {
+  create = async (client: IClientBase, projectId?: string): Promise<IClientData> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`client?${params.toString()}`, client);
   };
 
-  createMany = async (
-    arrayClients: IClientBase[],
-    projectId?: string
-  ): Promise<IClientData[]> => {
+  createMany = async (arrayClients: IClientBase[], projectId?: string): Promise<IClientData[]> => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
     return this.highway.post(`clients?${params.toString()}`, arrayClients);
@@ -61,6 +55,7 @@ export class Client {
     return this.highway.get(`clients?${params.toString()}`);
   };
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   listFlat = async (projectId?: string) => {
     const params = new URLSearchParams();
     if (projectId) params.append(`project_id`, `${projectId}`);
@@ -92,7 +87,7 @@ export class Client {
       default_reward: service.reward,
       default_requires: service.requires,
       default_cluster: service.cluster,
-      ...service.assign_to ? { default_assign_to: [service.assign_to[0]]} : {},
+      ...(service.assign_to ? { default_assign_to: [service.assign_to[0]] } : {}),
       default_volume: service.volume,
       default_weight: service.weight,
       default_timewindows: service.timewindows,

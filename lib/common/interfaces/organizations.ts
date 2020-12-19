@@ -1,7 +1,10 @@
 import { ICRUD } from './common';
 import { ISubscriptionBase } from './subscriptions';
 
-export type OrganizationRoles = `organization_administrator` | `organization_manager` | `organization_user`;
+export type OrganizationRoles =
+  | `organization_administrator`
+  | `organization_manager`
+  | `organization_user`;
 
 export interface IOrganizationUsers {
   user_id: string;

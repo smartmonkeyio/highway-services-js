@@ -1,13 +1,12 @@
-"use strict";
-import * as assert from "assert";
-import FormData from "form-data";
-import { IPutProjectCustomFieldPayload } from "../lib/common/interfaces/projects";
-import { createHighway } from "../lib/index";
-import { Highway } from "../lib/src/Highway";
-import { IProjectCustomFieldPayload } from "../lib/src/Project";
+import * as assert from 'assert';
+import FormData from 'form-data';
+import { IPutProjectCustomFieldPayload } from '../lib/common/interfaces/projects';
+import { createHighway } from '../lib/index';
+import { Highway } from '../lib/src/Highway';
+import { IProjectCustomFieldPayload } from '../lib/src/Project';
 //import * as loader from "./loader";
-import * as common from "./common";
-import * as storageLoader from "./loaders/storage.loader";
+import * as common from './common';
+import * as storageLoader from './loaders/storage.loader';
 
 describe(`Test Projects API`, () => {
   let highway: Highway;
@@ -146,11 +145,11 @@ describe(`Test Projects API`, () => {
 
   describe(`Basic Project Custom Fields CRUD`, async () => {
     let project: any;
-    let customField: IProjectCustomFieldPayload = {
+    const customField: IProjectCustomFieldPayload = {
       id: `my2_custom_field`,
       label: `My custom field`,
       type: `text`,
-      enabled: true
+      enabled: true,
     };
     it(`it should create a new project custom field`, async function () {
       this.timeout(10000);
@@ -167,7 +166,9 @@ describe(`Test Projects API`, () => {
       assert.strictEqual(project.custom_fields.vehicle.length, 0);
       assert.strictEqual(project.custom_fields.service_report_canceled.length, 0);
 
-      const found = project.custom_fields.service_report_completed.find((field: any) => field.id === customField.id);
+      const found = project.custom_fields.service_report_completed.find(
+        (field: any) => field.id === customField.id
+      );
       assert.notStrictEqual(found, undefined);
       assert.strictEqual(found.label, customField.label);
       assert.strictEqual(found.type, customField.type);
@@ -183,7 +184,7 @@ describe(`Test Projects API`, () => {
         label: `New label`,
         description: `The description of the custom field`,
         enabled: false,
-        order: 0
+        order: 0,
       };
 
       project = await highway.project.editCustomField(
@@ -197,7 +198,9 @@ describe(`Test Projects API`, () => {
       assert.strictEqual(project.custom_fields.vehicle.length, 0);
       assert.strictEqual(project.custom_fields.service_report_canceled.length, 0);
 
-      const found = project.custom_fields.service_report_completed.find((field: any) => field.id === customField.id);
+      const found = project.custom_fields.service_report_completed.find(
+        (field: any) => field.id === customField.id
+      );
       assert.notStrictEqual(found, undefined);
       assert.strictEqual(found.label, customFieldUpdate.label);
       assert.strictEqual(found.type, customField.type);
