@@ -1,14 +1,14 @@
-import axios from "axios";
-import { API_VERSION, HIGHWAY_ENDPOINT } from "../common/constants";
-import { HighwayError } from "../common/errors";
-import { IHighwayOptions } from "../common/interfaces/common";
-import { Client } from "./Client";
-import { Plan } from "./Plan";
-import { Project } from "./Project";
-import { Route } from "./Route";
-import { Service } from "./Service";
-import { Vehicle } from "./Vehicle";
-import { Webhook } from "./Webhook";
+import axios from 'axios';
+import { API_VERSION, HIGHWAY_ENDPOINT } from '../common/constants';
+import { HighwayError } from '../common/errors';
+import { IHighwayOptions } from '../common/interfaces/common';
+import { Client } from './Client';
+import { Plan } from './Plan';
+import { Project } from './Project';
+import { Route } from './Route';
+import { Service } from './Service';
+import { Vehicle } from './Vehicle';
+import { Webhook } from './Webhook';
 
 export class Highway {
   private _token?: string;
@@ -47,22 +47,16 @@ export class Highway {
     try {
       if (data) {
         return (
-          await method(
-            `${this.apiEndpoint}/api/${API_VERSION}/${url}`,
-            data || {},
-            {
-              params: {
-                ...(this._apiKey ? { private_key: this._apiKey } : {}),
-                ...(this.queryParams ? this.queryParams : {}),
-              },
-              headers: {
-                ...headers,
-                ...(!this._apiKey
-                  ? { Authorization: `Bearer ${this._token}` }
-                  : {}),
-              },
-            }
-          )
+          await method(`${this.apiEndpoint}/api/${API_VERSION}/${url}`, data || {}, {
+            params: {
+              ...(this._apiKey ? { private_key: this._apiKey } : {}),
+              ...(this.queryParams ? this.queryParams : {}),
+            },
+            headers: {
+              ...headers,
+              ...(!this._apiKey ? { Authorization: `Bearer ${this._token}` } : {}),
+            },
+          })
         ).data;
       } else {
         return (
@@ -73,9 +67,7 @@ export class Highway {
             },
             headers: {
               ...headers,
-              ...(!this._apiKey
-                ? { Authorization: `Bearer ${this._token}` }
-                : {}),
+              ...(!this._apiKey ? { Authorization: `Bearer ${this._token}` } : {}),
             },
           })
         ).data;
@@ -89,11 +81,7 @@ export class Highway {
         );
       }
       const { data, status } = error.response;
-      throw new HighwayError(
-        `${status} - ${data.message}`,
-        data.messageId,
-        status
-      );
+      throw new HighwayError(`${status} - ${data.message}`, data.messageId, status);
     }
   };
 

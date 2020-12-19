@@ -1,9 +1,8 @@
-"use strict";
-import * as assert from "assert";
-import { createHighway } from "../lib/index";
-import { Highway } from "../lib/src/Highway";
+import * as assert from 'assert';
 //import * as loader from "./loader";
-import * as common from "./common";
+import { createHighway } from '../lib/index';
+import { Highway } from '../lib/src/Highway';
+import * as common from './common';
 
 describe(`Test Plans API`, () => {
   let highway: Highway;
@@ -13,9 +12,7 @@ describe(`Test Plans API`, () => {
 
   before(async () => {
     highway = createHighway(common.key);
-    allProjectIds = (await highway.project.getAll()).map(
-      (project) => project.id
-    );
+    allProjectIds = (await highway.project.getAll()).map((project) => project.id);
   });
   describe(`Basic Plan CRUD`, () => {
     it(`it should create a new Plan`, async () => {
@@ -39,7 +36,11 @@ describe(`Test Plans API`, () => {
       assert.notStrictEqual(plan.created_at, undefined);
     });
     it(`it should be able to update the plan`, async () => {
-      plan = await highway.plan.update(allPlanIds[0], { label: `manolo`, services: [], routes: [] });
+      plan = await highway.plan.update(allPlanIds[0], {
+        label: `manolo`,
+        services: [],
+        routes: [],
+      });
       assert.strictEqual(plan._version, 1);
       assert.strictEqual(plan.label, `manolo`);
     });

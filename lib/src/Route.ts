@@ -1,6 +1,6 @@
-import { IRouteBase, IRouteData } from "../common/interfaces/routes";
-import { IVehicleData } from "../common/interfaces/vehicles";
-import { Highway } from "./Highway";
+import { IRouteBase, IRouteData } from '../common/interfaces/routes';
+import { IVehicleData } from '../common/interfaces/vehicles';
+import { Highway } from './Highway';
 
 export class Route {
   private highway: Highway;
@@ -15,10 +15,7 @@ export class Route {
   };
 
   createMany = async (planId: string, arrayRoutes: IRouteBase[]) => {
-    const response = await this.highway.post(
-      `routes?plan_id=${planId}`,
-      arrayRoutes
-    );
+    const response = await this.highway.post(`routes?plan_id=${planId}`, arrayRoutes);
     return response;
   };
 

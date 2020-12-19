@@ -1,6 +1,16 @@
-import * as FormData from "form-data";
-import { CustomFieldTypes, CustomFieldValueTypes, IProjectBase, IProjectData, IProjectResources, IProjectUsers, IPutProjectCustomFieldPayload, IServiceTrackingEmail, ProjectRoles } from "../common/interfaces/projects";
-import { Highway } from "./Highway";
+import * as FormData from 'form-data';
+import {
+  CustomFieldTypes,
+  CustomFieldValueTypes,
+  IProjectBase,
+  IProjectData,
+  IProjectResources,
+  IProjectUsers,
+  IPutProjectCustomFieldPayload,
+  IServiceTrackingEmail,
+  ProjectRoles,
+} from '../common/interfaces/projects';
+import { Highway } from './Highway';
 
 export interface IProjectCommunicationPayload {
   service_tracking_email: IServiceTrackingEmail;
@@ -35,10 +45,7 @@ export class Project {
     return this.highway.get(`projects`);
   };
 
-  update = async (
-    projectId: string,
-    project: IProjectBase
-  ): Promise<IProjectData> => {
+  update = async (projectId: string, project: IProjectBase): Promise<IProjectData> => {
     return this.highway.put(`project/${projectId}`, project);
   };
 
@@ -50,10 +57,7 @@ export class Project {
     return this.highway.get(`project/${projectId}/users`);
   };
 
-  createUser = async (
-    projectId: string,
-    userData: IProjectUsers
-  ): Promise<IProjectData> => {
+  createUser = async (projectId: string, userData: IProjectUsers): Promise<IProjectData> => {
     return this.highway.post(`project/${projectId}/users`, userData);
   };
 
@@ -80,10 +84,7 @@ export class Project {
     type: CustomFieldTypes,
     customFieldData: IProjectCustomFieldPayload
   ) => {
-    return this.highway.post(
-      `project/${projectId}/custom_fields?type=${type}`,
-      customFieldData
-    );
+    return this.highway.post(`project/${projectId}/custom_fields?type=${type}`, customFieldData);
   };
 
   editCustomField = async (
@@ -98,19 +99,13 @@ export class Project {
     );
   };
 
-  deleteCustomField = async (
-    projectId: string,
-    type: CustomFieldTypes,
-    customFielId: string
-  ) => {
-    return this.highway.delete(
-      `project/${projectId}/custom_fields/${customFielId}?type=${type}`
-    );
+  deleteCustomField = async (projectId: string, type: CustomFieldTypes, customFielId: string) => {
+    return this.highway.delete(`project/${projectId}/custom_fields/${customFielId}?type=${type}`);
   };
 
   createAvatar = async (projectId: string, formData: FormData) => {
     return this.highway.post(`project/${projectId}/avatar`, formData, {
-      "content-type": `multipart/form-data`,
+      'content-type': `multipart/form-data`,
       ...formData.getHeaders(),
     });
   };
@@ -123,10 +118,7 @@ export class Project {
     projectId: string,
     communicationData: IProjectCommunicationPayload
   ) => {
-    return this.highway.put(
-      `project/${projectId}/communication`,
-      communicationData
-    );
+    return this.highway.put(`project/${projectId}/communication`, communicationData);
   };
 
   // list = async (

@@ -1,7 +1,7 @@
-import { IPlanBase, IPlanData, IPlanPagination } from "../common/interfaces/plans";
-import { IRouteBase } from "../common/interfaces/routes";
-import { IServiceBase } from "../common/interfaces/services";
-import { Highway } from "./Highway";
+import { IPlanBase, IPlanData, IPlanPagination } from '../common/interfaces/plans';
+import { IRouteBase } from '../common/interfaces/routes';
+import { IServiceBase } from '../common/interfaces/services';
+import { Highway } from './Highway';
 
 export class Plan {
   private highway: Highway;
@@ -77,16 +77,15 @@ export class Plan {
     const response = await this.highway.post(`plan/${planId}/optimize`);
     return response;
   };
-  
-  optimizeAsync = async (planId: string): Promise<{ finished: boolean, status: `in progress` | `success` | `failed` }> => {
+
+  optimizeAsync = async (
+    planId: string
+  ): Promise<{ finished: boolean; status: `in progress` | `success` | `failed` }> => {
     const response = await this.highway.post(`plan/${planId}/optimize/async`);
     return response;
   };
 
-  addServices = async (
-    planId: string,
-    services: IServiceBase[]
-  ): Promise<IPlanData> => {
+  addServices = async (planId: string, services: IServiceBase[]): Promise<IPlanData> => {
     await this.highway.service.createMany(planId, services);
     const response = await this.get(planId);
     return response;

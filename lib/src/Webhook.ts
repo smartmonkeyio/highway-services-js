@@ -1,5 +1,5 @@
-import { IWebhook, IWebhookData } from "../common/interfaces/webhooks";
-import { Highway } from "./Highway";
+import { IWebhook, IWebhookData } from '../common/interfaces/webhooks';
+import { Highway } from './Highway';
 
 export class Webhook {
   private highway: Highway;

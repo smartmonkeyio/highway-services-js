@@ -4,7 +4,7 @@ import {
   ICRUD,
   ILocation,
   IOptimizerConfig,
-  LocalSearchMetaheuristic
+  LocalSearchMetaheuristic,
 } from './common';
 import { PlanType } from './subscriptions';
 
@@ -130,7 +130,11 @@ export interface IServiceTrackingEmailItem {
 }
 
 export type ICommunicationChannel = `email`;
-export type IServiceTrackingEmailTypes = `route_started` | `service_approaching` | `service_completed` | `service_canceled`;
+export type IServiceTrackingEmailTypes =
+  | `route_started`
+  | `service_approaching`
+  | `service_completed`
+  | `service_canceled`;
 export interface IServiceTrackingEmail {
   route_started?: IServiceTrackingEmailItem;
   service_approaching?: IServiceTrackingEmailItem;
@@ -189,7 +193,7 @@ export interface IProjectAllCustomField {
 
 export interface IProjectDataWebapp extends IProjectData {
   subscription_type: PlanType;
-} 
+}
 
 export interface IPutProjectCustomFieldPayload {
   label?: string;
