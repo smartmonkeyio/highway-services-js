@@ -87,7 +87,9 @@ export class Client {
       default_reward: service.reward,
       default_requires: service.requires,
       default_cluster: service.cluster,
-      ...(service.assign_to ? { default_assign_to: [service.assign_to[0]] } : {}),
+      ...(service.assign_to && typeof service.assign_to[0] === 'string'
+        ? { default_assign_to: [service.assign_to[0]] }
+        : {}),
       default_volume: service.volume,
       default_weight: service.weight,
       default_timewindows: service.timewindows,
