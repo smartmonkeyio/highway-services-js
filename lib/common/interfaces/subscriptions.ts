@@ -11,8 +11,6 @@ export type StatusTypes =
 export interface IPlan {
   type: PlanType;
   vehicles: number;
-  max_clients: number;
-  max_services_plan: number;
 }
 
 export interface ISubscriptionBase {
