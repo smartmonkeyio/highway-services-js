@@ -1,6 +1,6 @@
 {
   "name": "highway-api",
-  "version": "2.5.0",
+  "version": "2.5.1",
   "description": "This package allows the users to easily integrate Highway services in their code.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -47,7 +47,7 @@
     "typescript": "^4.1.0"
   },
   "dependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "joi": "^17.3.0"
   },
   "files": [
