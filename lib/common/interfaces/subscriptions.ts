@@ -11,7 +11,7 @@ export type StatusTypes =
 export interface IPlan {
   type: PlanType;
   vehicles: number;
-  max_customer_emails?: number;
+  max_customer_emails: number;
   customer_emails_count: number;
 }
 
