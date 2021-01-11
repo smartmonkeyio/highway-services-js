@@ -24,6 +24,7 @@ export class Route {
    */
   fromVehicle = (vehicle: IVehicleData): IRouteBase => {
     const {
+      id,
       default_end_location,
       default_start_location,
       default_max_distance,
@@ -45,6 +46,7 @@ export class Route {
     } = vehicle;
 
     return {
+      vehicle_id: id,
       start_location: default_start_location,
       end_location: default_end_location,
       max_distance: default_max_distance,
