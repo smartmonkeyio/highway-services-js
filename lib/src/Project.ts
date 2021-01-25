@@ -8,7 +8,7 @@ import {
   IProjectUsers,
   IPutProjectCustomFieldPayload,
   IServiceTrackingEmail,
-  ProjectRoles,
+  ProjectRoles
 } from '../common/interfaces/projects';
 import { Highway } from './Highway';
 
@@ -110,8 +110,8 @@ export class Project {
     });
   };
 
-  deleteAvatar = async (projectId: string, avatarId: string) => {
-    return this.highway.delete(`project/${projectId}/avatar/${avatarId}`);
+  deleteAvatar = async (projectId: string) => {
+    return this.highway.delete(`project/${projectId}/avatar`);
   };
 
   editCommunication = async (

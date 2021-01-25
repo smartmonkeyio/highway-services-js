@@ -118,7 +118,6 @@ describe(`Test Projects API`, () => {
 
   describe(`Basic Project Avatar CRUD`, async () => {
     let project: any;
-    let uploadData: any;
     it(`it should create a new project avatar`, async function () {
       this.timeout(10000);
 
@@ -130,16 +129,16 @@ describe(`Test Projects API`, () => {
       formData.append(`data`, binaryData);
       formData.append(`name`, `text.txt`);
       formData.append(`mime`, `image/jpeg`);
-      uploadData = await highway.project.createAvatar(project.id, formData);
+      await highway.project.createAvatar(project.id, formData);
 
       const projectUpdated = await highway.project.get(project.id);
-      assert.notStrictEqual(projectUpdated.avatar, undefined);
+      assert.notStrictEqual(projectUpdated.avatar_url, undefined);
     });
 
     it(`it should delete a project avatar`, async function () {
       this.timeout(10000);
-      project = await highway.project.deleteAvatar(project.id, uploadData.id);
-      assert.strictEqual(project.avatar, undefined);
+      project = await highway.project.deleteAvatar(project.id);
+      assert.strictEqual(project.avatar_url, undefined);
     });
   });
 

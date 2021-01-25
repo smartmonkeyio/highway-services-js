@@ -14,7 +14,7 @@ export interface IUserBase {
   password?: string;
   first_name?: string;
   last_name?: string;
-  avatar?: string;
+  avatar_url?: string;
   phone?: string;
 
   active?: boolean;

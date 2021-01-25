@@ -4,7 +4,7 @@ import {
   ICRUD,
   ILocation,
   IOptimizerConfig,
-  LocalSearchMetaheuristic,
+  LocalSearchMetaheuristic
 } from './common';
 import { PlanType } from './subscriptions';
 
@@ -15,9 +15,7 @@ export interface IProjectUsers {
   role: ProjectRoles;
   first_name?: string;
   last_name?: string;
-  avatar?: string;
   avatar_url?: string;
-  avatar_url_public?: string;
   email?: string;
   deleted?: boolean;
   validated?: boolean;
@@ -148,7 +146,7 @@ export interface IProjectBase extends ICRUD {
   location?: ILocation;
   description?: string;
   users?: IProjectUsers[];
-  avatar?: string;
+  avatar_url?: string;
 
   view?: IProjectView;
   optimizer_config?: IOptimizerConfig;

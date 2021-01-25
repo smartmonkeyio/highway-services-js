@@ -11,9 +11,7 @@ export interface IOrganizationUsers {
   role: OrganizationRoles;
   first_name?: string;
   last_name?: string;
-  avatar?: string;
   avatar_url?: string;
-  avatar_url_public?: string;
   email?: string;
   deleted?: boolean;
   validated?: boolean;
@@ -24,7 +22,7 @@ export interface IOrganizationBase extends ICRUD {
   country?: string;
   owner_id?: string;
   users?: IOrganizationUsers[];
-  avatar?: string;
+  avatar_url?: string;
   default_project_id?: string;
   subscription: ISubscriptionBase;
 }
