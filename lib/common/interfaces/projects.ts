@@ -132,12 +132,18 @@ export type IServiceTrackingEmailTypes =
   | `route_started`
   | `service_approaching`
   | `service_completed`
-  | `service_canceled`;
+  | `service_canceled`
+  | `pickup_approaching`
+  | `pickup_completed`
+  | `pickup_canceled`;
 export interface IServiceTrackingEmail {
   route_started?: IServiceTrackingEmailItem;
   service_approaching?: IServiceTrackingEmailItem;
   service_completed?: IServiceTrackingEmailItem;
   service_canceled?: IServiceTrackingEmailItem;
+  pickup_approaching?: IServiceTrackingEmailItem;
+  pickup_completed?: IServiceTrackingEmailItem;
+  pickup_canceled?: IServiceTrackingEmailItem;
 }
 
 export interface IProjectBase extends ICRUD {

@@ -8,7 +8,7 @@ import {
   IProjectUsers,
   IPutProjectCustomFieldPayload,
   IServiceTrackingEmail,
-  ProjectRoles
+  ProjectRoles,
 } from '../common/interfaces/projects';
 import { Highway } from './Highway';
 
