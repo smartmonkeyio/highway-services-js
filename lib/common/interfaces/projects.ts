@@ -79,6 +79,7 @@ interface IProjectServiceReportCanceledPreferences {
 }
 
 export interface IProjectServiceTracker {
+  label: boolean;
   driver_position: boolean;
   estimated_time_arrival: boolean;
   stops_left: boolean;
