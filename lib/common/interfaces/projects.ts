@@ -4,7 +4,7 @@ import {
   ICRUD,
   ILocation,
   IOptimizerConfig,
-  LocalSearchMetaheuristic
+  LocalSearchMetaheuristic,
 } from './common';
 import { PlanType } from './subscriptions';
 
@@ -123,9 +123,12 @@ export interface IProjectLimits {
 }
 
 export interface IServiceTrackingEmailItem {
+  from?: string;
   enabled: boolean;
+  subject?: string;
   body?: string;
   updated_at?: Date;
+  pod_fields?: string[];
 }
 
 export type ICommunicationChannel = `email`;
