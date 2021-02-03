@@ -31,7 +31,7 @@ export const defaultOptimizerConfig = {
 
 export type DistanceType = `km` | `mi`;
 export type WeightType = `kg` | `lb`;
-export type VolumeType = `l` | `m³`;
+export type VolumeType = `l` | `m³` | `u`;
 
 interface IProjectVehiclePreferences {
   external_id: boolean;
