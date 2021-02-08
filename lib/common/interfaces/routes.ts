@@ -50,6 +50,7 @@ export interface IRouteBase
   plan_id?: string;
   vehicle_id?: string;
   is_locked?: boolean;
+  tracing_percent?: number;
 }
 
 export interface IRouteData extends IRouteBase {
