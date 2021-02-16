@@ -15,11 +15,19 @@ export interface IWebhook extends IWebhookBase {
 }
 
 export type WebhookEventType =
-  | `plan.created`
+  | 'plan.created'
   | `plan.deleted`
   | `plan.updated`
+  | `route.created`
+  | `route.deleted`
+  | `route.started`
+  // `route.track` | // Disabled for the moment
+  | `route.finished`
+  | `service.created`
+  | `service.deleted`
   | `service.report`
-  | `route.track`;
+  | `service.report.completed`
+  | `service.report.canceled`;
 
 export interface IWebhookCreate {
   url: string;
