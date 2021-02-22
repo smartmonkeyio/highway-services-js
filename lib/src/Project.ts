@@ -49,7 +49,7 @@ export class Project {
     return this.highway.put(`project/${projectId}`, project);
   };
 
-  delete = async (projectId: string): Promise<IProjectData> => {
+  delete = async (projectId: string): Promise<void> => {
     return this.highway.delete(`project/${projectId}`);
   };
 
