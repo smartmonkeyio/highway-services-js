@@ -3,6 +3,17 @@ import { IRouteBase } from '../common/interfaces/routes';
 import { IServiceBase } from '../common/interfaces/services';
 import { Highway } from './Highway';
 
+export type IGetPlansProps = {
+  projectId?: string;
+  offset: number;
+  limit: number;
+  text?: string;
+  status?: string;
+  fromDate?: string;
+  toDate?: string;
+  sort?: string;
+};
+
 export class Plan {
   private highway: Highway;
 
@@ -36,16 +47,16 @@ export class Plan {
     return response;
   };
 
-  list = async (
-    projectId?: string,
-    text = undefined,
-    status = undefined,
-    fromDate = undefined,
-    toDate = undefined,
-    sort = undefined,
+  list = async ({
     offset = 0,
-    limit = 20
-  ): Promise<IPlanPagination> => {
+    limit = 20,
+    projectId,
+    text,
+    status,
+    fromDate,
+    toDate,
+    sort,
+  }: IGetPlansProps): Promise<IPlanPagination> => {
     const params = new URLSearchParams();
     if (projectId) {
       params.append(`project_id`, projectId);
