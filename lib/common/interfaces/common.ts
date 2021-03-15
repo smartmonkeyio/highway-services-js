@@ -49,6 +49,7 @@ export interface IUserObject {
 }
 
 export interface ILocation {
+  original_input?: string;
   location_id?: string;
   label?: string;
   country?: string;
