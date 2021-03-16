@@ -67,7 +67,7 @@ export interface ILocation {
   comments?: string;
   lat?: number;
   lng?: number;
-  score?: number;
+  scoring?: number;
 }
 
 export interface IOptimizerConfig {
