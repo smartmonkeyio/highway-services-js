@@ -19,6 +19,7 @@ export interface IOrganizationUsers {
 
 export interface IOrganizationBase extends ICRUD {
   label: string;
+  active: boolean;
   country?: string;
   owner_id?: string;
   users?: IOrganizationUsers[];
