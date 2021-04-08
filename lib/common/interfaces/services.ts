@@ -29,7 +29,6 @@ export interface IServiceConstraints {
 }
 
 export interface IServiceInfo {
-  label?: string;
   client_id?: string;
   client_external_id?: string;
   reference_person?: string;

@@ -6,15 +6,19 @@ export interface IVehicleFlat {
   lng: number;
 }
 
-export interface IVehicleData extends IVehicleBase {
-  id: string;
-}
-
 export type VehicleIconTypes = `moto` | `walk` | `truck` | `furgo`;
 
-export interface IVehicleBase extends ICRUD, IUserObject {
-  organization_id?: string;
-  project_id?: string;
+export interface IVehicleConstraints {
+  default_timewindow?: Timewindow;
+  default_max_distance?: number;
+  default_max_weight?: number;
+  default_max_volume?: number;
+  default_max_services?: number;
+  // default_capacity?: number[];
+  default_provides?: string[];
+}
+
+export interface IVehicleInfo {
   phone?: string;
   icon?: VehicleIconTypes;
   email?: string;
@@ -23,18 +27,20 @@ export interface IVehicleBase extends ICRUD, IUserObject {
   color?: string;
   brand?: string;
   comments?: string;
-  default_timewindow?: Timewindow;
-  default_max_distance?: number;
-  default_max_weight?: number;
-  default_max_volume?: number;
-  default_max_services?: number;
-  // default_capacity?: number[];
   default_start_location?: ILocation;
   default_end_location?: ILocation;
-  default_provides?: string[];
-  custom_fields?: object;
+  custom_fields?: any;
   price_per_distance?: number;
   price_per_minute?: number;
+}
+
+export interface IVehicleBase extends ICRUD, IUserObject, IVehicleInfo, IVehicleConstraints {
+  organization_id?: string;
+  project_id?: string;
+}
+
+export interface IVehicleData extends IVehicleBase {
+  id: string;
 }
 
 export type IVehiclePagination = IPagination<IVehicleData>;

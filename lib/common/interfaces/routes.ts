@@ -6,7 +6,6 @@ export type IRouteStatus = `not_started` | `in_transit` | `finished`;
 
 export interface IRouteInfo {
   vehicle_id?: string;
-  label?: string;
   phone?: string;
   icon?: VehicleIconTypes;
   comments?: string;
