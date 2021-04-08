@@ -7,13 +7,18 @@ export interface IClientFlat {
   lng: number;
 }
 
-export interface IClientData extends IClientBase {
-  id: string;
+export interface IClientConstraints {
+  default_duration?: number;
+  default_requires?: string[];
+  default_timewindows?: Timewindow[];
+  default_volume?: number;
+  default_weight?: number;
+  // default_assign_to?: string[];
+  // default_reward?: number;
+  // default_cluster?: string;
 }
 
-export interface IClientBase extends ICRUD, IUserObject {
-  organization_id?: string;
-  project_id?: string;
+export interface IClientInfo {
   icon?: ServiceIconTypes;
   location?: ILocation;
   location_details?: string;
@@ -22,15 +27,16 @@ export interface IClientBase extends ICRUD, IUserObject {
   email?: string;
   website?: string;
   reference_person?: string;
-  default_duration?: number;
-  default_reward?: number;
-  default_requires?: string[];
-  default_cluster?: string;
-  default_assign_to?: string[];
-  default_timewindows?: Timewindow[];
-  default_volume?: number;
-  default_weight?: number;
   custom_fields?: object;
+}
+
+export interface IClientBase extends ICRUD, IUserObject, IClientInfo, IClientConstraints {
+  organization_id?: string;
+  project_id?: string;
+}
+
+export interface IClientData extends IClientBase {
+  id: string;
 }
 
 export type IClientPagination = IPagination<IClientData>;
