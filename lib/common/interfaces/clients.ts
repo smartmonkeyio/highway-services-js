@@ -13,9 +13,9 @@ export interface IClientConstraints {
   default_timewindows?: Timewindow[];
   default_volume?: number;
   default_weight?: number;
-  // default_assign_to?: string[];
-  // default_reward?: number;
-  // default_cluster?: string;
+  default_assign_to?: string[];
+  default_reward?: number;
+  default_cluster?: string;
 }
 
 export interface IClientInfo {
