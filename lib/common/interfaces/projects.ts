@@ -39,7 +39,7 @@ interface IProjectVehiclePreferences {
   plate: boolean;
   phone: boolean;
   email: boolean;
-  webpage: boolean;
+  website: boolean;
   price_per_minute: boolean;
   price_per_distance: boolean;
 }
@@ -50,7 +50,7 @@ interface IProjectClientPreferences {
   comments: boolean;
   reference_person: boolean;
   phone: boolean;
-  webpage: boolean;
+  website: boolean;
   optional: boolean;
 }
 
