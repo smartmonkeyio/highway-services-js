@@ -24,7 +24,7 @@ describe(`Create a Highway Client`, () => {
   it(`Should fail to list plans with a wrong key`, async () => {
     try {
       highway = createHighway(`BadKey`);
-      await highway.plan.list(`bad_id`);
+      await highway.plan.list({ offset: 0, limit: 20, projectId: `bad_id` });
       throw new Error(`Should raise an exception with a bad key!`);
     } catch (exception) {
       // Everything worked
@@ -36,7 +36,7 @@ describe(`Create a Highway Client`, () => {
       highway = createHighway(privateKey, {
         apiEndpoint: `http://localhost:1234/`,
       });
-      await highway.plan.list(`bad_id`);
+      await highway.plan.list({ offset: 0, limit: 20, projectId: `bad_id` });
       throw new Error(`Should raise an exception with a bad key!`);
     } catch (exception) {
       // Everything worked
@@ -46,7 +46,7 @@ describe(`Create a Highway Client`, () => {
   it(`Should fail to list plans with a wrong URL`, async () => {
     try {
       highway = createHighway(privateKey, { apiEndpoint: `malformedurl` });
-      await highway.plan.list(`bad_id`);
+      await highway.plan.list({ offset: 0, limit: 20, projectId: `bad_id` });
       throw new Error(`Should raise an exception with a bad key!`);
     } catch (exception) {
       // Everything worked

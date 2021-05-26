@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as assert from 'assert';
 //import * as loader from "./loader";
 import { createHighway } from '../lib/index';
@@ -12,7 +13,12 @@ describe(`Test Plans API`, () => {
 
   before(async () => {
     highway = createHighway(common.key);
-    allProjectIds = (await highway.project.getAll()).map((project) => project.id);
+
+    const allProjects = await axios.get('/projects', {
+      headers: { Authorization: `Bearer ${highway.apiKey}` },
+    });
+    allProjectIds =
+      allProjects.status === 200 ? allProjects.data.map((project: any) => project.id) : [];
   });
   describe(`Basic Plan CRUD`, () => {
     it(`it should create a new Plan`, async () => {
@@ -67,13 +73,17 @@ describe(`Test Plans API`, () => {
       assert.strictEqual(plan.services.length, 2);
     });
     it(`Must retrieve the list of plans`, async () => {
-      const planList = await highway.plan.list(allProjectIds[0]);
+      const planList = await highway.plan.list({
+        offset: 0,
+        limit: 20,
+        projectId: allProjectIds[0],
+      });
       assert.strictEqual(planList.docs.length, 2);
       assert.strictEqual(planList.offset, 0);
       assert.strictEqual(planList.limit, 20);
     });
     it(`Must retrieve the list of plans without setting the project id`, async () => {
-      const planList = await highway.plan.list();
+      const planList = await highway.plan.list({ offset: 0, limit: 20 });
       assert.strictEqual(planList.docs.length, 2);
       assert.strictEqual(planList.offset, 0);
       assert.strictEqual(planList.limit, 20);

@@ -4,7 +4,6 @@ import { HighwayError } from '../common/errors';
 import { IHighwayOptions } from '../common/interfaces/common';
 import { Client } from './Client';
 import { Plan } from './Plan';
-import { Project } from './Project';
 import { Route } from './Route';
 import { Service } from './Service';
 import { Vehicle } from './Vehicle';
@@ -16,7 +15,6 @@ export class Highway {
   private apiEndpoint: string;
   private queryParams: { [param: string]: string } | undefined;
 
-  project: Project;
   client: Client;
   webhook: Webhook;
   plan: Plan;
@@ -27,7 +25,6 @@ export class Highway {
   constructor(apiKey: string, options: IHighwayOptions) {
     this._token = options.bearer;
     this._apiKey = apiKey;
-    this.project = new Project(this);
     this.client = new Client(this);
     this.webhook = new Webhook(this);
     this.plan = new Plan(this);

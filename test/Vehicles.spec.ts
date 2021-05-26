@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as assert from 'assert';
 import { createHighway } from '../lib/index';
 import { Highway } from '../lib/src/Highway';
@@ -12,7 +13,12 @@ describe(`Test Vehicles API`, () => {
     before(async () => {
       const key = common.key;
       highway = createHighway(key);
-      allProjectIds = (await highway.project.getAll()).map((project) => project.id);
+
+      const allProjects = await axios.get('/projects', {
+        headers: { Authorization: `Bearer ${highway.apiKey}` },
+      });
+      allProjectIds =
+        allProjects.status === 200 ? allProjects.data.map((project: any) => project.id) : [];
 
       const vehicles = await highway.vehicle.listFlat(allProjectIds[0]);
       vehicles.map(async (vehicle: any) => {
