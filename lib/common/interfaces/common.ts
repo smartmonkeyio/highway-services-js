@@ -10,8 +10,6 @@ export type Timewindow = [number, number];
 
 export type LanguageType = `en-us` | `es-es`;
 
-export type CurrencyTypes = `EUR` | `USD` | `MXN`;
-
 export type LocalSearchMetaheuristic =
   | `AUTOMATIC`
   | `GREEDY_DESCENT`
